@@ -48,15 +48,21 @@ export default async function LessonPage({ params }: Props) {
 
   const { lesson, moduleTitle, moduleOrder } = row;
 
-  const quizProps: QuizQuestion[] = lessonQuiz.map((q) => ({
-    id: q.id,
-    kind: q.kind,
-    prompt: q.prompt,
-    code: q.code,
-    options: (q.options ?? []) as string[],
-    correct: q.correct as string | string[],
-    explanation: q.explanation,
-  }));
+  const quizProps: QuizQuestion[] = lessonQuiz.map((q) => {
+    const correctRaw = q.correct as string | string[] | number | number[];
+    const correct = Array.isArray(correctRaw)
+      ? correctRaw.map(String)
+      : String(correctRaw);
+    return {
+      id: q.id,
+      kind: q.kind,
+      prompt: q.prompt,
+      code: q.code,
+      options: ((q.options ?? []) as Array<string | number>).map(String),
+      correct,
+      explanation: q.explanation,
+    };
+  });
 
   return (
     <article className="space-y-6">

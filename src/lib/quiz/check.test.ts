@@ -60,3 +60,10 @@ describe("checkQuizAnswer — output", () => {
     expect(checkQuizAnswer(q, "23").isCorrect).toBe(false);
   });
 });
+
+describe("checkQuizAnswer — jsonb number coercion", () => {
+  it("matches option \"5\" when correct was stored as number 5", () => {
+    const q = { kind: "output" as const, correct: 5 as unknown as string };
+    expect(checkQuizAnswer(q, "5").isCorrect).toBe(true);
+  });
+});
