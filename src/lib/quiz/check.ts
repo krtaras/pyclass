@@ -4,18 +4,25 @@ function asSortedUnique(values: string[]): string[] {
   return [...new Set(values)].sort((a, b) => a.localeCompare(b, "uk"));
 }
 
+function toStringList(value: string | string[] | number | number[]): string[] {
+  const list = Array.isArray(value) ? value : [value];
+  return asSortedUnique(list.map((v) => String(v)));
+}
+
 export function normalizeCorrect(correct: string | string[]): string[] {
-  return asSortedUnique(Array.isArray(correct) ? correct : [correct]);
+  return toStringList(correct);
 }
 
 export function normalizeAnswer(answer: QuizAnswer): string[] {
-  return asSortedUnique(Array.isArray(answer) ? answer : [answer]);
+  return toStringList(answer);
 }
 
 /**
  * Pure answer checker.
  * - single / output: exact string match against the correct option
  * - multi: exact set match (order-independent); partial selection is wrong
+ *
+ * Values are coerced with String() so jsonb numbers like 5 still match option "5".
  */
 export function checkQuizAnswer(
   question: Pick<QuizQuestion, "kind" | "correct">,
@@ -31,7 +38,6 @@ export function checkQuizAnswer(
     return { isCorrect, correctOptions };
   }
 
-  // single + output
   const isCorrect =
     given.length === 1 &&
     correctOptions.length === 1 &&
