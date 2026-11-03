@@ -43,6 +43,19 @@ describe("translatePythonError", () => {
     expect(t.line).toBe(3);
   });
 
+  it("translates AssertionError", () => {
+    const t = translatePythonError("AssertionError: ");
+    expect(t.title).toBe("Перевірка не пройшла");
+  });
+
+  it("unwraps Pyodide PythonError wrapper", () => {
+    const t = translatePythonError(
+      'PythonError: Traceback (most recent call last):\n  File "<exec>", line 3, in <module>\nAssertionError: ',
+    );
+    expect(t.title).toBe("Перевірка не пройшла");
+    expect(t.line).toBe(3);
+  });
+
   it("handles timeout", () => {
     const t = translatePythonError("anything", { timedOut: true });
     expect(t.title).toBe("Час вичерпано");
