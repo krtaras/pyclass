@@ -175,9 +175,24 @@ function QuizQuestionCard({
             optionClass += " hover:border-zinc-300 hover:bg-zinc-50";
           }
 
+          const select = () => {
+            if (answered) return;
+            if (question.kind === "multi") toggleMulti(option);
+            else onDraft(option);
+          };
+
           return (
             <li key={option}>
-              <label className={optionClass} htmlFor={inputId}>
+              <label
+                className={optionClass}
+                htmlFor={inputId}
+                onClick={(e) => {
+                  // Ensure React state updates even when the native
+                  // radio/checkbox event is swallowed (e.g. in some automation).
+                  e.preventDefault();
+                  select();
+                }}
+              >
                 {question.kind === "multi" ? (
                   <input
                     id={inputId}
@@ -187,7 +202,8 @@ function QuizQuestionCard({
                     checked={
                       Array.isArray(draft) ? draft.includes(option) : false
                     }
-                    onChange={() => toggleMulti(option)}
+                    onChange={select}
+                    data-option={option}
                   />
                 ) : (
                   <input
@@ -197,7 +213,8 @@ function QuizQuestionCard({
                     className="mt-0.5 h-4 w-4 shrink-0"
                     disabled={answered}
                     checked={draft === option}
-                    onChange={() => onDraft(option)}
+                    onChange={select}
+                    data-option={option}
                   />
                 )}
                 <span className="min-w-0 flex-1 break-words font-mono text-[13px] leading-snug sm:text-sm">
