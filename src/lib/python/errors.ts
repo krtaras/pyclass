@@ -10,6 +10,7 @@ const TYPE_MESSAGES: Record<string, string> = {
   KeyError: "Немає такого ключа",
   AttributeError: "Немає такого атрибута",
   RecursionError: "Занадто глибока рекурсія",
+  AssertionError: "Перевірка не пройшла",
   TimeoutError: "Час вичерпано",
 };
 
@@ -21,8 +22,8 @@ export type TranslatedError = {
 
 function extractLine(raw: string): number | null {
   const patterns = [
-    /line (\d+)/i,
     /File "<[^"]+", line (\d+)/,
+    /line (\d+)/i,
     /, рядок (\d+)/i,
   ];
   for (const re of patterns) {
@@ -32,11 +33,26 @@ function extractLine(raw: string): number | null {
   return null;
 }
 
+const ERROR_TYPES =
+  /(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError|AssertionError|TimeoutError)/;
+
 function extractType(raw: string): string | null {
-  const m = raw.match(
-    /\b(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError|TimeoutError)\b/,
-  );
+  const m = raw.match(ERROR_TYPES);
   return m?.[1] ?? null;
+}
+
+/** Prefer the most specific Error: line from a Pyodide PythonError wrapper. */
+function unwrapDetail(raw: string): string {
+  const lines = raw
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean);
+  // Prefer last line that looks like "SomeError: ..."
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const line = lines[i]!;
+    if (ERROR_TYPES.test(line.split(":")[0] ?? "")) return line;
+  }
+  return lines[lines.length - 1] ?? raw.trim();
 }
 
 /** Translate a Python traceback / error string into a clear Ukrainian message. */
@@ -56,15 +72,16 @@ export function translatePythonError(
   const errorType = extractType(raw) ?? "Error";
   const title = TYPE_MESSAGES[errorType] ?? "Помилка виконання";
 
-  let detail = raw.trim();
-  // Prefer the last non-empty line (usually "TypeError: ...")
-  const lines = detail.split("\n").map((l) => l.trim()).filter(Boolean);
-  const last = lines[lines.length - 1] ?? detail;
+  const last = unwrapDetail(raw);
   const colon = last.indexOf(":");
-  if (colon > 0 && /Error$/.test(last.slice(0, colon).trim())) {
+  let detail = last;
+  if (colon > 0 && ERROR_TYPES.test(last.slice(0, colon).trim())) {
     detail = last.slice(colon + 1).trim() || last;
-  } else {
-    detail = last;
+  }
+
+  // Assertion with empty message
+  if (errorType === "AssertionError" && (!detail || detail === "AssertionError")) {
+    detail = "твердження виявилось хибним";
   }
 
   const linePart = line != null ? ` (рядок ${line})` : "";

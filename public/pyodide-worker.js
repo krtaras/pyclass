@@ -25,7 +25,7 @@ function extractError(err) {
   if (m) line = Number(m[1]);
   let errorType = "Error";
   const t = message.match(
-    /\b(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError)\b/,
+    /\b(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError|AssertionError)\b/,
   );
   if (t) errorType = t[1];
   return { message, line, errorType };
