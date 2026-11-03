@@ -7,6 +7,7 @@ import { Markdown } from "@/components/Markdown";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { LessonInteractive } from "@/components/LessonInteractive";
 import { getSession } from "@/lib/auth/session";
+import { isHintsEnabled } from "@/lib/hints/enabled";
 import type { ExerciseTest } from "@/lib/python/types";
 import type { QuizQuestion } from "@/lib/quiz/types";
 
@@ -184,7 +185,7 @@ export default async function LessonPage({ params }: Props) {
           starterCode: ex.starterCode,
           tests: ex.tests as ExerciseTest[],
           initialCode: latestCode.get(ex.id),
-          hintLimit: ex.hintLimit,
+          hintLimit: isHintsEnabled() ? ex.hintLimit : 0,
           initialHintsUsed: hintsUsed.get(ex.id) ?? 0,
         }))}
         questions={quizProps}
