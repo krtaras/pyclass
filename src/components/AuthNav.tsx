@@ -47,14 +47,27 @@ export function AuthNav({ user }: { user: AuthNavUser | null }) {
 
   return (
     <nav className="flex items-center gap-3 text-sm">
-      <Link
-        href="/progress"
-        className="text-zinc-600 hover:text-zinc-900"
-        data-testid="nav-progress"
+      {user.role === "teacher" ? (
+        <Link
+          href="/teacher"
+          className="text-zinc-600 hover:text-zinc-900"
+          data-testid="nav-teacher"
+        >
+          Кабінет
+        </Link>
+      ) : (
+        <Link
+          href="/progress"
+          className="text-zinc-600 hover:text-zinc-900"
+          data-testid="nav-progress"
+        >
+          Мій прогрес
+        </Link>
+      )}
+      <span
+        className="hidden max-w-[9rem] truncate text-zinc-500 sm:inline"
+        title={user.name}
       >
-        Мій прогрес
-      </Link>
-      <span className="hidden max-w-[9rem] truncate text-zinc-500 sm:inline" title={user.name}>
         {user.name}
       </span>
       <button

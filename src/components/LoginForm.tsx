@@ -31,6 +31,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
         error?: string;
         errors?: Record<string, string>;
         ok?: boolean;
+        user?: { role?: string };
       };
       if (!res.ok) {
         if (data.errors) setErrors(data.errors);
@@ -38,7 +39,11 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
         return;
       }
       router.refresh();
-      router.push(nextPath || "/");
+      const fallback =
+        data.user?.role === "teacher" ? "/teacher" : "/";
+      const dest =
+        nextPath && nextPath !== "/" ? nextPath : fallback;
+      router.push(dest);
     } catch {
       setFormError("Помилка мережі. Спробуй ще раз.");
     } finally {
