@@ -31,7 +31,15 @@ export function VideoEmbed({
 
   return (
     <div className="overflow-hidden rounded-xl border border-zinc-200 bg-black shadow-sm">
-      <video className="aspect-video w-full" controls src={url} title={title} />
+      <video
+        className="aspect-video w-full"
+        controls
+        playsInline
+        preload="metadata"
+        src={url}
+        title={title}
+        data-testid="lesson-blob-video"
+      />
     </div>
   );
 }
