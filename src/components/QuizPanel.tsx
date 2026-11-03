@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { checkQuizAnswer } from "@/lib/quiz/check";
 import type {
   QuizAnswer,
@@ -110,27 +110,31 @@ function QuizQuestionCard({
       ? Array.isArray(state.answer)
         ? state.answer
         : [state.answer]
-      : [],
+      : Array.isArray(draft)
+        ? draft
+        : draft
+          ? [draft]
+          : [],
   );
 
-  const canSubmit = useMemo(() => {
-    if (answered) return false;
+  const canSubmit = !answered && (
+    question.kind === "multi"
+      ? Array.isArray(draft) && draft.length > 0
+      : typeof draft === "string" && draft.length > 0
+  );
+
+  function select(option: string) {
+    if (answered) return;
     if (question.kind === "multi") {
-      return Array.isArray(draft) && draft.length > 0;
-    }
-    return typeof draft === "string" && draft.length > 0;
-  }, [answered, draft, question.kind]);
-
-  const toggleMulti = useCallback(
-    (option: string) => {
-      if (answered || !Array.isArray(draft)) return;
-      const next = draft.includes(option)
-        ? draft.filter((o) => o !== option)
-        : [...draft, option];
+      const current = Array.isArray(draft) ? draft : [];
+      const next = current.includes(option)
+        ? current.filter((o) => o !== option)
+        : [...current, option];
       onDraft(next);
-    },
-    [answered, draft, onDraft],
-  );
+      return;
+    }
+    onDraft(option);
+  }
 
   return (
     <li
@@ -156,12 +160,11 @@ function QuizQuestionCard({
 
       <ul className="mt-3 space-y-2" role="list">
         {question.options.map((option) => {
-          const inputId = `q${question.id}-${option}`;
           const isCorrectOpt = correctSet.has(option);
           const isChosen = chosenSet.has(option);
 
           let optionClass =
-            "flex items-start gap-3 rounded-xl border border-zinc-200 px-3 py-2.5 text-sm transition";
+            "flex w-full items-start gap-3 rounded-xl border px-3 py-2.5 text-left text-sm transition";
           if (answered) {
             if (isCorrectOpt) {
               optionClass +=
@@ -169,58 +172,51 @@ function QuizQuestionCard({
             } else if (isChosen && !isCorrectOpt) {
               optionClass += " border-red-300 bg-red-50 text-red-950";
             } else {
-              optionClass += " opacity-70";
+              optionClass += " border-zinc-200 opacity-70";
             }
+          } else if (isChosen) {
+            optionClass +=
+              " border-emerald-500 bg-emerald-50 text-emerald-950 ring-2 ring-emerald-200";
           } else {
-            optionClass += " hover:border-zinc-300 hover:bg-zinc-50";
+            optionClass +=
+              " border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50";
           }
-
-          const select = () => {
-            if (answered) return;
-            if (question.kind === "multi") toggleMulti(option);
-            else onDraft(option);
-          };
 
           return (
             <li key={option}>
-              <label
+              <button
+                type="button"
                 className={optionClass}
-                htmlFor={inputId}
-                onClick={(e) => {
-                  // Ensure React state updates even when the native
-                  // radio/checkbox event is swallowed (e.g. in some automation).
-                  e.preventDefault();
-                  select();
-                }}
+                disabled={answered}
+                aria-pressed={isChosen}
+                data-option={option}
+                onClick={() => select(option)}
               >
-                {question.kind === "multi" ? (
-                  <input
-                    id={inputId}
-                    type="checkbox"
-                    className="mt-0.5 h-4 w-4 shrink-0"
-                    disabled={answered}
-                    checked={
-                      Array.isArray(draft) ? draft.includes(option) : false
-                    }
-                    onChange={select}
-                    data-option={option}
-                  />
-                ) : (
-                  <input
-                    id={inputId}
-                    type="radio"
-                    name={`quiz-${question.id}`}
-                    className="mt-0.5 h-4 w-4 shrink-0"
-                    disabled={answered}
-                    checked={draft === option}
-                    onChange={select}
-                    data-option={option}
-                  />
-                )}
+                <span
+                  aria-hidden
+                  className={
+                    question.kind === "multi"
+                      ? `mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] ${
+                          isChosen
+                            ? "border-emerald-600 bg-emerald-600 text-white"
+                            : "border-zinc-400 bg-white"
+                        }`
+                      : `mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
+                          isChosen
+                            ? "border-emerald-600 bg-emerald-600"
+                            : "border-zinc-400 bg-white"
+                        }`
+                  }
+                >
+                  {question.kind === "multi" && isChosen ? "✓" : null}
+                  {question.kind !== "multi" && isChosen ? (
+                    <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                  ) : null}
+                </span>
                 <span className="min-w-0 flex-1 break-words font-mono text-[13px] leading-snug sm:text-sm">
                   {option}
                 </span>
-              </label>
+              </button>
             </li>
           );
         })}
@@ -230,6 +226,7 @@ function QuizQuestionCard({
         <button
           type="button"
           disabled={!canSubmit}
+          data-testid={`quiz-submit-${question.id}`}
           onClick={() => onSubmit(draft)}
           className="mt-3 rounded-full bg-emerald-700 px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
         >
@@ -250,7 +247,10 @@ function QuizQuestionCard({
           <p className="font-semibold">
             {state.isCorrect ? "Правильно!" : "Неправильно"}
           </p>
-          <p className="mt-1 text-zinc-800" data-testid={`quiz-explanation-${question.id}`}>
+          <p
+            className="mt-1 text-zinc-800"
+            data-testid={`quiz-explanation-${question.id}`}
+          >
             {question.explanation}
           </p>
         </div>
