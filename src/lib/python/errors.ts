@@ -20,11 +20,14 @@ export type TranslatedError = {
   line: number | null;
 };
 
+const ERROR_TYPES =
+  /(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError|AssertionError|TimeoutError)/;
+
 function extractLine(raw: string): number | null {
   const patterns = [
+    /File "<exec>", line (\d+)/,
     /File "<[^"]+", line (\d+)/,
     /line (\d+)/i,
-    /, рядок (\d+)/i,
   ];
   for (const re of patterns) {
     const m = raw.match(re);
@@ -33,21 +36,16 @@ function extractLine(raw: string): number | null {
   return null;
 }
 
-const ERROR_TYPES =
-  /(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError|AssertionError|TimeoutError)/;
-
 function extractType(raw: string): string | null {
   const m = raw.match(ERROR_TYPES);
   return m?.[1] ?? null;
 }
 
-/** Prefer the most specific Error: line from a Pyodide PythonError wrapper. */
 function unwrapDetail(raw: string): string {
   const lines = raw
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean);
-  // Prefer last line that looks like "SomeError: ..."
   for (let i = lines.length - 1; i >= 0; i--) {
     const line = lines[i]!;
     if (ERROR_TYPES.test(line.split(":")[0] ?? "")) return line;
@@ -58,7 +56,11 @@ function unwrapDetail(raw: string): string {
 /** Translate a Python traceback / error string into a clear Ukrainian message. */
 export function translatePythonError(
   raw: string,
-  options?: { timedOut?: boolean; line?: number | null },
+  options?: {
+    timedOut?: boolean;
+    line?: number | null;
+    errorType?: string | null;
+  },
 ): TranslatedError {
   if (options?.timedOut) {
     return {
@@ -69,7 +71,11 @@ export function translatePythonError(
   }
 
   const line = options?.line ?? extractLine(raw);
-  const errorType = extractType(raw) ?? "Error";
+  const preferred =
+    options?.errorType && ERROR_TYPES.test(options.errorType)
+      ? options.errorType
+      : null;
+  const errorType = preferred ?? extractType(raw) ?? "Error";
   const title = TYPE_MESSAGES[errorType] ?? "Помилка виконання";
 
   const last = unwrapDetail(raw);
@@ -79,9 +85,16 @@ export function translatePythonError(
     detail = last.slice(colon + 1).trim() || last;
   }
 
-  // Assertion with empty message
-  if (errorType === "AssertionError" && (!detail || detail === "AssertionError")) {
+  if (
+    errorType === "AssertionError" &&
+    (!detail || detail === "AssertionError" || detail === "PythonError")
+  ) {
     detail = "твердження виявилось хибним";
+  }
+
+  // Avoid showing bare "PythonError" when we know a better type
+  if (detail === "PythonError" && errorType !== "Error") {
+    detail = title.toLowerCase();
   }
 
   const linePart = line != null ? ` (рядок ${line})` : "";

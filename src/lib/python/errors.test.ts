@@ -56,6 +56,16 @@ describe("translatePythonError", () => {
     expect(t.line).toBe(3);
   });
 
+
+  it("uses preferred errorType when message is thin", () => {
+    const t = translatePythonError("PythonError", {
+      errorType: "AssertionError",
+      line: 2,
+    });
+    expect(t.title).toBe("Перевірка не пройшла");
+    expect(t.body).toContain("рядок 2");
+  });
+
   it("handles timeout", () => {
     const t = translatePythonError("anything", { timedOut: true });
     expect(t.title).toBe("Час вичерпано");

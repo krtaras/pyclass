@@ -44,6 +44,7 @@ export function evaluateSingleTest(
     }
     const t = translatePythonError(outcome.message, {
       line: outcome.line,
+      errorType: outcome.errorType,
     });
     return {
       index,

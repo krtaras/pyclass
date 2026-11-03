@@ -18,16 +18,25 @@ async function ensurePyodide() {
 }
 
 function extractError(err) {
-  const message = String(err && err.message ? err.message : err);
+  const message = String(
+    (err && (err.message || err.toString?.())) || err || "",
+  );
   let line = null;
   const m =
-    message.match(/File "<[^"]+", line (\d+)/) || message.match(/line (\d+)/i);
+    message.match(/File "<exec>", line (\d+)/) ||
+    message.match(/File "<[^"]+", line (\d+)/) ||
+    message.match(/line (\d+)/i);
   if (m) line = Number(m[1]);
+
+  const known =
+    /(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError|AssertionError)/;
   let errorType = "Error";
-  const t = message.match(
-    /\b(SyntaxError|IndentationError|TabError|NameError|TypeError|ValueError|ZeroDivisionError|IndexError|KeyError|AttributeError|RecursionError|AssertionError)\b/,
-  );
-  if (t) errorType = t[1];
+  if (err && typeof err.type === "string" && known.test(err.type)) {
+    errorType = err.type;
+  } else {
+    const t = message.match(known);
+    if (t) errorType = t[1];
+  }
   return { message, line, errorType };
 }
 
@@ -35,7 +44,6 @@ async function runPython(code, stdin) {
   const pd = await ensurePyodide();
   const stdinText = stdin == null ? "" : String(stdin);
 
-  // Isolate each run: fresh stdin/stdout/stderr
   pd.globals.set("_pyclass_stdin", stdinText);
   pd.runPython(`
 import sys
