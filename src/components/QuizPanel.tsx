@@ -8,8 +8,16 @@ import type {
   QuizQuestion,
 } from "@/lib/quiz/types";
 
+export type InitialQuizAttempt = {
+  questionId: number;
+  answer: QuizAnswer;
+  isCorrect: boolean;
+};
+
 export type QuizPanelProps = {
   questions: QuizQuestion[];
+  /** Previously saved attempts — show answer + explanation on reload. */
+  initialAttempts?: InitialQuizAttempt[];
   /** Seam for step 4 — fired once when the student submits an answer. */
   onAttempt?: (payload: QuizAttemptPayload) => void;
 };
@@ -27,14 +35,32 @@ function emptyDraft(kind: QuizQuestion["kind"]): QuizAnswer {
   return kind === "multi" ? [] : "";
 }
 
-export function QuizPanel({ questions, onAttempt }: QuizPanelProps) {
+export function QuizPanel({
+  questions,
+  initialAttempts = [],
+  onAttempt,
+}: QuizPanelProps) {
   const initial = useMemo(() => {
+    const saved = new Map(
+      initialAttempts.map((a) => [a.questionId, a] as const),
+    );
     const map: Record<number, QuestionState> = {};
     for (const q of questions) {
-      map[q.id] = { status: "pending", draft: emptyDraft(q.kind) };
+      const prev = saved.get(q.id);
+      if (prev) {
+        const result = checkQuizAnswer(q, prev.answer);
+        map[q.id] = {
+          status: "answered",
+          answer: prev.answer,
+          isCorrect: prev.isCorrect,
+          correctOptions: result.correctOptions,
+        };
+      } else {
+        map[q.id] = { status: "pending", draft: emptyDraft(q.kind) };
+      }
     }
     return map;
-  }, [questions]);
+  }, [questions, initialAttempts]);
 
   const [states, setStates] = useState(initial);
   const [ready, setReady] = useState(false);

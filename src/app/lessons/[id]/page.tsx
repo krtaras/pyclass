@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { asc, eq } from "drizzle-orm";
+import { notFound, redirect } from "next/navigation";
+import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
-import { exercises, lessons, modules, quizQuestions } from "@/db/schema";
+import { exercises, lessons, modules, quizAttempts, quizQuestions, submissions } from "@/db/schema";
 import { Markdown } from "@/components/Markdown";
 import { VideoEmbed } from "@/components/VideoEmbed";
-import { ExercisePanel } from "@/components/ExercisePanel";
-import { QuizPanel } from "@/components/QuizPanel";
+import { LessonInteractive } from "@/components/LessonInteractive";
+import { getSession } from "@/lib/auth/session";
 import type { ExerciseTest } from "@/lib/python/types";
 import type { QuizQuestion } from "@/lib/quiz/types";
 
@@ -17,6 +17,12 @@ type Props = {
 };
 
 export default async function LessonPage({ params }: Props) {
+  const session = await getSession();
+  if (!session) {
+    const { id } = await params;
+    redirect(`/login?next=/lessons/${id}`);
+  }
+
   const { id } = await params;
   const lessonId = Number(id);
   if (!Number.isFinite(lessonId)) notFound();
@@ -45,6 +51,67 @@ export default async function LessonPage({ params }: Props) {
     .from(quizQuestions)
     .where(eq(quizQuestions.lessonId, lessonId))
     .orderBy(asc(quizQuestions.id));
+
+  const exerciseIds = lessonExercises.map((e) => e.id);
+  const questionIds = lessonQuiz.map((q) => q.id);
+
+  // Latest submission code per exercise for this user
+  const latestCode = new Map<number, string>();
+  if (exerciseIds.length > 0) {
+    const subs = await db
+      .select({
+        exerciseId: submissions.exerciseId,
+        code: submissions.code,
+        createdAt: submissions.createdAt,
+      })
+      .from(submissions)
+      .where(
+        and(
+          eq(submissions.userId, session.id),
+          inArray(submissions.exerciseId, exerciseIds),
+        ),
+      )
+      .orderBy(desc(submissions.createdAt));
+    for (const s of subs) {
+      if (!latestCode.has(s.exerciseId)) {
+        latestCode.set(s.exerciseId, s.code);
+      }
+    }
+  }
+
+  // Latest attempt per question for this user
+  const savedAttempts: {
+    questionId: number;
+    answer: string | string[];
+    isCorrect: boolean;
+  }[] = [];
+  if (questionIds.length > 0) {
+    const attempts = await db
+      .select({
+        questionId: quizAttempts.questionId,
+        answer: quizAttempts.answer,
+        isCorrect: quizAttempts.isCorrect,
+        createdAt: quizAttempts.createdAt,
+      })
+      .from(quizAttempts)
+      .where(
+        and(
+          eq(quizAttempts.userId, session.id),
+          inArray(quizAttempts.questionId, questionIds),
+        ),
+      )
+      .orderBy(desc(quizAttempts.createdAt));
+    const seen = new Set<number>();
+    for (const a of attempts) {
+      if (seen.has(a.questionId)) continue;
+      seen.add(a.questionId);
+      savedAttempts.push({
+        questionId: a.questionId,
+        answer: a.answer as string | string[],
+        isCorrect: a.isCorrect,
+      });
+    }
+  }
 
   const { lesson, moduleTitle, moduleOrder } = row;
 
@@ -91,23 +158,17 @@ export default async function LessonPage({ params }: Props) {
         <Markdown content={lesson.bodyMarkdown} />
       </section>
 
-      {lessonExercises.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-500">
-          У цьому уроці ще немає вправ.
-        </p>
-      ) : (
-        lessonExercises.map((ex) => (
-          <ExercisePanel
-            key={ex.id}
-            exerciseId={ex.id}
-            prompt={ex.prompt}
-            starterCode={ex.starterCode}
-            tests={ex.tests as ExerciseTest[]}
-          />
-        ))
-      )}
-
-      <QuizPanel questions={quizProps} />
+      <LessonInteractive
+        exercises={lessonExercises.map((ex) => ({
+          id: ex.id,
+          prompt: ex.prompt,
+          starterCode: ex.starterCode,
+          tests: ex.tests as ExerciseTest[],
+          initialCode: latestCode.get(ex.id),
+        }))}
+        questions={quizProps}
+        savedAttempts={savedAttempts}
+      />
     </article>
   );
 }

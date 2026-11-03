@@ -20,7 +20,9 @@ export type ExercisePanelProps = {
   prompt: string;
   starterCode: string;
   tests: ExerciseTest[];
-  /** Seam for step 4 — called after «Перевірити». Not used yet. */
+  /** Latest saved code from a previous submission, if any. */
+  initialCode?: string;
+  /** Seam for step 4 — called after «Перевірити». */
   onCheckComplete?: (payload: SubmissionPayload) => void;
 };
 
@@ -35,9 +37,10 @@ export function ExercisePanel({
   prompt,
   starterCode,
   tests,
+  initialCode,
   onCheckComplete,
 }: ExercisePanelProps) {
-  const [code, setCode] = useState(starterCode);
+  const [code, setCode] = useState(initialCode ?? starterCode);
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [view, setView] = useState<RunView>({ kind: "idle" });
