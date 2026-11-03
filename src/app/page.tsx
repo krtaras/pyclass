@@ -2,10 +2,20 @@ import Link from "next/link";
 import { asc } from "drizzle-orm";
 import { db } from "@/db";
 import { modules, lessons } from "@/db/schema";
+import { getSession } from "@/lib/auth/session";
+import { loadUserCourseProgress } from "@/lib/progress/load";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  const session = await getSession();
+  const progress = session
+    ? await loadUserCourseProgress(session.id)
+    : null;
+  const progressByLesson = new Map(
+    progress?.lessons.map((l) => [l.lessonId, l]) ?? [],
+  );
+
   const allModules = await db
     .select()
     .from(modules)
@@ -33,6 +43,15 @@ export default async function HomePage() {
           Короткі уроки українською: пояснення, відео, вправи й квізи. Почни з
           першого модуля.
         </p>
+        {progress && (
+          <p
+            className="text-sm font-medium text-emerald-800"
+            data-testid="home-progress-summary"
+          >
+            Твій прогрес: {progress.lessonsComplete}/{progress.lessonsTotal}{" "}
+            уроків · {progress.percent}%
+          </p>
+        )}
       </section>
 
       {allModules.length === 0 ? (
@@ -57,27 +76,45 @@ export default async function HomePage() {
                   </h2>
                 </div>
                 <ul className="divide-y divide-zinc-100">
-                  {modLessons.map((lesson) => (
-                    <li key={lesson.id}>
-                      <Link
-                        href={`/lessons/${lesson.id}`}
-                        className="flex items-center gap-3 px-4 py-3.5 transition hover:bg-zinc-50 active:bg-zinc-100 sm:px-5"
-                      >
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-semibold text-emerald-800">
-                          {lesson.order}
-                        </span>
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate font-medium text-zinc-900">
-                            {lesson.title}
-                          </p>
-                          <p className="text-xs text-zinc-500">Урок</p>
-                        </div>
-                        <span aria-hidden className="text-zinc-400">
-                          →
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
+                  {modLessons.map((lesson) => {
+                    const lp = progressByLesson.get(lesson.id);
+                    return (
+                      <li key={lesson.id}>
+                        <Link
+                          href={`/lessons/${lesson.id}`}
+                          className="flex items-center gap-3 px-4 py-3.5 transition hover:bg-zinc-50 active:bg-zinc-100 sm:px-5"
+                          data-testid={`home-lesson-${lesson.id}`}
+                          data-complete={lp?.complete ? "true" : "false"}
+                          data-percent={lp?.percent ?? 0}
+                        >
+                          <span
+                            className={
+                              lp?.complete
+                                ? "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm text-white"
+                                : "flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-semibold text-emerald-800"
+                            }
+                          >
+                            {lp?.complete ? "✓" : lesson.order}
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate font-medium text-zinc-900">
+                              {lesson.title}
+                            </p>
+                            <p className="text-xs text-zinc-500">
+                              {lp
+                                ? lp.complete
+                                  ? "Завершено"
+                                  : `Прогрес ${lp.percent}%`
+                                : "Урок"}
+                            </p>
+                          </div>
+                          <span aria-hidden className="text-zinc-400">
+                            →
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </section>
             );

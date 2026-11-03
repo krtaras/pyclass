@@ -3,30 +3,40 @@ config({ path: ".env.local" });
 
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
+import { eq } from "drizzle-orm";
 import {
   modules,
   lessons,
   exercises,
   quizQuestions,
   groups,
+  users,
 } from "./schema";
+import { hashPassword } from "../lib/auth/password";
 
 async function main() {
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error("DATABASE_URL is not set");
 
+  const inviteCode = (
+    process.env.DEMO_INVITE_CODE ?? "DEMO10A"
+  ).trim().toUpperCase();
+  const teacherEmail = (process.env.TEACHER_EMAIL ?? "").trim().toLowerCase();
+  const teacherPassword = process.env.TEACHER_PASSWORD ?? "";
+  if (!teacherEmail || !teacherPassword) {
+    throw new Error("TEACHER_EMAIL and TEACHER_PASSWORD must be set");
+  }
+
   const sql = neon(url);
   const db = drizzle(sql);
 
+  // Content reset (cascades submissions / quiz_attempts via exercise/question FKs)
   await db.delete(quizQuestions);
   await db.delete(exercises);
   await db.delete(lessons);
   await db.delete(modules);
-  await db.delete(groups);
 
-  // Keep demo URLs stable (/lessons/1, /lessons/2)
   for (const stmt of [
-    "ALTER SEQUENCE groups_id_seq RESTART WITH 1",
     "ALTER SEQUENCE modules_id_seq RESTART WITH 1",
     "ALTER SEQUENCE lessons_id_seq RESTART WITH 1",
     "ALTER SEQUENCE exercises_id_seq RESTART WITH 1",
@@ -35,10 +45,46 @@ async function main() {
     await sql.query(stmt);
   }
 
-  const [demoGroup] = await db
-    .insert(groups)
-    .values({ name: "Демо-група 10-А", inviteCode: "DEMO10A" })
-    .returning();
+  // Demo group — upsert by invite code
+  let [demoGroup] = await db
+    .select()
+    .from(groups)
+    .where(eq(groups.inviteCode, inviteCode))
+    .limit(1);
+
+  if (!demoGroup) {
+    [demoGroup] = await db
+      .insert(groups)
+      .values({ name: "Демо-група 10-А", inviteCode })
+      .returning();
+  }
+
+  // Teacher — upsert by email (never self-signup)
+  const passwordHash = await hashPassword(teacherPassword);
+  const [existingTeacher] = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, teacherEmail))
+    .limit(1);
+
+  if (existingTeacher) {
+    await db
+      .update(users)
+      .set({
+        passwordHash,
+        role: "teacher",
+        name: existingTeacher.name || "Вчитель",
+      })
+      .where(eq(users.id, existingTeacher.id));
+  } else {
+    await db.insert(users).values({
+      name: "Вчитель",
+      email: teacherEmail,
+      passwordHash,
+      role: "teacher",
+      groupId: null,
+    });
+  }
 
   const [mod] = await db
     .insert(modules)
@@ -196,8 +242,10 @@ else:
 
   console.log("Seed OK", {
     groupId: demoGroup.id,
+    inviteCode,
     moduleId: mod.id,
     lessons: [lesson1.id, lesson2.id],
+    teacherEmail,
   });
 }
 
