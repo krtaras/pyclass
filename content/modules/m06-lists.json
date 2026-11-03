@@ -1,0 +1,604 @@
+{
+  "slug": "m06-lists",
+  "order": 6,
+  "title": "Списки та кортежі",
+  "lessons": [
+    {
+      "slug": "m06-l01-lists-basic",
+      "order": 1,
+      "title": "Списки: створення і індекси",
+      "bodyMarkdown": "## Список — упорядкована колекція\n\n```python\nfruits = [\"яблуко\", \"груша\", \"слива\"]\nprint(fruits[0])\nprint(len(fruits))\n```\n\n```python\nnums = [10, 20, 30]\nprint(nums[-1])\n```\n\n```python\nempty = []\nprint(len(empty))\n```\n\n## Типові помилки\n\n- `IndexError`, якщо індекс ≥ довжини.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=W8KRzm-HUcc",
+      "exercises": [
+        {
+          "slug": "m06-l01-e1-nth",
+          "prompt": "Спочатку n, потім n цілих чисел у рядок через пробіл. Виведи останнє число.\n\n**Приклад.**\nВвід:\n```\n3\n1 2 9\n```\nВивід:\n```\n9\n```",
+          "starterCode": "n = int(input())\nline = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\n1 2 9\n",
+              "output": "9",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\n5\n",
+              "output": "5",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "4\n10 20 30 40\n",
+              "output": "40",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\n1 2 9\n",
+            "output": "9"
+          }
+        },
+        {
+          "slug": "m06-l01-e2-len",
+          "prompt": "Прочитай рядок слів через пробіл. Виведи кількість слів (як список).\n\n**Приклад.**\nВвід:\n```\na b c\n```\nВивід:\n```\n3\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "a b c\n",
+              "output": "3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "один\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "x y\n",
+              "output": "2",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "a b c\n",
+            "output": "3"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m06-l01-q1",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "20",
+            "10",
+            "30",
+            "Помилка"
+          ],
+          "correct": "20",
+          "explanation": "Індекс 1 → 20.",
+          "code": "print([10, 20, 30][1])"
+        },
+        {
+          "slug": "m06-l01-q2",
+          "kind": "single",
+          "prompt": "Порожній список?",
+          "options": [
+            "[]",
+            "{}",
+            "()",
+            "None"
+          ],
+          "correct": "[]",
+          "explanation": "Квадратні дужки."
+        },
+        {
+          "slug": "m06-l01-q3",
+          "kind": "multi",
+          "prompt": "Що правда?",
+          "options": [
+            "len рахує елементи",
+            "Індекси з 0",
+            "Списки змінні",
+            "Списки як рядки — незмінні"
+          ],
+          "correct": [
+            "len рахує елементи",
+            "Індекси з 0",
+            "Списки змінні"
+          ],
+          "explanation": "Mutable."
+        }
+      ]
+    },
+    {
+      "slug": "m06-l02-mutate",
+      "order": 2,
+      "title": "Зміна списку: append, pop",
+      "bodyMarkdown": "## Списки можна змінювати\n\n```python\na = [1, 2]\na.append(3)\nprint(a)\n```\n\n```python\na = [1, 2, 3]\nx = a.pop()\nprint(x, a)\n```\n\n```python\na = [\"а\", \"б\"]\na[0] = \"я\"\nprint(a)\n```\n\n## Типові помилки\n\n- `append` повертає `None` — не пиши `a = a.append(x)`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=W8KRzm-HUcc",
+      "exercises": [
+        {
+          "slug": "m06-l02-e1-build",
+          "prompt": "n, потім n рядків. Збери їх у список і виведи через пробіл.\n\n**Приклад.**\nВвід:\n```\n3\na\nb\nc\n```\nВивід:\n```\na b c\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\na\nb\nc\n",
+              "output": "a b c",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nhello\n",
+              "output": "hello",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2\nx\ny\n",
+              "output": "x y",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\na\nb\nc\n",
+            "output": "a b c"
+          }
+        },
+        {
+          "slug": "m06-l02-e2-pop-last",
+          "prompt": "Прочитай числа через пробіл. Видали останнє (pop) і виведи решту через пробіл.\n\n**Приклад.**\nВвід:\n```\n1 2 3\n```\nВивід:\n```\n1 2\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 2 3\n",
+              "output": "1 2",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "9\n",
+              "output": "",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "5 6 7 8\n",
+              "output": "5 6 7",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 2 3\n",
+            "output": "1 2"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m06-l02-q1",
+          "kind": "single",
+          "prompt": "append додає?",
+          "options": [
+            "В кінець",
+            "На початок",
+            "Посередині",
+            "Нікуди"
+          ],
+          "correct": "В кінець",
+          "explanation": "append."
+        },
+        {
+          "slug": "m06-l02-q2",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "[1, 2, 3]",
+            "None",
+            "[1, 2]",
+            "Помилка"
+          ],
+          "correct": "[1, 2, 3]",
+          "explanation": "append.",
+          "code": "a = [1, 2]\na.append(3)\nprint(a)"
+        },
+        {
+          "slug": "m06-l02-q3",
+          "kind": "single",
+          "prompt": "a = a.append(1) дасть?",
+          "options": [
+            "None у a",
+            "Довгий список",
+            "Помилка одразу",
+            "1"
+          ],
+          "correct": "None у a",
+          "explanation": "append→None."
+        }
+      ]
+    },
+    {
+      "slug": "m06-l03-loop-list",
+      "order": 3,
+      "title": "Обхід списку",
+      "bodyMarkdown": "## for по елементах\n\n```python\nfor x in [10, 20, 30]:\n    print(x)\n```\n\n```python\nnums = [1, 2, 3, 4]\ns = 0\nfor n in nums:\n    s += n\nprint(s)\n```\n\n```python\nwords = [\"а\", \"б\"]\nfor i, w in enumerate(words):\n    print(i, w)\n```\n\n## Типові помилки\n\n- Змінювати список під час `for` без потреби — легко заплутатись.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=W8KRzm-HUcc",
+      "exercises": [
+        {
+          "slug": "m06-l03-e1-sum",
+          "prompt": "Числа через пробіл. Виведи їх суму.\n\n**Приклад.**\nВвід:\n```\n1 2 3\n```\nВивід:\n```\n6\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 2 3\n",
+              "output": "6",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "10\n",
+              "output": "10",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "5 -2 1\n",
+              "output": "4",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 2 3\n",
+            "output": "6"
+          }
+        },
+        {
+          "slug": "m06-l03-e2-max",
+          "prompt": "Числа через пробіл. Виведи найбільше.\n\n**Приклад.**\nВвід:\n```\n1 9 3\n```\nВивід:\n```\n9\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 9 3\n",
+              "output": "9",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "-5 -1 -8\n",
+              "output": "-1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "7\n",
+              "output": "7",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 9 3\n",
+            "output": "9"
+          }
+        },
+        {
+          "slug": "m06-l03-e3-evens",
+          "prompt": "Числа через пробіл. Виведи лише парні через пробіл (у тому ж порядку).\n\n**Приклад.**\nВвід:\n```\n1 2 3 4\n```\nВивід:\n```\n2 4\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 2 3 4\n",
+              "output": "2 4",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1 3 5\n",
+              "output": "",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "8 7 6\n",
+              "output": "8 6",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 2 3 4\n",
+            "output": "2 4"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m06-l03-q1",
+          "kind": "output",
+          "prompt": "Сума?",
+          "options": [
+            "6",
+            "3",
+            "123",
+            "Помилка"
+          ],
+          "correct": "6",
+          "explanation": "1+2+3.",
+          "code": "print(sum([1, 2, 3]))"
+        },
+        {
+          "slug": "m06-l03-q2",
+          "kind": "single",
+          "prompt": "max([1,5,2])?",
+          "options": [
+            "5",
+            "1",
+            "2",
+            "Помилка"
+          ],
+          "correct": "5",
+          "explanation": "Найбільше."
+        },
+        {
+          "slug": "m06-l03-q3",
+          "kind": "multi",
+          "prompt": "Що правда?",
+          "options": [
+            "for x in lst обходить елементи",
+            "sum працює зі списком чисел",
+            "max шукає найбільше",
+            "for завжди змінює список"
+          ],
+          "correct": [
+            "for x in lst обходить елементи",
+            "sum працює зі списком чисел",
+            "max шукає найбільше"
+          ],
+          "explanation": "for не зобовʼязаний змінювати."
+        }
+      ]
+    },
+    {
+      "slug": "m06-l04-tuples",
+      "order": 4,
+      "title": "Кортежі (tuple)",
+      "bodyMarkdown": "## Кортеж — як список, але незмінний\n\n```python\npoint = (3, 4)\nprint(point[0])\n```\n\n```python\na, b = (10, 20)\nprint(a, b)\n```\n\n```python\nt = (1,)\nprint(type(t))\n```\n\n## Типові помилки\n\n- `(1)` — це просто число; кортеж з одного елемента: `(1,)`.\n- Присвоєння `t[0] = 5` → помилка.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=W8KRzm-HUcc",
+      "exercises": [
+        {
+          "slug": "m06-l04-e1-swap",
+          "prompt": "Два числа. Поміняй місцями через кортеж і виведи через пробіл.\n\n**Приклад.**\nВвід:\n```\n1\n2\n```\nВивід:\n```\n2 1\n```",
+          "starterCode": "a = int(input())\nb = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1\n2\n",
+              "output": "2 1",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "5\n5\n",
+              "output": "5 5",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n-3\n",
+              "output": "-3 0",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1\n2\n",
+            "output": "2 1"
+          }
+        },
+        {
+          "slug": "m06-l04-e2-pair",
+          "prompt": "Два слова. Виведи їх як кортеж у стандартному вигляді Python, напр. ('a', 'b').\n\n**Приклад.**\nВвід:\n```\nкіт\nпес\n```\nВивід:\n```\n('кіт', 'пес')\n```",
+          "starterCode": "a = input()\nb = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "кіт\nпес\n",
+              "output": "('кіт', 'пес')",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "x\ny\n",
+              "output": "('x', 'y')",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1\n2\n",
+              "output": "('1', '2')",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "кіт\nпес\n",
+            "output": "('кіт', 'пес')"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m06-l04-q1",
+          "kind": "single",
+          "prompt": "Кортеж записують?",
+          "options": [
+            "Круглими ()",
+            "Квадратними []",
+            "Фігурними {}",
+            "Без дужок лише"
+          ],
+          "correct": "Круглими ()",
+          "explanation": "tuple."
+        },
+        {
+          "slug": "m06-l04-q2",
+          "kind": "single",
+          "prompt": "t[0]=1 для кортежу?",
+          "options": [
+            "Помилка",
+            "Ок",
+            "Створює список",
+            "Ігнорує"
+          ],
+          "correct": "Помилка",
+          "explanation": "Immutable."
+        },
+        {
+          "slug": "m06-l04-q3",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "20 10",
+            "10 20",
+            "(10, 20)",
+            "Помилка"
+          ],
+          "correct": "20 10",
+          "explanation": "swap.",
+          "code": "a, b = 10, 20\na, b = b, a\nprint(a, b)"
+        }
+      ]
+    },
+    {
+      "slug": "m06-l05-list-practice",
+      "order": 5,
+      "title": "Практика зі списками",
+      "bodyMarkdown": "## Типові задачі\n\n```python\nnums = list(map(int, input().split()))\nprint(min(nums), max(nums))\n```\n\n```python\na = [1, 2, 3]\nb = a[:]  # копія\n```\n\nПамʼятай: `b = a` — це те саме імʼя на той самий список.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=W8KRzm-HUcc",
+      "exercises": [
+        {
+          "slug": "m06-l05-e1-reverse",
+          "prompt": "Числа через пробіл. Виведи у зворотному порядку через пробіл.\n\n**Приклад.**\nВвід:\n```\n1 2 3\n```\nВивід:\n```\n3 2 1\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 2 3\n",
+              "output": "3 2 1",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "9\n",
+              "output": "9",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "5 4\n",
+              "output": "4 5",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 2 3\n",
+            "output": "3 2 1"
+          }
+        },
+        {
+          "slug": "m06-l05-e2-unique-keep",
+          "prompt": "Слова через пробіл. Виведи слова без повторів, зберігаючи перший порядок.\n\n**Приклад.**\nВвід:\n```\na b a c b\n```\nВивід:\n```\na b c\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "a b a c b\n",
+              "output": "a b c",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "x x x\n",
+              "output": "x",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "one two\n",
+              "output": "one two",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "a b a c b\n",
+            "output": "a b c"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m06-l05-q1",
+          "kind": "single",
+          "prompt": "b = a означає?",
+          "options": [
+            "Те саме імʼя на список",
+            "Копію",
+            "Кортеж",
+            "Помилку"
+          ],
+          "correct": "Те саме імʼя на список",
+          "explanation": "Аліас."
+        },
+        {
+          "slug": "m06-l05-q2",
+          "kind": "output",
+          "prompt": "reversed?",
+          "options": [
+            "3 2 1",
+            "1 2 3",
+            "[3, 2, 1]",
+            "Помилка"
+          ],
+          "correct": "3 2 1",
+          "explanation": "join.",
+          "code": "print(\" \".join(reversed([\"1\", \"2\", \"3\"])))"
+        },
+        {
+          "slug": "m06-l05-q3",
+          "kind": "multi",
+          "prompt": "Корисно?",
+          "options": [
+            "append",
+            "pop",
+            "sum",
+            "def без імені"
+          ],
+          "correct": [
+            "append",
+            "pop",
+            "sum"
+          ],
+          "explanation": "Останнє ні."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,570 @@
+{
+  "slug": "m08-dicts",
+  "order": 8,
+  "title": "Словники та множини",
+  "lessons": [
+    {
+      "slug": "m08-l01-dict-basic",
+      "order": 1,
+      "title": "Словник: ключ → значення",
+      "bodyMarkdown": "## dict\n\n```python\nуч = {\"імʼя\": \"Оля\", \"бал\": 10}\nprint(уч[\"імʼя\"])\nprint(уч.get(\"телефон\", \"немає\"))\n```\n\n```python\nціни = {\"хліб\": 20, \"молоко\": 35}\nціни[\"хліб\"] = 22\n```\n\n## Типові помилки\n\n- Звернення до відсутнього ключа через `[]` → `KeyError`. Краще `.get`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=daefaLgNkw0",
+      "exercises": [
+        {
+          "slug": "m08-l01-e1-get",
+          "prompt": "У коді вже є словник d. Виведи значення ключа 'бал'.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\n11\n```",
+          "starterCode": "d = {\"імʼя\": \"Оля\", \"бал\": 11}\n# допиши print\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "11",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "11",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "11",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "11"
+          }
+        },
+        {
+          "slug": "m08-l01-e2-build",
+          "prompt": "Два рядки: ключ і значення (рядок). Збудуй словник з одним записом і виведи значення за ключем.\n\n**Приклад.**\nВвід:\n```\nмісто\nНовояворівськ\n```\nВивід:\n```\nНовояворівськ\n```",
+          "starterCode": "k = input()\nv = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "місто\nНовояворівськ\n",
+              "output": "Новояворівськ",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "a\n1\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "x\ny\n",
+              "output": "y",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "місто\nНовояворівськ\n",
+            "output": "Новояворівськ"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m08-l01-q1",
+          "kind": "single",
+          "prompt": "Словник пишуть?",
+          "options": [
+            "{}",
+            "[]",
+            "()",
+            "<>"
+          ],
+          "correct": "{}",
+          "explanation": "Фігурні."
+        },
+        {
+          "slug": "m08-l01-q2",
+          "kind": "single",
+          "prompt": "Немає ключа в d[k]?",
+          "options": [
+            "KeyError",
+            "None завжди",
+            "0",
+            "False"
+          ],
+          "correct": "KeyError",
+          "explanation": "Або get."
+        },
+        {
+          "slug": "m08-l01-q3",
+          "kind": "output",
+          "prompt": "Що?",
+          "options": [
+            "10",
+            "Оля",
+            "Помилка",
+            "бал"
+          ],
+          "correct": "10",
+          "explanation": "ключ.",
+          "code": "d = {\"бал\": 10}\nprint(d[\"бал\"])"
+        }
+      ]
+    },
+    {
+      "slug": "m08-l02-dict-loop",
+      "order": 2,
+      "title": "Обхід словника",
+      "bodyMarkdown": "## keys, values, items\n\n```python\nd = {\"a\": 1, \"b\": 2}\nfor k in d:\n    print(k, d[k])\n```\n\n```python\nfor k, v in d.items():\n    print(k, v)\n```\n\n## Типові помилки\n\n- Порядок ключів у навчанні можна вважати збереженим (Py3.7+), але не покладайся на сортування без `sorted`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=daefaLgNkw0",
+      "exercises": [
+        {
+          "slug": "m08-l02-e1-sum-vals",
+          "prompt": "n пар ключ-значення (ключ рядок, значення int). Порахуй суму значень.\n\n**Приклад.**\nВвід:\n```\n2\na\n3\nb\n4\n```\nВивід:\n```\n7\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\na\n3\nb\n4\n",
+              "output": "7",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nx\n10\n",
+              "output": "10",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "3\na\n1\nb\n1\nc\n1\n",
+              "output": "3",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\na\n3\nb\n4\n",
+            "output": "7"
+          }
+        },
+        {
+          "slug": "m08-l02-e2-has-key",
+          "prompt": "Спочатку JSON-подібно не треба: ключ шукаємо. Дано n пар, потім запит. Якщо ключ є — Так, інакше Ні.\n\n**Приклад.**\nВвід:\n```\n2\na\n1\nb\n2\na\n```\nВивід:\n```\nТак\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\na\n1\nb\n2\na\n",
+              "output": "Так",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nx\n5\ny\n",
+              "output": "Ні",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1\nk\n0\nk\n",
+              "output": "Так",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\na\n1\nb\n2\na\n",
+            "output": "Так"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m08-l02-q1",
+          "kind": "single",
+          "prompt": "d.items() дає?",
+          "options": [
+            "Пари ключ-значення",
+            "Лише ключі",
+            "Лише значення",
+            "Список індексів"
+          ],
+          "correct": "Пари ключ-значення",
+          "explanation": "items."
+        },
+        {
+          "slug": "m08-l02-q2",
+          "kind": "single",
+          "prompt": "k in d перевіряє?",
+          "options": [
+            "Ключі",
+            "Значення",
+            "Довжину",
+            "Тип"
+          ],
+          "correct": "Ключі",
+          "explanation": "in для dict."
+        },
+        {
+          "slug": "m08-l02-q3",
+          "kind": "output",
+          "prompt": "sum values?",
+          "options": [
+            "3",
+            "2",
+            "1",
+            "Помилка"
+          ],
+          "correct": "3",
+          "explanation": "values.",
+          "code": "print(sum({\"a\": 1, \"b\": 2}.values()))"
+        }
+      ]
+    },
+    {
+      "slug": "m08-l03-sets",
+      "order": 3,
+      "title": "Множини set",
+      "bodyMarkdown": "## Унікальні елементи\n\n```python\ns = {1, 2, 2, 3}\nprint(s)\n```\n\n```python\na = {1, 2, 3}\nb = {3, 4}\nprint(a | b)\nprint(a & b)\n```\n\n```python\nprint(set([1, 1, 2]))\n```\n\n## Типові помилки\n\n- Порожня множина: `set()`, не `{}` (це словник).\n",
+      "videoUrl": "https://www.youtube.com/watch?v=W8KRzm-HUcc",
+      "exercises": [
+        {
+          "slug": "m08-l03-e1-unique-count",
+          "prompt": "Числа через пробіл. Скільки унікальних?\n\n**Приклад.**\nВвід:\n```\n1 2 2 3\n```\nВивід:\n```\n3\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 2 2 3\n",
+              "output": "3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "5 5 5\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1 2 3 4\n",
+              "output": "4",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 2 2 3\n",
+            "output": "3"
+          }
+        },
+        {
+          "slug": "m08-l03-e2-intersect",
+          "prompt": "Два рядки чисел. Виведи кількість спільних унікальних чисел.\n\n**Приклад.**\nВвід:\n```\n1 2 3\n2 3 4\n```\nВивід:\n```\n2\n```",
+          "starterCode": "a = input()\nb = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 2 3\n2 3 4\n",
+              "output": "2",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\n2\n",
+              "output": "0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "5 5 6\n6 7\n",
+              "output": "1",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 2 3\n2 3 4\n",
+            "output": "2"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m08-l03-q1",
+          "kind": "single",
+          "prompt": "Порожня множина?",
+          "options": [
+            "set()",
+            "{}",
+            "[]",
+            "()"
+          ],
+          "correct": "set()",
+          "explanation": "{} — dict."
+        },
+        {
+          "slug": "m08-l03-q2",
+          "kind": "output",
+          "prompt": "len(set(...))?",
+          "options": [
+            "2",
+            "3",
+            "1",
+            "0"
+          ],
+          "correct": "2",
+          "explanation": "унікальні.",
+          "code": "print(len(set([1, 1, 2])))"
+        },
+        {
+          "slug": "m08-l03-q3",
+          "kind": "multi",
+          "prompt": "Що вміє set?",
+          "options": [
+            "Прибирати повтори",
+            "Перетин &",
+            "Обʼєднання |",
+            "Зберігати порядок індексів як список"
+          ],
+          "correct": [
+            "Прибирати повтори",
+            "Перетин &",
+            "Обʼєднання |"
+          ],
+          "explanation": "Не список."
+        }
+      ]
+    },
+    {
+      "slug": "m08-l04-freq",
+      "order": 4,
+      "title": "Підрахунок частот",
+      "bodyMarkdown": "## Словник-лічильник\n\n```python\ntext = \"аба\"\nfreq = {}\nfor ch in text:\n    freq[ch] = freq.get(ch, 0) + 1\nprint(freq)\n```\n\n## Типові помилки\n\n- Забути `.get(ch, 0)` і спіймати KeyError на першому входженні.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=daefaLgNkw0",
+      "exercises": [
+        {
+          "slug": "m08-l04-e1-char-freq",
+          "prompt": "Рядок. Виведи кількість входжень символу 'а' (латинська або українська — рахуй саме той символ, що у вводі як a українське «а»). Рахуй символ «а».\n\n**Приклад.**\nВвід:\n```\nабаз\n```\nВивід:\n```\n2\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "абаз\n",
+              "output": "2",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "ббб\n",
+              "output": "0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "ааа\n",
+              "output": "3",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "абаз\n",
+            "output": "2"
+          }
+        },
+        {
+          "slug": "m08-l04-e2-word-freq",
+          "prompt": "Слова через пробіл. Виведи слово і його кількість для слова, яке зустрілось найчастіше (якщо кілька — будь-яке з максимумом). Формат: слово кількість\n\n**Приклад.**\nВвід:\n```\na b a c a\n```\nВивід:\n```\na 3\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "a b a c a\n",
+              "output": "a 3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "x x y\n",
+              "output": "x 2",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "one\n",
+              "output": "one 1",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "a b a c a\n",
+            "output": "a 3"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m08-l04-q1",
+          "kind": "single",
+          "prompt": "freq.get(k, 0)?",
+          "options": [
+            "0 якщо немає ключа",
+            "Завжди помилка",
+            "Видаляє ключ",
+            "Сортує"
+          ],
+          "correct": "0 якщо немає ключа",
+          "explanation": "get."
+        },
+        {
+          "slug": "m08-l04-q2",
+          "kind": "output",
+          "prompt": "count а?",
+          "options": [
+            "2",
+            "3",
+            "1",
+            "0"
+          ],
+          "correct": "2",
+          "explanation": "count.",
+          "code": "print(\"аба\".count(\"а\"))"
+        },
+        {
+          "slug": "m08-l04-q3",
+          "kind": "single",
+          "prompt": "Навіщо частотний словник?",
+          "options": [
+            "Рахувати повтори",
+            "Малювати",
+            "Замість for",
+            "Лише для float"
+          ],
+          "correct": "Рахувати повтори",
+          "explanation": "Класика."
+        }
+      ]
+    },
+    {
+      "slug": "m08-l05-dict-practice",
+      "order": 5,
+      "title": "Практика: словник оцінок",
+      "bodyMarkdown": "## Журнал\n\n```python\njournal = {\"Оля\": 10, \"Тарас\": 9}\nprint(sum(journal.values()) / len(journal))\n```\n",
+      "videoUrl": "https://www.youtube.com/watch?v=daefaLgNkw0",
+      "exercises": [
+        {
+          "slug": "m08-l05-e1-avg",
+          "prompt": "n учнів: імʼя і бал. Виведи середній бал з 1 знаком після крапки.\n\n**Приклад.**\nВвід:\n```\n2\nОля\n10\nТарас\n8\n```\nВивід:\n```\n9.0\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\nОля\n10\nТарас\n8\n",
+              "output": "9.0",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nA\n7\n",
+              "output": "7.0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "3\na\n9\nb\n9\nc\n12\n",
+              "output": "10.0",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\nОля\n10\nТарас\n8\n",
+            "output": "9.0"
+          }
+        },
+        {
+          "slug": "m08-l05-e2-best",
+          "prompt": "n учнів: імʼя і бал. Виведи імʼя з найбільшим балом (унікальний максимум).\n\n**Приклад.**\nВвід:\n```\n3\nОля\n10\nІгор\n8\nМарія\n11\n```\nВивід:\n```\nМарія\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\nОля\n10\nІгор\n8\nМарія\n11\n",
+              "output": "Марія",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nX\n5\n",
+              "output": "X",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2\nA\n9\nB\n7\n",
+              "output": "A",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\nОля\n10\nІгор\n8\nМарія\n11\n",
+            "output": "Марія"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m08-l05-q1",
+          "kind": "single",
+          "prompt": "max(d, key=d.get)?",
+          "options": [
+            "Ключ з макс. значенням",
+            "Макс. ключ як рядок",
+            "Список",
+            "Помилка завжди"
+          ],
+          "correct": "Ключ з макс. значенням",
+          "explanation": "key=."
+        },
+        {
+          "slug": "m08-l05-q2",
+          "kind": "output",
+          "prompt": "avg?",
+          "options": [
+            "9.0",
+            "9",
+            "18",
+            "2"
+          ],
+          "correct": "9.0",
+          "explanation": "format.",
+          "code": "print(f\"{(10+8)/2:.1f}\")"
+        },
+        {
+          "slug": "m08-l05-q3",
+          "kind": "multi",
+          "prompt": "Словник зручний для?",
+          "options": [
+            "Журналу",
+            "Цін товарів",
+            "Частот слів",
+            "Лише для кортежів"
+          ],
+          "correct": [
+            "Журналу",
+            "Цін товарів",
+            "Частот слів"
+          ],
+          "explanation": "Широко."
+        }
+      ]
+    }
+  ]
+}

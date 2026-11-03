@@ -1,0 +1,819 @@
+{
+  "slug": "m10-project",
+  "order": 10,
+  "title": "Підсумковий проєкт",
+  "lessons": [
+    {
+      "slug": "m10-l01-journal-1",
+      "order": 1,
+      "title": "Проєкт: журнал — крок 1 (ввід)",
+      "bodyMarkdown": "## Підсумковий проєкт: журнал оцінок\n\nЗберемо маленький журнал.\n\n**Крок 1.** Прочитай n, потім n рядків `Імʼя Бал`. Збережи у словник і виведи кількість учнів.\n\n```python\nn = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\nprint(len(journal))\n```\n",
+      "videoUrl": "https://www.youtube.com/watch?v=daefaLgNkw0",
+      "exercises": [
+        {
+          "slug": "m10-l01-e1-read",
+          "prompt": "n, потім n рядків «Імʼя Бал». Виведи кількість записів у журналі.\n\n**Приклад.**\nВвід:\n```\n2\nОля 10\nТарас 9\n```\nВивід:\n```\n2\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\nОля 10\nТарас 9\n",
+              "output": "2",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nA 5\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "3\nA 1\nB 2\nC 3\n",
+              "output": "3",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\nОля 10\nТарас 9\n",
+            "output": "2"
+          }
+        },
+        {
+          "slug": "m10-l01-e2-list-names",
+          "prompt": "Те саме введення. Виведи імена в алфавітному порядку через пробіл.\n\n**Приклад.**\nВвід:\n```\n3\nТарас 9\nОля 10\nБогдан 8\n```\nВивід:\n```\nБогдан Оля Тарас\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\nТарас 9\nОля 10\nБогдан 8\n",
+              "output": "Богдан Оля Тарас",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nЯна 12\n",
+              "output": "Яна",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2\nb 1\na 2\n",
+              "output": "a b",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\nТарас 9\nОля 10\nБогдан 8\n",
+            "output": "Богдан Оля Тарас"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m10-l01-q1",
+          "kind": "single",
+          "prompt": "Журнал зручно як?",
+          "options": [
+            "Словник імʼя→бал",
+            "Лише рядок",
+            "Лише int",
+            "set імен без балів"
+          ],
+          "correct": "Словник імʼя→бал",
+          "explanation": "Ключ-значення."
+        },
+        {
+          "slug": "m10-l01-q2",
+          "kind": "output",
+          "prompt": "sorted keys?",
+          "options": [
+            "a b",
+            "b a",
+            "ab",
+            "Помилка"
+          ],
+          "correct": "a b",
+          "explanation": "sorted.",
+          "code": "print(\" \".join(sorted({\"b\": 1, \"a\": 2})))"
+        },
+        {
+          "slug": "m10-l01-q3",
+          "kind": "single",
+          "prompt": "split імені і бала?",
+          "options": [
+            "name, bal = line.split()",
+            "лише bal=line",
+            "int(line)",
+            "dict(line)"
+          ],
+          "correct": "name, bal = line.split()",
+          "explanation": "Два поля."
+        }
+      ]
+    },
+    {
+      "slug": "m10-l02-journal-2",
+      "order": 2,
+      "title": "Проєкт: журнал — крок 2 (статистика)",
+      "bodyMarkdown": "## Середнє і найкращий\n\n```python\navg = sum(journal.values()) / len(journal)\nbest = max(journal, key=journal.get)\n```\n",
+      "videoUrl": "https://www.youtube.com/watch?v=daefaLgNkw0",
+      "exercises": [
+        {
+          "slug": "m10-l02-e1-avg",
+          "prompt": "n рядків «Імʼя Бал». Виведи середній бал з 1 знаком (як 9.5).\n\n**Приклад.**\nВвід:\n```\n2\nОля 10\nТарас 9\n```\nВивід:\n```\n9.5\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\nОля 10\nТарас 9\n",
+              "output": "9.5",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nA 7\n",
+              "output": "7.0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "4\nA 12\nB 12\nC 12\nD 12\n",
+              "output": "12.0",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\nОля 10\nТарас 9\n",
+            "output": "9.5"
+          }
+        },
+        {
+          "slug": "m10-l02-e2-best",
+          "prompt": "n рядків «Імʼя Бал». Виведи імʼя з максимальним балом (унікальний max).\n\n**Приклад.**\nВвід:\n```\n3\nОля 10\nІгор 8\nМарія 11\n```\nВивід:\n```\nМарія\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\nОля 10\nІгор 8\nМарія 11\n",
+              "output": "Марія",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "2\nA 9\nB 7\n",
+              "output": "A",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1\nX 5\n",
+              "output": "X",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\nОля 10\nІгор 8\nМарія 11\n",
+            "output": "Марія"
+          }
+        },
+        {
+          "slug": "m10-l02-e3-pass-count",
+          "prompt": "Поріг — друге число після n? Формат: n, поріг, потім n рядків Імʼя Бал. Скільки учнів з балом >= поріг.\n\n**Приклад.**\nВвід:\n```\n3\n7\nОля 10\nІгор 6\nМарія 7\n```\nВивід:\n```\n2\n```",
+          "starterCode": "n = int(input())\nporig = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\n7\nОля 10\nІгор 6\nМарія 7\n",
+              "output": "2",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\n10\nA 9\n",
+              "output": "0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2\n5\nA 5\nB 4\n",
+              "output": "1",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\n7\nОля 10\nІгор 6\nМарія 7\n",
+            "output": "2"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m10-l02-q1",
+          "kind": "single",
+          "prompt": "max(..., key=journal.get)?",
+          "options": [
+            "Імʼя з кращим балом",
+            "Найбільше імʼя",
+            "Середнє",
+            "Список"
+          ],
+          "correct": "Імʼя з кращим балом",
+          "explanation": "key."
+        },
+        {
+          "slug": "m10-l02-q2",
+          "kind": "output",
+          "prompt": "avg format?",
+          "options": [
+            "9.5",
+            "9.50",
+            "19",
+            "2"
+          ],
+          "correct": "9.5",
+          "explanation": ":.1f",
+          "code": "print(f\"{(10+9)/2:.1f}\")"
+        },
+        {
+          "slug": "m10-l02-q3",
+          "kind": "multi",
+          "prompt": "У журналі корисно?",
+          "options": [
+            "середнє",
+            "найкращий",
+            "скільки здали",
+            "випадковий бал без правил"
+          ],
+          "correct": [
+            "середнє",
+            "найкращий",
+            "скільки здали"
+          ],
+          "explanation": "Без хаосу."
+        }
+      ]
+    },
+    {
+      "slug": "m10-l03-shop",
+      "order": 3,
+      "title": "Проєкт: чек магазину",
+      "bodyMarkdown": "## Прайс і кількість\n\nВвід: n товарів, кожен рядок `назва ціна`, потім m покупок `назва кількість`.\nПорахуй суму чеку. Невідома назва → ігноруй позицію (або 0).\n\nМи зробимо простіший варіант у вправах.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=daefaLgNkw0",
+      "exercises": [
+        {
+          "slug": "m10-l03-e1-price-map",
+          "prompt": "n рядків «товар ціна». Потім назва товару. Виведи ціну або Немає.\n\n**Приклад.**\nВвід:\n```\n2\nхліб 20\nмолоко 35\nхліб\n```\nВивід:\n```\n20\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\nхліб 20\nмолоко 35\nхліб\n",
+              "output": "20",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nчай 40\nкава\n",
+              "output": "Немає",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1\nсік 25\nсік\n",
+              "output": "25",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\nхліб 20\nмолоко 35\nхліб\n",
+            "output": "20"
+          }
+        },
+        {
+          "slug": "m10-l03-e2-receipt",
+          "prompt": "n прайс «товар ціна», потім k рядків «товар кількість». Виведи суму чеку (невідомі товари = 0).\n\n**Приклад.**\nВвід:\n```\n2\nхліб 20\nмолоко 35\n2\nхліб 2\nмолоко 1\n```\nВивід:\n```\n75\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\nхліб 20\nмолоко 35\n2\nхліб 2\nмолоко 1\n",
+              "output": "75",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\nчай 10\n1\nкава 3\n",
+              "output": "0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1\nа 5\n1\nа 4\n",
+              "output": "20",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\nхліб 20\nмолоко 35\n2\nхліб 2\nмолоко 1\n",
+            "output": "75"
+          }
+        },
+        {
+          "slug": "m10-l03-e3-receipt-fn",
+          "prompt": "Напиши `suma_cheku(price, cart)`: price і cart — словники назва→число; повертає суму.",
+          "starterCode": "# def suma_cheku(price, cart):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'suma_cheku' in globals() and callable(globals()['suma_cheku']), 'Немає функції «suma_cheku». Напиши: def suma_cheku(...):'\nassert suma_cheku({'хліб': 20}, {'хліб': 2}) == 40",
+              "visible": true,
+              "label": "suma_cheku"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'suma_cheku' in globals() and callable(globals()['suma_cheku']), 'Немає функції «suma_cheku». Напиши: def suma_cheku(...):'\nassert suma_cheku({'а': 5}, {'b': 3}) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'suma_cheku' in globals() and callable(globals()['suma_cheku']), 'Немає функції «suma_cheku». Напиши: def suma_cheku(...):'\nassert suma_cheku({'а': 5, 'b': 2}, {'а': 1, 'b': 4}) == 13",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m10-l03-q1",
+          "kind": "single",
+          "prompt": "price.get(name, 0)?",
+          "options": [
+            "0 якщо товару немає",
+            "Помилка",
+            "Видаляє товар",
+            "Міняє ціну"
+          ],
+          "correct": "0 якщо товару немає",
+          "explanation": "get."
+        },
+        {
+          "slug": "m10-l03-q2",
+          "kind": "output",
+          "prompt": "чек?",
+          "options": [
+            "40",
+            "20",
+            "2",
+            "0"
+          ],
+          "correct": "40",
+          "explanation": "20*2.",
+          "code": "print(20 * 2)"
+        },
+        {
+          "slug": "m10-l03-q3",
+          "kind": "multi",
+          "prompt": "У чеку потрібно?",
+          "options": [
+            "прайс",
+            "кількість",
+            "сума",
+            "випадкова ціна щоразу"
+          ],
+          "correct": [
+            "прайс",
+            "кількість",
+            "сума"
+          ],
+          "explanation": "Детерміновано."
+        }
+      ]
+    },
+    {
+      "slug": "m10-l04-guess",
+      "order": 4,
+      "title": "Проєкт: вгадай число (детерміновано)",
+      "bodyMarkdown": "## Без random у тестах\n\nСекретне число приходить **першим** у вводі (для перевірок). Далі — спроби учня, поки не вгадає.\nВиводи підказки: Мало / Багато / Вгадав за K спроб\n\n```python\nsecret = int(input())\ntries = 0\nwhile True:\n    g = int(input())\n    tries += 1\n    if g < secret:\n        print(\"Мало\")\n    elif g > secret:\n        print(\"Багато\")\n    else:\n        print(f\"Вгадав за {tries} спроб\")\n        break\n```\n",
+      "videoUrl": "https://www.youtube.com/watch?v=6iF8Xb7Z3wQ",
+      "exercises": [
+        {
+          "slug": "m10-l04-e1-one-hint",
+          "prompt": "secret, потім одна спроба. Виведи Мало/Багато/Вгадав.\n\n**Приклад.**\nВвід:\n```\n5\n3\n```\nВивід:\n```\nМало\n```",
+          "starterCode": "secret = int(input())\ng = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "5\n3\n",
+              "output": "Мало",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "5\n9\n",
+              "output": "Багато",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "5\n5\n",
+              "output": "Вгадав",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "5\n3\n",
+            "output": "Мало"
+          }
+        },
+        {
+          "slug": "m10-l04-e2-loop",
+          "prompt": "secret, потім спроби до вгадування. Після кожної невдалої — Мало/Багато; наприкінці Вгадав за K спроб.\n\n**Приклад.**\nВвід:\n```\n5\n3\n7\n5\n```\nВивід:\n```\nМало\nБагато\nВгадав за 3 спроб\n```",
+          "starterCode": "secret = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "5\n3\n7\n5\n",
+              "output": "Мало\nБагато\nВгадав за 3 спроб",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\n1\n",
+              "output": "Вгадав за 1 спроб",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "10\n10\n",
+              "output": "Вгадав за 1 спроб",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "5\n3\n7\n5\n",
+            "output": "Мало\nБагато\nВгадав за 3 спроб"
+          }
+        },
+        {
+          "slug": "m10-l04-e3-fn",
+          "prompt": "Напиши `pidkazka(secret, guess)` → 'Мало'/'Багато'/'Вгадав'.",
+          "starterCode": "# def pidkazka(secret, guess):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'pidkazka' in globals() and callable(globals()['pidkazka']), 'Немає функції «pidkazka». Напиши: def pidkazka(...):'\nassert pidkazka(5, 3) == 'Мало'",
+              "visible": true,
+              "label": "pidkazka"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'pidkazka' in globals() and callable(globals()['pidkazka']), 'Немає функції «pidkazka». Напиши: def pidkazka(...):'\nassert pidkazka(5, 9) == 'Багато'",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'pidkazka' in globals() and callable(globals()['pidkazka']), 'Немає функції «pidkazka». Напиши: def pidkazka(...):'\nassert pidkazka(5, 5) == 'Вгадав'",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m10-l04-q1",
+          "kind": "single",
+          "prompt": "Чому secret з input у тестах?",
+          "options": [
+            "Детерміновано, без random",
+            "Так швидше",
+            "Інакше SyntaxError",
+            "Так треба для print"
+          ],
+          "correct": "Детерміновано, без random",
+          "explanation": "Тести."
+        },
+        {
+          "slug": "m10-l04-q2",
+          "kind": "output",
+          "prompt": "підказка?",
+          "options": [
+            "Мало",
+            "Багато",
+            "Вгадав",
+            "5"
+          ],
+          "correct": "Мало",
+          "explanation": "3<5.",
+          "code": "secret=5; g=3\nprint(\"Мало\" if g < secret else \"Багато\")"
+        },
+        {
+          "slug": "m10-l04-q3",
+          "kind": "multi",
+          "prompt": "У грі є?",
+          "options": [
+            "цикл",
+            "порівняння",
+            "лічильник спроб",
+            "обовʼязково random"
+          ],
+          "correct": [
+            "цикл",
+            "порівняння",
+            "лічильник спроб"
+          ],
+          "explanation": "random не обовʼязковий."
+        }
+      ]
+    },
+    {
+      "slug": "m10-l05-wordcount",
+      "order": 5,
+      "title": "Проєкт: лічильник слів",
+      "bodyMarkdown": "## Текст → статистика\n\n```python\ntext = input().lower()\nwords = text.split()\nprint(len(words))\n```\n\nДалі — унікальні слова і найчастіше.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=k9TUPpGqYTo",
+      "exercises": [
+        {
+          "slug": "m10-l05-e1-count",
+          "prompt": "Один рядок тексту. Виведи кількість слів (split по пробілах).\n\n**Приклад.**\nВвід:\n```\nЯ люблю Python\n```\nВивід:\n```\n3\n```",
+          "starterCode": "text = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "Я люблю Python\n",
+              "output": "3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "один\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "a b c d\n",
+              "output": "4",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "Я люблю Python\n",
+            "output": "3"
+          }
+        },
+        {
+          "slug": "m10-l05-e2-unique",
+          "prompt": "Рядок. Скільки унікальних слів (регістр як є)?\n\n**Приклад.**\nВвід:\n```\na b a c\n```\nВивід:\n```\n3\n```",
+          "starterCode": "text = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "a b a c\n",
+              "output": "3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "x x x\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "one two\n",
+              "output": "2",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "a b a c\n",
+            "output": "3"
+          }
+        },
+        {
+          "slug": "m10-l05-e3-top",
+          "prompt": "Рядок слів. Виведи найчастіше слово і кількість: `слово N` (унікальний максимум).\n\n**Приклад.**\nВвід:\n```\na b a c a\n```\nВивід:\n```\na 3\n```",
+          "starterCode": "text = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "a b a c a\n",
+              "output": "a 3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "hi hi bye\n",
+              "output": "hi 2",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "z\n",
+              "output": "z 1",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "a b a c a\n",
+            "output": "a 3"
+          }
+        },
+        {
+          "slug": "m10-l05-e4-fn",
+          "prompt": "Напиши `najchastishe(words)` — words список рядків; повертає (слово, кількість) для унікального максимуму.",
+          "starterCode": "# def najchastishe(words):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'najchastishe' in globals() and callable(globals()['najchastishe']), 'Немає функції «najchastishe». Напиши: def najchastishe(...):'\nassert najchastishe(['a','b','a']) == ('a', 2)",
+              "visible": true,
+              "label": "najchastishe"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'najchastishe' in globals() and callable(globals()['najchastishe']), 'Немає функції «najchastishe». Напиши: def najchastishe(...):'\nassert najchastishe(['x']) == ('x', 1)",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'najchastishe' in globals() and callable(globals()['najchastishe']), 'Немає функції «najchastishe». Напиши: def najchastishe(...):'\nassert najchastishe(['z','z','y','z']) == ('z', 3)",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m10-l05-q1",
+          "kind": "single",
+          "prompt": "Унікальні слова?",
+          "options": [
+            "set(words)",
+            "len(words)",
+            "sum(words)",
+            "print(words)"
+          ],
+          "correct": "set(words)",
+          "explanation": "Множина."
+        },
+        {
+          "slug": "m10-l05-q2",
+          "kind": "output",
+          "prompt": "слів?",
+          "options": [
+            "3",
+            "2",
+            "13",
+            "1"
+          ],
+          "correct": "3",
+          "explanation": "split.",
+          "code": "print(len(\"Я люблю Python\".split()))"
+        },
+        {
+          "slug": "m10-l05-q3",
+          "kind": "multi",
+          "prompt": "Лічильник слів використовує?",
+          "options": [
+            "split",
+            "словник частот",
+            "max з key",
+            "обовʼязково файли на диску"
+          ],
+          "correct": [
+            "split",
+            "словник частот",
+            "max з key"
+          ],
+          "explanation": "Файли не обовʼязкові."
+        }
+      ]
+    },
+    {
+      "slug": "m10-l06-wrapup",
+      "order": 6,
+      "title": "Підсумки курсу",
+      "bodyMarkdown": "## Що ти вмієш\n\n- Змінні, умови, цикли\n- Рядки, списки, словники\n- Функції і обробка помилок\n- Невеликі проєкти з побутовими задачами\n\n```python\ndef privit(name):\n    return f\"Героям слава, {name}!\"\n\nprint(privit(\"Новояворівськ\"))\n```\n\nОстання вправа — коротка самоперевірка.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=kqtD5dpn9C8",
+      "exercises": [
+        {
+          "slug": "m10-l06-e1-summary-fn",
+          "prompt": "Напиши `privit(name)` → f-рядок «Привіт, {name}!»",
+          "starterCode": "# def privit(name):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'privit' in globals() and callable(globals()['privit']), 'Немає функції «privit». Напиши: def privit(...):'\nassert privit('Оля') == 'Привіт, Оля!'",
+              "visible": true,
+              "label": "privit"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'privit' in globals() and callable(globals()['privit']), 'Немає функції «privit». Напиши: def privit(...):'\nassert privit('') == 'Привіт, !'",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'privit' in globals() and callable(globals()['privit']), 'Немає функції «privit». Напиши: def privit(...):'\nassert privit('ВПУ') == 'Привіт, ВПУ!'",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "slug": "m10-l06-e2-pipeline",
+          "prompt": "Прочитай рядок слів. Виведи кількість слів і найчастіше у форматі двох рядків: N потім слово.\n\n**Приклад.**\nВвід:\n```\na b a\n```\nВивід:\n```\n3\na\n```",
+          "starterCode": "text = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "a b a\n",
+              "output": "3\na",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "x\n",
+              "output": "1\nx",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "hi hi bye hi\n",
+              "output": "4\nhi",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "a b a\n",
+            "output": "3\na"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m10-l06-q1",
+          "kind": "single",
+          "prompt": "Курс завершено, коли?",
+          "options": [
+            "Усі вправи і квізи закриті",
+            "Лише відео",
+            "Лише реєстрація",
+            "Один print"
+          ],
+          "correct": "Усі вправи і квізи закриті",
+          "explanation": "Прогрес."
+        },
+        {
+          "slug": "m10-l06-q2",
+          "kind": "output",
+          "prompt": "f-рядок?",
+          "options": [
+            "Привіт, Оля!",
+            "Оля",
+            "Привіт",
+            "Помилка"
+          ],
+          "correct": "Привіт, Оля!",
+          "explanation": "f.",
+          "code": "name='Оля'\nprint(f\"Привіт, {name}!\")"
+        },
+        {
+          "slug": "m10-l06-q3",
+          "kind": "multi",
+          "prompt": "Що варто повторити?",
+          "options": [
+            "функції",
+            "словники",
+            "try/except",
+            "вигадати синтаксис"
+          ],
+          "correct": [
+            "функції",
+            "словники",
+            "try/except"
+          ],
+          "explanation": "Без вигадок."
+        }
+      ]
+    }
+  ]
+}

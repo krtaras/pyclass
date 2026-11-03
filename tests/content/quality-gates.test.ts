@@ -15,8 +15,8 @@ const solutions: Solutions = JSON.parse(
 );
 
 describe("course structure", () => {
-  test("modules 1–4 present with 4–6 lessons each", () => {
-    expect(COURSE_MODULES).toHaveLength(4);
+  test("modules 1–10 present with 4–6 lessons each", () => {
+    expect(COURSE_MODULES).toHaveLength(10);
     for (const m of COURSE_MODULES) {
       expect(m.lessons.length).toBeGreaterThanOrEqual(4);
       expect(m.lessons.length).toBeLessThanOrEqual(6);

@@ -92,6 +92,14 @@ export function translatePythonError(
     detail = "твердження виявилось хибним";
   }
 
+  if (errorType === "NameError") {
+    const nameMatch = detail.match(/name ['"]([^'"]+)['"] is not defined/i);
+    if (nameMatch) {
+      detail =
+        `імені «${nameMatch[1]}» немає. Якщо це твоя функція — перевір написання: def ${nameMatch[1]}(...):`;
+    }
+  }
+
   // Avoid showing bare "PythonError" when we know a better type
   if (detail === "PythonError" && errorType !== "Error") {
     detail = title.toLowerCase();

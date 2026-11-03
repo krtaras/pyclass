@@ -19,4 +19,16 @@ export const V = {
   loops: "https://www.youtube.com/watch?v=6iF8Xb7Z3wQ",
   /** EN: Learn Python for loops in 5 minutes */
   forLoops: "https://www.youtube.com/watch?v=KWgYha0clzw",
+  /** EN: Lists, Tuples, and Sets (Corey Schafer) */
+  lists: "https://www.youtube.com/watch?v=W8KRzm-HUcc",
+  /** EN: Functions (Corey Schafer) */
+  functions: "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+  /** EN: How To Use Functions (CS Dojo) */
+  functionsCs: "https://www.youtube.com/watch?v=NSbOtYzIQI0",
+  /** EN: Dictionaries (Corey Schafer) */
+  dicts: "https://www.youtube.com/watch?v=daefaLgNkw0",
+  /** EN: Try/Except (Corey Schafer) */
+  exceptions: "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+  /** EN: Comments in Python (The Bad Tutorials) */
+  comments: "https://www.youtube.com/watch?v=Uu7C99-hG60",
 } as const;

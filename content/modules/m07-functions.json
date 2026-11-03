@@ -1,0 +1,545 @@
+{
+  "slug": "m07-functions",
+  "order": 7,
+  "title": "Функції",
+  "lessons": [
+    {
+      "slug": "m07-l01-def",
+      "order": 1,
+      "title": "def: оголошення функції",
+      "bodyMarkdown": "## Функція — іменований блок коду\n\n```python\ndef вітаю():\n    print(\"Привіт!\")\n\nвітаю()\n```\n\n```python\ndef подвій(x):\n    return x * 2\n\nprint(подвій(5))\n```\n\n```python\ndef сума(a, b):\n    return a + b\n```\n\n## Типові помилки\n\n- Забути `return` — функція поверне `None`.\n- Назвати функцію інакше, ніж у завданні — тести не знайдуть її.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+      "exercises": [
+        {
+          "slug": "m07-l01-e1-hello-fn",
+          "prompt": "Напиши функцію `privit()`, яка повертає рядок «Привіт!».\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\n(перевірка return)\n```",
+          "starterCode": "# def privit():\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'privit' in globals() and callable(globals()['privit']), 'Немає функції «privit». Напиши: def privit(...):'\nassert privit() == 'Привіт!'",
+              "visible": true,
+              "label": "privit() → Привіт!"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'privit' in globals() and callable(globals()['privit']), 'Немає функції «privit». Напиши: def privit(...):'\nr = privit()\nassert isinstance(r, str)",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'privit' in globals() and callable(globals()['privit']), 'Немає функції «privit». Напиши: def privit(...):'\nassert privit() == 'Привіт!'",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "(перевірка return)"
+          }
+        },
+        {
+          "slug": "m07-l01-e2-double",
+          "prompt": "Напиши `podvij(x)`, яка повертає x*2.",
+          "starterCode": "# def podvij(x):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'podvij' in globals() and callable(globals()['podvij']), 'Немає функції «podvij». Напиши: def podvij(...):'\nassert podvij(5) == 10",
+              "visible": true,
+              "label": "podvij(5) == 10"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'podvij' in globals() and callable(globals()['podvij']), 'Немає функції «podvij». Напиши: def podvij(...):'\nassert podvij(0) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'podvij' in globals() and callable(globals()['podvij']), 'Немає функції «podvij». Напиши: def podvij(...):'\nassert podvij(-3) == -6",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'podvij' in globals() and callable(globals()['podvij']), 'Немає функції «podvij». Напиши: def podvij(...):'\nassert podvij(100) == 200",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m07-l01-q1",
+          "kind": "single",
+          "prompt": "Ключове слово?",
+          "options": [
+            "def",
+            "func",
+            "function",
+            "fn"
+          ],
+          "correct": "def",
+          "explanation": "Синтаксис."
+        },
+        {
+          "slug": "m07-l01-q2",
+          "kind": "single",
+          "prompt": "Без return?",
+          "options": [
+            "Повертає None",
+            "Помилка",
+            "0",
+            "Порожній рядок"
+          ],
+          "correct": "Повертає None",
+          "explanation": "За замовчуванням."
+        },
+        {
+          "slug": "m07-l01-q3",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "6",
+            "None",
+            "3",
+            "Помилка"
+          ],
+          "correct": "6",
+          "explanation": "return.",
+          "code": "def f(x):\n    return x + 1\nprint(f(5))"
+        }
+      ]
+    },
+    {
+      "slug": "m07-l02-params",
+      "order": 2,
+      "title": "Параметри і return",
+      "bodyMarkdown": "## Аргументи\n\n```python\ndef площа(a, b):\n    return a * b\n\nprint(площа(3, 4))\n```\n\n```python\ndef знак(n):\n    if n > 0:\n        return \"додатне\"\n    if n < 0:\n        return \"відʼємне\"\n    return \"нуль\"\n```\n\n## Типові помилки\n\n- Плутати `print` у функції з `return` (тести часто перевіряють саме return).\n",
+      "videoUrl": "https://www.youtube.com/watch?v=NSbOtYzIQI0",
+      "exercises": [
+        {
+          "slug": "m07-l02-e1-suma",
+          "prompt": "Напиши `suma(a, b)` — повертає суму.",
+          "starterCode": "# def suma(a, b):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'suma' in globals() and callable(globals()['suma']), 'Немає функції «suma». Напиши: def suma(...):'\nassert suma(2, 3) == 5",
+              "visible": true,
+              "label": "suma(2,3)==5"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'suma' in globals() and callable(globals()['suma']), 'Немає функції «suma». Напиши: def suma(...):'\nassert suma(0, 0) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'suma' in globals() and callable(globals()['suma']), 'Немає функції «suma». Напиши: def suma(...):'\nassert suma(-1, 5) == 4",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "slug": "m07-l02-e2-max2",
+          "prompt": "Напиши `bilshe(a, b)` — повертає більше з двох чисел.",
+          "starterCode": "# def bilshe(a, b):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'bilshe' in globals() and callable(globals()['bilshe']), 'Немає функції «bilshe». Напиши: def bilshe(...):'\nassert bilshe(3, 7) == 7",
+              "visible": true,
+              "label": "bilshe(3,7)==7"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'bilshe' in globals() and callable(globals()['bilshe']), 'Немає функції «bilshe». Напиши: def bilshe(...):'\nassert bilshe(9, 2) == 9",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'bilshe' in globals() and callable(globals()['bilshe']), 'Немає функції «bilshe». Напиши: def bilshe(...):'\nassert bilshe(4, 4) == 4",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'bilshe' in globals() and callable(globals()['bilshe']), 'Немає функції «bilshe». Напиши: def bilshe(...):'\nassert bilshe(-5, -1) == -1",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m07-l02-q1",
+          "kind": "single",
+          "prompt": "return робить?",
+          "options": [
+            "Повертає значення і виходить",
+            "Лише друкує",
+            "Створює змінну",
+            "Запускає цикл"
+          ],
+          "correct": "Повертає значення і виходить",
+          "explanation": "return."
+        },
+        {
+          "slug": "m07-l02-q2",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "12",
+            "7",
+            "None",
+            "Помилка"
+          ],
+          "correct": "12",
+          "explanation": "3*4.",
+          "code": "def ploscha(a, b):\n    return a * b\nprint(ploscha(3, 4))"
+        },
+        {
+          "slug": "m07-l02-q3",
+          "kind": "multi",
+          "prompt": "Що правда?",
+          "options": [
+            "Параметри — вхідні дані",
+            "Можна кілька return у гілках",
+            "Імʼя функції важливе для тестів",
+            "def можна без дужок"
+          ],
+          "correct": [
+            "Параметри — вхідні дані",
+            "Можна кілька return у гілках",
+            "Імʼя функції важливе для тестів"
+          ],
+          "explanation": "Дужки обовʼязкові."
+        }
+      ]
+    },
+    {
+      "slug": "m07-l03-scope",
+      "order": 3,
+      "title": "Локальні змінні",
+      "bodyMarkdown": "## Локальні імена\n\n```python\ndef f():\n    x = 10\n    return x\n\nprint(f())\n# print(x)  # NameError — x локальна\n```\n\n```python\nn = 5\ndef g():\n    return n + 1\nprint(g())\n```\n\n## Типові помилки\n\n- Змінювати глобальну без `global` (поки уникай `global` — передавай аргументи).\n",
+      "videoUrl": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+      "exercises": [
+        {
+          "slug": "m07-l03-e1-serednye",
+          "prompt": "Напиши `serednye(a, b)` — середнє арифметичне (float).",
+          "starterCode": "# def serednye(a, b):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'serednye' in globals() and callable(globals()['serednye']), 'Немає функції «serednye». Напиши: def serednye(...):'\nassert serednye(2, 4) == 3.0",
+              "visible": true,
+              "label": "serednye(2,4)==3.0"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'serednye' in globals() and callable(globals()['serednye']), 'Немає функції «serednye». Напиши: def serednye(...):'\nassert serednye(0, 0) == 0.0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'serednye' in globals() and callable(globals()['serednye']), 'Немає функції «serednye». Напиши: def serednye(...):'\nassert serednye(1, 2) == 1.5",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "slug": "m07-l03-e2-abs-own",
+          "prompt": "Напиши `modul(n)` — модуль числа (як abs).",
+          "starterCode": "# def modul(n):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'modul' in globals() and callable(globals()['modul']), 'Немає функції «modul». Напиши: def modul(...):'\nassert modul(-5) == 5",
+              "visible": true,
+              "label": "modul(-5)==5"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'modul' in globals() and callable(globals()['modul']), 'Немає функції «modul». Напиши: def modul(...):'\nassert modul(3) == 3",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'modul' in globals() and callable(globals()['modul']), 'Немає функції «modul». Напиши: def modul(...):'\nassert modul(0) == 0",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m07-l03-q1",
+          "kind": "single",
+          "prompt": "Змінна всередині def?",
+          "options": [
+            "Локальна",
+            "Завжди глобальна",
+            "Не існує",
+            "Кортеж"
+          ],
+          "correct": "Локальна",
+          "explanation": "Scope."
+        },
+        {
+          "slug": "m07-l03-q2",
+          "kind": "single",
+          "prompt": "Краще передавати дані?",
+          "options": [
+            "Аргументами",
+            "Лише global",
+            "Через print",
+            "Без імен"
+          ],
+          "correct": "Аргументами",
+          "explanation": "Чисто."
+        },
+        {
+          "slug": "m07-l03-q3",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "11",
+            "10",
+            "Помилка",
+            "None"
+          ],
+          "correct": "11",
+          "explanation": "n+1.",
+          "code": "n = 10\ndef g():\n    return n + 1\nprint(g())"
+        }
+      ]
+    },
+    {
+      "slug": "m07-l04-list-fn",
+      "order": 4,
+      "title": "Функції і списки",
+      "bodyMarkdown": "## Передаємо список\n\n```python\ndef suma_list(nums):\n    s = 0\n    for x in nums:\n        s += x\n    return s\n```\n\n```python\ndef kilkist_dod(nums):\n    return sum(1 for x in nums if x > 0)\n```\n\n## Типові помилки\n\n- Змінювати вхідний список «тихо» — краще повертати нове значення, якщо не просили змінити.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=9Os0o3wzS_I",
+      "exercises": [
+        {
+          "slug": "m07-l04-e1-suma-list",
+          "prompt": "Напиши `suma_list(nums)` — сума елементів списку чисел.",
+          "starterCode": "# def suma_list(nums):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'suma_list' in globals() and callable(globals()['suma_list']), 'Немає функції «suma_list». Напиши: def suma_list(...):'\nassert suma_list([1, 2, 3]) == 6",
+              "visible": true,
+              "label": "suma_list([1,2,3])==6"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'suma_list' in globals() and callable(globals()['suma_list']), 'Немає функції «suma_list». Напиши: def suma_list(...):'\nassert suma_list([]) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'suma_list' in globals() and callable(globals()['suma_list']), 'Немає функції «suma_list». Напиши: def suma_list(...):'\nassert suma_list([-1, 1]) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'suma_list' in globals() and callable(globals()['suma_list']), 'Немає функції «suma_list». Напиши: def suma_list(...):'\nassert suma_list([10]) == 10",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "slug": "m07-l04-e2-count-pos",
+          "prompt": "Напиши `kilkist_dod(nums)` — скільки додатних (>0).",
+          "starterCode": "# def kilkist_dod(nums):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'kilkist_dod' in globals() and callable(globals()['kilkist_dod']), 'Немає функції «kilkist_dod». Напиши: def kilkist_dod(...):'\nassert kilkist_dod([1, -2, 3, 0]) == 2",
+              "visible": true,
+              "label": "kilkist_dod → 2"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'kilkist_dod' in globals() and callable(globals()['kilkist_dod']), 'Немає функції «kilkist_dod». Напиши: def kilkist_dod(...):'\nassert kilkist_dod([]) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'kilkist_dod' in globals() and callable(globals()['kilkist_dod']), 'Немає функції «kilkist_dod». Напиши: def kilkist_dod(...):'\nassert kilkist_dod([-1, -2]) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'kilkist_dod' in globals() and callable(globals()['kilkist_dod']), 'Немає функції «kilkist_dod». Напиши: def kilkist_dod(...):'\nassert kilkist_dod([5]) == 1",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m07-l04-q1",
+          "kind": "single",
+          "prompt": "Порожній список у suma_list?",
+          "options": [
+            "0",
+            "None",
+            "Помилка",
+            "1"
+          ],
+          "correct": "0",
+          "explanation": "Нейтраль суми."
+        },
+        {
+          "slug": "m07-l04-q2",
+          "kind": "output",
+          "prompt": "Що?",
+          "options": [
+            "2",
+            "3",
+            "0",
+            "1"
+          ],
+          "correct": "2",
+          "explanation": "два >0.",
+          "code": "def kilkist_dod(nums):\n    return sum(1 for x in nums if x > 0)\nprint(kilkist_dod([1, -1, 2]))"
+        },
+        {
+          "slug": "m07-l04-q3",
+          "kind": "multi",
+          "prompt": "Що правда?",
+          "options": [
+            "Список можна передати в функцію",
+            "return віддає результат",
+            "Імʼя def має збігатися з умовою",
+            "Функції лише для рядків"
+          ],
+          "correct": [
+            "Список можна передати в функцію",
+            "return віддає результат",
+            "Імʼя def має збігатися з умовою"
+          ],
+          "explanation": "Не лише рядки."
+        }
+      ]
+    },
+    {
+      "slug": "m07-l05-practice-fn",
+      "order": 5,
+      "title": "Практика функцій",
+      "bodyMarkdown": "## Зʼєднуємо з input\n\nІноді функція рахує, а ззовні читаємо ввід:\n\n```python\ndef ocinka(bal):\n    if bal >= 10:\n        return \"відмінно\"\n    if bal >= 7:\n        return \"добре\"\n    return \"треба ще\"\n\nb = int(input())\nprint(ocinka(b))\n```\n",
+      "videoUrl": "https://www.youtube.com/watch?v=NSbOtYzIQI0",
+      "exercises": [
+        {
+          "slug": "m07-l05-e1-grade-fn",
+          "prompt": "Напиши `ocinka(bal)`: >=10 відмінно; >=7 добре; інакше треба ще.",
+          "starterCode": "# def ocinka(bal):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'ocinka' in globals() and callable(globals()['ocinka']), 'Немає функції «ocinka». Напиши: def ocinka(...):'\nassert ocinka(11) == 'відмінно'",
+              "visible": true,
+              "label": "ocinka(11)"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'ocinka' in globals() and callable(globals()['ocinka']), 'Немає функції «ocinka». Напиши: def ocinka(...):'\nassert ocinka(10) == 'відмінно'",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'ocinka' in globals() and callable(globals()['ocinka']), 'Немає функції «ocinka». Напиши: def ocinka(...):'\nassert ocinka(8) == 'добре'",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'ocinka' in globals() and callable(globals()['ocinka']), 'Немає функції «ocinka». Напиши: def ocinka(...):'\nassert ocinka(4) == 'треба ще'",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "slug": "m07-l05-e2-io-wrap",
+          "prompt": "Прочитай два цілі. Використай `suma` (напиши її) і виведи результат.\n\n**Приклад.**\nВвід:\n```\n2\n3\n```\nВивід:\n```\n5\n```",
+          "starterCode": "# напиши suma і читай input\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\n3\n",
+              "output": "5",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "0\n0\n",
+              "output": "0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "-1\n4\n",
+              "output": "3",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\n3\n",
+            "output": "5"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m07-l05-q1",
+          "kind": "single",
+          "prompt": "Навіщо функції?",
+          "options": [
+            "Повторно використовувати логіку",
+            "Лише для краси",
+            "Замість змінних",
+            "Щоб не писати print"
+          ],
+          "correct": "Повторно використовувати логіку",
+          "explanation": "DRY."
+        },
+        {
+          "slug": "m07-l05-q2",
+          "kind": "output",
+          "prompt": "ocinka(7)?",
+          "options": [
+            "добре",
+            "відмінно",
+            "треба ще",
+            "7"
+          ],
+          "correct": "добре",
+          "explanation": ">=7.",
+          "code": "def ocinka(bal):\n    if bal >= 10:\n        return \"відмінно\"\n    if bal >= 7:\n        return \"добре\"\n    return \"треба ще\"\nprint(ocinka(7))"
+        },
+        {
+          "slug": "m07-l05-q3",
+          "kind": "single",
+          "prompt": "Немає потрібного імені функції?",
+          "options": [
+            "NameError / перевірка не знайде",
+            "Все одно ок",
+            "Python вигадає",
+            "Лише попередження"
+          ],
+          "correct": "NameError / перевірка не знайде",
+          "explanation": "Імʼя важливе."
+        }
+      ]
+    }
+  ]
+}
