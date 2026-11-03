@@ -147,45 +147,34 @@ export function LessonEditor({
 
         <fieldset className="space-y-3">
           <legend className="text-sm font-medium">Відео уроку</legend>
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Тип відео">
-            <label
-              className={`cursor-pointer rounded-full border px-4 py-2 text-sm ${
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Тип відео">
+            <button
+              type="button"
+              className={`rounded-full border px-4 py-2 text-sm ${
                 videoKind === "youtube"
                   ? "border-emerald-600 bg-emerald-50 text-emerald-900"
                   : "border-zinc-300 bg-white text-zinc-700"
               }`}
+              aria-pressed={videoKind === "youtube"}
+              onClick={() => setVideoKind("youtube")}
+              data-testid="lesson-video-kind-youtube"
             >
-              <input
-                type="radio"
-                className="sr-only"
-                name="videoKind"
-                value="youtube"
-                checked={videoKind === "youtube"}
-                onChange={() => setVideoKind("youtube")}
-                data-testid="lesson-video-kind-youtube"
-              />
               YouTube
-            </label>
-            <label
-              className={`cursor-pointer rounded-full border px-4 py-2 text-sm ${
+            </button>
+            <button
+              type="button"
+              className={`rounded-full border px-4 py-2 text-sm ${
                 videoKind === "blob"
                   ? "border-emerald-600 bg-emerald-50 text-emerald-900"
                   : "border-zinc-300 bg-white text-zinc-700"
               }`}
+              aria-pressed={videoKind === "blob"}
+              onClick={() => setVideoKind("blob")}
+              data-testid="lesson-video-kind-blob"
             >
-              <input
-                type="radio"
-                className="sr-only"
-                name="videoKind"
-                value="blob"
-                checked={videoKind === "blob"}
-                onChange={() => setVideoKind("blob")}
-                data-testid="lesson-video-kind-blob"
-              />
               Власне відео (mp4)
-            </label>
+            </button>
           </div>
-          {/* keep select for older proof scripts / accessibility fallback */}
           <select
             className="sr-only"
             value={videoKind}
