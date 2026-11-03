@@ -3,26 +3,39 @@ import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 import { SESSION_COOKIE_NAME } from "@/lib/auth/constants";
 
-async function hasValidSession(req: NextRequest): Promise<boolean> {
+type SessionPayload = {
+  role?: string;
+};
+
+async function readSession(
+  req: NextRequest,
+): Promise<{ ok: boolean; role?: string }> {
   const token = req.cookies.get(SESSION_COOKIE_NAME)?.value;
-  if (!token) return false;
+  if (!token) return { ok: false };
   const secret = process.env.AUTH_SECRET;
-  if (!secret) return false;
+  if (!secret) return { ok: false };
   try {
-    await jwtVerify(token, new TextEncoder().encode(secret));
-    return true;
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(secret),
+    );
+    const role =
+      typeof (payload as SessionPayload).role === "string"
+        ? (payload as SessionPayload).role
+        : undefined;
+    return { ok: true, role };
   } catch {
-    return false;
+    return { ok: false };
   }
 }
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const authed = await hasValidSession(request);
+  const session = await readSession(request);
 
   if (
     (pathname.startsWith("/lessons") || pathname.startsWith("/progress")) &&
-    !authed
+    !session.ok
   ) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
@@ -30,9 +43,24 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if ((pathname === "/login" || pathname === "/signup") && authed) {
+  if (pathname.startsWith("/teacher")) {
+    if (!session.ok) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("next", pathname);
+      return NextResponse.redirect(url);
+    }
+    if (session.role !== "teacher") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/";
+      url.searchParams.set("error", "teacher-only");
+      return NextResponse.redirect(url);
+    }
+  }
+
+  if ((pathname === "/login" || pathname === "/signup") && session.ok) {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = session.role === "teacher" ? "/teacher" : "/";
     url.search = "";
     return NextResponse.redirect(url);
   }
@@ -41,5 +69,12 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/lessons/:path*", "/progress", "/login", "/signup"],
+  matcher: [
+    "/lessons/:path*",
+    "/progress",
+    "/login",
+    "/signup",
+    "/teacher",
+    "/teacher/:path*",
+  ],
 };
