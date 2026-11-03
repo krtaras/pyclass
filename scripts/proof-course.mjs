@@ -70,6 +70,21 @@ async function waitPyodide(page) {
   );
 }
 
+async function clickOption(card, opt) {
+  const wanted = String(opt);
+  const clicked = await card.evaluate((el, value) => {
+    const btn = [...el.querySelectorAll("button[data-option]")].find(
+      (b) => b.getAttribute("data-option") === value,
+    );
+    if (!btn) return false;
+    btn.click();
+    return true;
+  }, wanted);
+  if (!clicked) {
+    await card.getByRole("button", { name: wanted, exact: true }).click();
+  }
+}
+
 async function answerQuiz(page, q) {
   const card = page.getByTestId(`quiz-question-${q.id}`);
   await card.waitFor({ timeout: 30_000 });
@@ -77,16 +92,10 @@ async function answerQuiz(page, q) {
   let correct = q.correct;
   if (kind === "multi") {
     const opts = Array.isArray(correct) ? correct : [correct];
-    for (const opt of opts) {
-      const btn = card.locator(`button[data-option="${opt}"]`);
-      if (await btn.count()) await btn.click();
-      else await card.getByRole("button", { name: String(opt), exact: true }).click();
-    }
+    for (const opt of opts) await clickOption(card, opt);
   } else {
     const opt = Array.isArray(correct) ? correct[0] : correct;
-    const btn = card.locator(`button[data-option="${opt}"]`);
-    if (await btn.count()) await btn.click();
-    else await card.getByRole("button", { name: String(opt), exact: true }).click();
+    await clickOption(card, opt);
   }
   await page.getByTestId(`quiz-submit-${q.id}`).click();
   await page.getByTestId(`quiz-feedback-${q.id}`).waitFor({ timeout: 30_000 });
