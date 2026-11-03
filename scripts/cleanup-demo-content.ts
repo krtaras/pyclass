@@ -1,36 +1,30 @@
 /**
- * One-shot cleanup before first full course sync:
- * - delete step-4 style test students (and submissions/quiz/hints)
- * - delete leftover «Клас Step6…» groups (keep DEMO10A)
- * - delete old demo module/lessons that have no student data (or after student wipe)
- * - delete leftover proof Blob objects under pyclass/
- *
- * Safe to re-run: skips missing rows.
+ * One-shot cleanup before first full course sync.
  */
 import { config } from "dotenv";
 config({ path: ".env.local" });
 
-import { and, eq, like, ne, or, sql } from "drizzle-orm";
-import { list, del } from "@vercel/blob";
-import { db } from "../src/db";
-import {
-  exercises,
-  groups,
-  hintRequests,
-  lessons,
-  modules,
-  quizAttempts,
-  quizQuestions,
-  submissions,
-  users,
-} from "../src/db/schema";
-
 async function main() {
+  const { and, eq, like, ne, or, sql } = await import("drizzle-orm");
+  const { list, del } = await import("@vercel/blob");
+  const { db } = await import("../src/db");
+  const schema = await import("../src/db/schema");
+  const {
+    exercises,
+    groups,
+    hintRequests,
+    lessons,
+    modules,
+    quizAttempts,
+    quizQuestions,
+    submissions,
+    users,
+  } = schema;
+
   const keepInvite = (process.env.DEMO_INVITE_CODE ?? "DEMO10A")
     .trim()
     .toUpperCase();
 
-  // 1) Test students: emails used in proof scripts / known patterns
   const testStudents = await db
     .select()
     .from(users)
@@ -38,13 +32,15 @@ async function main() {
       and(
         eq(users.role, "student"),
         or(
-          like(users.email, "step4%"),
-          like(users.email, "step5%"),
-          like(users.email, "step6%"),
-          like(users.email, "step7%"),
-          like(users.email, "step8%"),
+          like(users.email, "%step4%"),
+          like(users.email, "%step5%"),
+          like(users.email, "%step6%"),
+          like(users.email, "%step7%"),
+          like(users.email, "%step8%"),
           like(users.email, "content1%"),
           like(users.email, "proof%"),
+          like(users.email, "api.test%"),
+          like(users.email, "block.%"),
           like(users.email, "%@pyclass.test"),
           like(users.email, "%@example.com"),
         ),
@@ -59,7 +55,6 @@ async function main() {
     console.log("deleted student", u.email, u.id);
   }
 
-  // 2) Step6 leftover groups
   const badGroups = await db
     .select()
     .from(groups)
@@ -82,7 +77,6 @@ async function main() {
     console.log("deleted group", g.name, g.inviteCode);
   }
 
-  // 3) Demo / legacy modules (not m01–m04). Delete only if no remaining student data.
   const allMods = await db.select().from(modules);
   for (const m of allMods) {
     if (m.slug?.startsWith("m0") || m.slug?.startsWith("m1")) continue;
@@ -128,7 +122,6 @@ async function main() {
     console.log("deleted module", m.id, m.title, m.slug);
   }
 
-  // 4) Leftover proof blobs
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
       const listed = await list({ prefix: "pyclass/" });
