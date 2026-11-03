@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { checkQuizAnswer } from "@/lib/quiz/check";
 import type {
   QuizAnswer,
@@ -37,11 +37,20 @@ export function QuizPanel({ questions, onAttempt }: QuizPanelProps) {
   }, [questions]);
 
   const [states, setStates] = useState(initial);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
 
   if (questions.length === 0) return null;
 
   return (
-    <section className="space-y-4" data-testid="quiz-section">
+    <section
+      className="space-y-4"
+      data-testid="quiz-section"
+      data-quiz-ready={ready ? "true" : "false"}
+    >
       <div className="space-y-1">
         <h2 className="text-lg font-semibold text-zinc-900">Квіз</h2>
         <p className="text-sm text-zinc-600">
