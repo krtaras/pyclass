@@ -67,7 +67,7 @@ async function main() {
 
   // 3) Open lesson 1
   await page.goto(BASE + "/lessons/1", { waitUntil: "domcontentloaded" });
-  await page.getByRole("heading", { name: /print/ }).waitFor();
+  await page.getByRole("heading", { name: "print і змінні", level: 1 }).waitFor();
   const checkBtn = page.getByRole("button", { name: "Перевірити" });
   await checkBtn.waitFor({ state: "visible" });
   await page.waitForFunction(() => {
