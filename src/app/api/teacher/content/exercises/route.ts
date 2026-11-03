@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { exercises, lessons } from "@/db/schema";
 import { requireTeacherApi } from "@/lib/auth/teacher-api";
 import { exerciseCreateSchema } from "@/lib/content/validate";
+import { teacherSlug } from "@/lib/content/slug";
 
 export async function POST(req: Request) {
   const auth = await requireTeacherApi();
@@ -34,11 +35,13 @@ export async function POST(req: Request) {
   const [row] = await db
     .insert(exercises)
     .values({
+      slug: teacherSlug("ex", parsed.data.prompt),
       lessonId: parsed.data.lessonId,
       prompt: parsed.data.prompt,
       starterCode: "",
       tests: [{ type: "assert", code: "assert True", visible: false }],
       hintLimit: 3,
+      repoManaged: false,
     })
     .returning();
 

@@ -13,7 +13,9 @@
     "db:seed": "tsx src/db/seed.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "content:sync": "tsx scripts/sync-content.ts",
+    "content:cleanup-demo": "tsx scripts/cleanup-demo-content.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

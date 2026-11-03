@@ -1,0 +1,601 @@
+{
+  "slug": "m03-conditions",
+  "order": 3,
+  "title": "Умови",
+  "lessons": [
+    {
+      "slug": "m03-l01-comparison",
+      "order": 1,
+      "title": "Порівняння: True і False",
+      "bodyMarkdown": "## Порівняння дає True або False\n\n```python\nprint(5 > 3)\nprint(5 < 3)\nprint(5 == 5)\nprint(5 != 4)\nprint(5 >= 5)\nprint(5 <= 4)\n```\n\n```python\na = 10\nb = 7\nprint(a > b)\n```\n\n```python\nслово1 = \"кіт\"\nслово2 = \"кіт\"\nprint(слово1 == слово2)\n```\n\n## Типові помилки\n\n- `=` (присвоєння) замість `==` (порівняння).\n- Порівнювати різні типи без потреби: `\"5\" == 5` → `False`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=DZwmZ8Usvnk",
+      "exercises": [
+        {
+          "slug": "m03-l01-e1-compare",
+          "prompt": "Виведи a > b.\n\n**Приклад.**\nВвід:\n```\n5\n3\n```\nВивід:\n```\nTrue\n```",
+          "starterCode": "a = int(input())\nb = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "5\n3\n",
+              "output": "True",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "2\n9\n",
+              "output": "False",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "4\n4\n",
+              "output": "False",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "5\n3\n",
+            "output": "True"
+          }
+        },
+        {
+          "slug": "m03-l01-e2-equal",
+          "prompt": "Виведи a == b.\n\n**Приклад.**\nВвід:\n```\n7\n7\n```\nВивід:\n```\nTrue\n```",
+          "starterCode": "a = int(input())\nb = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "7\n7\n",
+              "output": "True",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1\n2\n",
+              "output": "False",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n0\n",
+              "output": "True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "7\n7\n",
+            "output": "True"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m03-l01-q1",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "True",
+            "False",
+            "5",
+            "Помилка"
+          ],
+          "correct": "True",
+          "explanation": "5==5.",
+          "code": "print(5 == 5)"
+        },
+        {
+          "slug": "m03-l01-q2",
+          "kind": "single",
+          "prompt": "= чи ==?",
+          "options": [
+            "= присвоює, == порівнює",
+            "Немає різниці",
+            "== присвоює",
+            "= порівнює"
+          ],
+          "correct": "= присвоює, == порівнює",
+          "explanation": "Класика."
+        },
+        {
+          "slug": "m03-l01-q3",
+          "kind": "multi",
+          "prompt": "Що True?",
+          "options": [
+            "3 < 10",
+            "3 > 10",
+            "3 != 4",
+            "3 == 4"
+          ],
+          "correct": [
+            "3 < 10",
+            "3 != 4"
+          ],
+          "explanation": "Перевірте."
+        }
+      ]
+    },
+    {
+      "slug": "m03-l02-if",
+      "order": 2,
+      "title": "if: гілка якщо",
+      "bodyMarkdown": "## if: зроби, якщо умова істинна\n\n```python\nбал = 8\nif бал >= 6:\n    print(\"Залік\")\n```\n\n```python\nтемпература = 30\nif температура > 25:\n    print(\"Спекотно — візьми воду\")\n```\n\nЗверни увагу на **двокрапку** і **відступ** (4 пробіли або Tab).\n\n```python\nn = int(input())\nif n > 0:\n    print(\"Додатне\")\n```\n\n## Типові помилки\n\n- Забути `:` після умови.\n- Не зробити відступ у тілі `if`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=AWek49wXGzI",
+      "exercises": [
+        {
+          "slug": "m03-l02-e1-pass",
+          "prompt": "Якщо бал >= 6 — Залік.\n\n**Приклад.**\nВвід:\n```\n8\n```\nВивід:\n```\nЗалік\n```",
+          "starterCode": "bal = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "8\n",
+              "output": "Залік",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "6\n",
+              "output": "Залік",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "5\n",
+              "output": "",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "8\n",
+            "output": "Залік"
+          }
+        },
+        {
+          "slug": "m03-l02-e2-positive",
+          "prompt": "Якщо n > 0 — Додатне.\n\n**Приклад.**\nВвід:\n```\n3\n```\nВивід:\n```\nДодатне\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\n",
+              "output": "Додатне",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "-1\n",
+              "output": "",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n",
+              "output": "",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\n",
+            "output": "Додатне"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m03-l02-q1",
+          "kind": "single",
+          "prompt": "Після умови if?",
+          "options": [
+            "Двокрапка :",
+            " ; ",
+            "print",
+            "return"
+          ],
+          "correct": "Двокрапка :",
+          "explanation": "Синтаксис."
+        },
+        {
+          "slug": "m03-l02-q2",
+          "kind": "output",
+          "prompt": "x=10?",
+          "options": [
+            "Так",
+            "Нічого",
+            "False",
+            "Помилка"
+          ],
+          "correct": "Так",
+          "explanation": "10>5.",
+          "code": "x = 10\nif x > 5:\n    print(\"Так\")"
+        },
+        {
+          "slug": "m03-l02-q3",
+          "kind": "single",
+          "prompt": "Навіщо відступ?",
+          "options": [
+            "Тіло умови",
+            "Краса",
+            "Швидкість",
+            "Замінює :"
+          ],
+          "correct": "Тіло умови",
+          "explanation": "Синтаксис."
+        }
+      ]
+    },
+    {
+      "slug": "m03-l03-else",
+      "order": 3,
+      "title": "else: гілка інакше",
+      "bodyMarkdown": "## else: інакше\n\nЗавжди виконується **рівно одна** гілка: або `if`, або `else`.\n\n```python\nn = 4\nif n % 2 == 0:\n    print(\"Парне\")\nelse:\n    print(\"Непарне\")\n```\n\n```python\nсума = 1200\nif сума >= 1000:\n    print(\"Знижка\")\nelse:\n    print(\"Без знижки\")\n```\n\n```python\nпароль = input()\nif пароль == \"python\":\n    print(\"Вхід\")\nelse:\n    print(\"Відмова\")\n```\n\n## Типові помилки\n\n- Писати умову після `else` — у `else` умови немає.\n- Плутати `%` (остача) з діленням `/`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=AWek49wXGzI",
+      "exercises": [
+        {
+          "slug": "m03-l03-e1-even-odd",
+          "prompt": "Парне/Непарне.\n\n**Приклад.**\nВвід:\n```\n4\n```\nВивід:\n```\nПарне\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "4\n",
+              "output": "Парне",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "7\n",
+              "output": "Непарне",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n",
+              "output": "Парне",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "4\n",
+            "output": "Парне"
+          }
+        },
+        {
+          "slug": "m03-l03-e2-discount",
+          "prompt": "Сума >=1000 — Знижка, інакше Без знижки.\n\n**Приклад.**\nВвід:\n```\n1000\n```\nВивід:\n```\nЗнижка\n```",
+          "starterCode": "suma = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1000\n",
+              "output": "Знижка",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "999\n",
+              "output": "Без знижки",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2500\n",
+              "output": "Знижка",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1000\n",
+            "output": "Знижка"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m03-l03-q1",
+          "kind": "single",
+          "prompt": "Скільки гілок?",
+          "options": [
+            "Рівно одна",
+            "Обидві",
+            "Жодна",
+            "Усі"
+          ],
+          "correct": "Рівно одна",
+          "explanation": "xor гілок."
+        },
+        {
+          "slug": "m03-l03-q2",
+          "kind": "output",
+          "prompt": "n=3?",
+          "options": [
+            "Непарне",
+            "Парне",
+            "3",
+            "Помилка"
+          ],
+          "correct": "Непарне",
+          "explanation": "%",
+          "code": "n = 3\nif n % 2 == 0:\n    print(\"Парне\")\nelse:\n    print(\"Непарне\")"
+        },
+        {
+          "slug": "m03-l03-q3",
+          "kind": "multi",
+          "prompt": "Про else?",
+          "options": [
+            "Після if",
+            "Має умову",
+            "Потрібен відступ",
+            "Без if ок"
+          ],
+          "correct": [
+            "Після if",
+            "Потрібен відступ"
+          ],
+          "explanation": "Без власної умови."
+        }
+      ]
+    },
+    {
+      "slug": "m03-l04-elif",
+      "order": 4,
+      "title": "elif: кілька варіантів",
+      "bodyMarkdown": "## elif: ще варіанти\n\nПеревіряються зверху вниз; спрацьовує **перша** істинна гілка.\n\n```python\nбал = 9\nif бал >= 10:\n    print(\"Відмінно\")\nelif бал >= 7:\n    print(\"Добре\")\nelif бал >= 4:\n    print(\"Задовільно\")\nelse:\n    print(\"Початковий\")\n```\n\n```python\nt = 18\nif t > 25:\n    print(\"Спека\")\nelif t >= 15:\n    print(\"Тепло\")\nelse:\n    print(\"Прохолодно\")\n```\n\n## Типові помилки\n\n- Поставити вужчу умову вище ширшої так, що нижчі ніколи не досягнуть.\n- Дублювати `if` замість `elif` — тоді можуть виконатись кілька блоків.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=DZwmZ8Usvnk",
+      "exercises": [
+        {
+          "slug": "m03-l04-e1-grade",
+          "prompt": "Оцінка за порогами 10/7/4.\n\n**Приклад.**\nВвід:\n```\n11\n```\nВивід:\n```\nВідмінно\n```",
+          "starterCode": "bal = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "11\n",
+              "output": "Відмінно",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "8\n",
+              "output": "Добре",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "5\n",
+              "output": "Задовільно",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2\n",
+              "output": "Початковий",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "10\n",
+              "output": "Відмінно",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "11\n",
+            "output": "Відмінно"
+          }
+        },
+        {
+          "slug": "m03-l04-e2-temp",
+          "prompt": "t>25 Спека; >=15 Тепло; інакше Прохолодно.\n\n**Приклад.**\nВвід:\n```\n30\n```\nВивід:\n```\nСпека\n```",
+          "starterCode": "t = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "30\n",
+              "output": "Спека",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "15\n",
+              "output": "Тепло",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "10\n",
+              "output": "Прохолодно",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "26\n",
+              "output": "Спека",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "30\n",
+            "output": "Спека"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m03-l04-q1",
+          "kind": "single",
+          "prompt": "Порядок elif?",
+          "options": [
+            "Зверху вниз",
+            "Усі разом",
+            "Знизу вгору",
+            "Випадково"
+          ],
+          "correct": "Зверху вниз",
+          "explanation": "Перша істинна."
+        },
+        {
+          "slug": "m03-l04-q2",
+          "kind": "output",
+          "prompt": "bal=9?",
+          "options": [
+            "Добре",
+            "Відмінно",
+            "Задовільно",
+            "Початковий"
+          ],
+          "correct": "Добре",
+          "explanation": ">=7.",
+          "code": "bal = 9\nif bal >= 10:\n    print(\"Відмінно\")\nelif bal >= 7:\n    print(\"Добре\")\nelif bal >= 4:\n    print(\"Задовільно\")\nelse:\n    print(\"Початковий\")"
+        },
+        {
+          "slug": "m03-l04-q3",
+          "kind": "single",
+          "prompt": "else обовʼязковий?",
+          "options": [
+            "Ні",
+            "Так",
+            "Інакше помилка",
+            "Заборонений"
+          ],
+          "correct": "Ні",
+          "explanation": "Але зручний."
+        }
+      ]
+    },
+    {
+      "slug": "m03-l05-and-or-not",
+      "order": 5,
+      "title": "and, or, not",
+      "bodyMarkdown": "## and, or, not\n\n```python\nprint(True and True)\nprint(True and False)\nprint(True or False)\nprint(not True)\n```\n\n```python\nвік = 17\nквиток = 1\nif вік >= 16 and квиток == 1:\n    print(\"Вхід\")\n```\n\n```python\nn = 120\nif n < 0 or n > 100:\n    print(\"Поза діапазоном\")\nelse:\n    print(\"ОК\")\n```\n\n## Типові помилки\n\n- Писати `16 < вік < 60` ок у Python, але плутати з `and`/`or` у складніших умовах.\n- `not` має високу пріоритетність — інколи потрібні дужки.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=DZwmZ8Usvnk",
+      "exercises": [
+        {
+          "slug": "m03-l05-e1-and",
+          "prompt": "Вік і квиток 1/0 → Вхід або Ні.\n\n**Приклад.**\nВвід:\n```\n17\n1\n```\nВивід:\n```\nВхід\n```",
+          "starterCode": "vik = int(input())\nквиток = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "17\n1\n",
+              "output": "Вхід",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "15\n1\n",
+              "output": "Ні",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "20\n0\n",
+              "output": "Ні",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "16\n1\n",
+              "output": "Вхід",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "17\n1\n",
+            "output": "Вхід"
+          }
+        },
+        {
+          "slug": "m03-l05-e2-or",
+          "prompt": "n поза 0..100 → Поза діапазоном інакше ОК.\n\n**Приклад.**\nВвід:\n```\n-1\n```\nВивід:\n```\nПоза діапазоном\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "-1\n",
+              "output": "Поза діапазоном",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "50\n",
+              "output": "ОК",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "101\n",
+              "output": "Поза діапазоном",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n",
+              "output": "ОК",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "-1\n",
+            "output": "Поза діапазоном"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m03-l05-q1",
+          "kind": "single",
+          "prompt": "and True коли?",
+          "options": [
+            "Обидві True",
+            "Одна True",
+            "Завжди",
+            "Ніколи"
+          ],
+          "correct": "Обидві True",
+          "explanation": "and."
+        },
+        {
+          "slug": "m03-l05-q2",
+          "kind": "output",
+          "prompt": "not True?",
+          "options": [
+            "False",
+            "True",
+            "not",
+            "Помилка"
+          ],
+          "correct": "False",
+          "explanation": "Інверсія.",
+          "code": "print(not True)"
+        },
+        {
+          "slug": "m03-l05-q3",
+          "kind": "multi",
+          "prompt": "Що True?",
+          "options": [
+            "True or False",
+            "False and True",
+            "not False",
+            "False or False"
+          ],
+          "correct": [
+            "True or False",
+            "not False"
+          ],
+          "explanation": "or/not."
+        }
+      ]
+    }
+  ]
+}

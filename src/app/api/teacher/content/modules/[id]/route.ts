@@ -84,7 +84,7 @@ export async function PATCH(req: Request, { params }: Props) {
   }
   const [row] = await db
     .update(modules)
-    .set({ title: parsed.data.title })
+    .set({ title: parsed.data.title, repoManaged: false })
     .where(eq(modules.id, id))
     .returning();
   if (!row) {
