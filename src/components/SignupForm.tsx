@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function SignupForm() {
   const router = useRouter();
@@ -13,9 +13,13 @@ export function SignupForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [ready, setReady] = useState(false);
 
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  async function submit() {
     setBusy(true);
     setErrors({});
     setFormError(null);
@@ -46,9 +50,15 @@ export function SignupForm() {
 
   return (
     <form
-      onSubmit={onSubmit}
+      method="post"
+      action="#"
+      onSubmit={(e) => {
+        e.preventDefault();
+        void submit();
+      }}
       className="mx-auto max-w-md space-y-4 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6"
       data-testid="signup-form"
+      data-ready={ready ? "true" : "false"}
     >
       <div>
         <h1 className="text-xl font-bold">Реєстрація учня</h1>
@@ -138,7 +148,7 @@ export function SignupForm() {
 
       <button
         type="submit"
-        disabled={busy}
+        disabled={busy || !ready}
         className="w-full rounded-full bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white disabled:opacity-50"
         data-testid="signup-submit"
       >
