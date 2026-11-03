@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { lessons, modules } from "@/db/schema";
+import { exercises, lessons, modules } from "@/db/schema";
 import { Markdown } from "@/components/Markdown";
 import { VideoEmbed } from "@/components/VideoEmbed";
+import { ExercisePanel } from "@/components/ExercisePanel";
+import type { ExerciseTest } from "@/lib/python/types";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +31,12 @@ export default async function LessonPage({ params }: Props) {
     .limit(1);
 
   if (!row) notFound();
+
+  const lessonExercises = await db
+    .select()
+    .from(exercises)
+    .where(eq(exercises.lessonId, lessonId))
+    .orderBy(asc(exercises.id));
 
   const { lesson, moduleTitle, moduleOrder } = row;
 
@@ -59,9 +67,21 @@ export default async function LessonPage({ params }: Props) {
         <Markdown content={lesson.bodyMarkdown} />
       </section>
 
-      <p className="rounded-xl border border-dashed border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-500">
-        Вправи й квізи зʼявляться в наступних кроках.
-      </p>
+      {lessonExercises.length === 0 ? (
+        <p className="rounded-xl border border-dashed border-zinc-300 bg-white px-4 py-3 text-sm text-zinc-500">
+          У цьому уроці ще немає вправ.
+        </p>
+      ) : (
+        lessonExercises.map((ex) => (
+          <ExercisePanel
+            key={ex.id}
+            exerciseId={ex.id}
+            prompt={ex.prompt}
+            starterCode={ex.starterCode}
+            tests={ex.tests as ExerciseTest[]}
+          />
+        ))
+      )}
     </article>
   );
 }
