@@ -167,6 +167,7 @@ function RunResultView({ outcome }: { outcome: RunOutcome }) {
     const t = translatePythonError(outcome.message, {
       timedOut: outcome.timedOut,
       line: outcome.line,
+      errorType: outcome.errorType,
     });
     return (
       <div
