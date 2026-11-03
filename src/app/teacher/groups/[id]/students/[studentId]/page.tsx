@@ -46,7 +46,8 @@ export default async function TeacherStudentPage({ params }: Props) {
         <p className="text-sm text-zinc-700">
           Уроки {summary.lessonsCompleted}/{summary.lessonsTotal} · вправи{" "}
           {summary.exerciseSolved}/{summary.exerciseTotal} · квіз{" "}
-          {summary.quizCorrect}/{summary.quizTotal} · оцінка{" "}
+          {summary.quizCorrect}/{summary.quizTotal} · підказок{" "}
+          <span data-testid="student-hints">{summary.hintsUsed}</span> · оцінка{" "}
           <strong data-testid="student-grade">{summary.grade}</strong>
         </p>
         <p className="text-xs text-zinc-500">{GRADE_FORMULA_UK}</p>
@@ -86,7 +87,10 @@ export default async function TeacherStudentPage({ params }: Props) {
                     <p className="font-medium text-zinc-900">{ex.prompt}</p>
                     <p className="mt-1 text-xs text-zinc-600">
                       {ex.solved ? "Розвʼязано" : "Не розвʼязано"} · спроб:{" "}
-                      {ex.attempts}
+                      {ex.attempts} · підказок:{" "}
+                      <span data-testid={`detail-hints-count-${ex.id}`}>
+                        {ex.hintsUsed}
+                      </span>
                     </p>
                     {ex.lastCode != null && (
                       <details className="mt-2">
@@ -99,6 +103,26 @@ export default async function TeacherStudentPage({ params }: Props) {
                         >
                           {ex.lastCode}
                         </pre>
+                      </details>
+                    )}
+                    {ex.hints.length > 0 && (
+                      <details className="mt-2" open>
+                        <summary className="cursor-pointer text-xs text-amber-800">
+                          Підказки ({ex.hintsUsed})
+                        </summary>
+                        <ul
+                          className="mt-2 space-y-2"
+                          data-testid={`detail-hints-${ex.id}`}
+                        >
+                          {ex.hints.map((h, i) => (
+                            <li
+                              key={`${ex.id}-hint-${i}`}
+                              className="rounded-lg border border-amber-100 bg-amber-50 p-2 text-xs text-amber-950 whitespace-pre-wrap"
+                            >
+                              {h.answer}
+                            </li>
+                          ))}
+                        </ul>
                       </details>
                     )}
                   </li>

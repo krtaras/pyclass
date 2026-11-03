@@ -22,6 +22,8 @@ type ExerciseView = {
   starterCode: string;
   tests: ExerciseTest[];
   initialCode?: string;
+  hintLimit?: number;
+  initialHintsUsed?: number;
 };
 
 export function LessonInteractive({
@@ -75,6 +77,8 @@ export function LessonInteractive({
             starterCode={ex.starterCode}
             tests={ex.tests}
             initialCode={ex.initialCode}
+            hintLimit={ex.hintLimit}
+            initialHintsUsed={ex.initialHintsUsed}
             onCheckComplete={persistSubmission}
           />
         ))

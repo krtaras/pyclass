@@ -2,6 +2,7 @@ import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import {
   exercises,
+  hintRequests,
   lessons,
   quizAttempts,
   quizQuestions,
@@ -40,6 +41,7 @@ export type StudentRow = {
   exerciseTotal: number;
   quizCorrect: number;
   quizTotal: number;
+  hintsUsed: number;
   exerciseScore: number;
   quizScore: number;
   grade: number;
@@ -165,9 +167,27 @@ export async function loadGroupStudents(
             ),
           );
 
+  const allHints =
+    exerciseIds.length === 0
+      ? []
+      : await db
+          .select({
+            userId: hintRequests.userId,
+            exerciseId: hintRequests.exerciseId,
+            createdAt: hintRequests.createdAt,
+          })
+          .from(hintRequests)
+          .where(
+            and(
+              inArray(hintRequests.userId, studentIds),
+              inArray(hintRequests.exerciseId, exerciseIds),
+            ),
+          );
+
   return students.map((student) => {
     const solved = new Set<number>();
     let lastActivity: Date | null = null;
+    let hintsUsed = 0;
 
     for (const s of allSubs) {
       if (s.userId !== student.id) continue;
@@ -184,6 +204,14 @@ export async function loadGroupStudents(
       answered.set(a.questionId, prev === true || a.isCorrect === true);
       if (!lastActivity || a.createdAt > lastActivity) {
         lastActivity = a.createdAt;
+      }
+    }
+
+    for (const h of allHints) {
+      if (h.userId !== student.id) continue;
+      hintsUsed += 1;
+      if (!lastActivity || h.createdAt > lastActivity) {
+        lastActivity = h.createdAt;
       }
     }
 
@@ -216,6 +244,7 @@ export async function loadGroupStudents(
       exerciseTotal,
       quizCorrect,
       quizTotal,
+      hintsUsed,
       exerciseScore,
       quizScore,
       grade: computeUkrainianGrade(exerciseScore, quizScore),
@@ -234,6 +263,7 @@ export function studentRowsToCsv(rows: StudentRow[]): GroupCsvRow[] {
     exerciseTotal: r.exerciseTotal,
     quizCorrect: r.quizCorrect,
     quizTotal: r.quizTotal,
+    hintsUsed: r.hintsUsed,
     grade: r.grade,
     lastActivity: r.lastActivity ? r.lastActivity.toISOString() : "",
   }));
@@ -253,6 +283,8 @@ export type StudentDetail = {
       solved: boolean;
       attempts: number;
       lastCode: string | null;
+      hintsUsed: number;
+      hints: { answer: string; createdAt: Date }[];
     }[];
     quiz: {
       id: number;
@@ -315,6 +347,34 @@ export async function loadStudentDetail(
           )
           .orderBy(desc(quizAttempts.createdAt));
 
+  const hintRows =
+    exerciseIds.length === 0
+      ? []
+      : await db
+          .select({
+            exerciseId: hintRequests.exerciseId,
+            answer: hintRequests.answer,
+            createdAt: hintRequests.createdAt,
+          })
+          .from(hintRequests)
+          .where(
+            and(
+              eq(hintRequests.userId, studentId),
+              inArray(hintRequests.exerciseId, exerciseIds),
+            ),
+          )
+          .orderBy(desc(hintRequests.createdAt));
+
+  const hintsByExercise = new Map<
+    number,
+    { answer: string; createdAt: Date }[]
+  >();
+  for (const h of hintRows) {
+    const list = hintsByExercise.get(h.exerciseId) ?? [];
+    list.push({ answer: h.answer, createdAt: h.createdAt });
+    hintsByExercise.set(h.exerciseId, list);
+  }
+
   const solved = new Set<number>();
   const attemptCount = new Map<number, number>();
   const lastCode = new Map<number, string>();
@@ -340,6 +400,10 @@ export async function loadStudentDetail(
       answered.set(a.questionId, true);
     }
     if (!lastActivity || a.createdAt > lastActivity) lastActivity = a.createdAt;
+  }
+
+  for (const h of hintRows) {
+    if (!lastActivity || h.createdAt > lastActivity) lastActivity = h.createdAt;
   }
 
   // Prefer "any correct" for answered map consistency with progress
@@ -374,6 +438,7 @@ export async function loadStudentDetail(
     exerciseTotal,
     quizCorrect,
     quizTotal,
+    hintsUsed: hintRows.length,
     exerciseScore,
     quizScore,
     grade: computeUkrainianGrade(exerciseScore, quizScore),
@@ -404,6 +469,8 @@ export async function loadStudentDetail(
           solved: solved.has(e.id),
           attempts: attemptCount.get(e.id) ?? 0,
           lastCode: lastCode.get(e.id) ?? null,
+          hintsUsed: (hintsByExercise.get(e.id) ?? []).length,
+          hints: hintsByExercise.get(e.id) ?? [],
         })),
         quiz: qs.map((q) => {
           const ans = answered.get(q.id);

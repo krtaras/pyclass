@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
-import { exercises, lessons, modules, quizAttempts, quizQuestions, submissions } from "@/db/schema";
+import { exercises, hintRequests, lessons, modules, quizAttempts, quizQuestions, submissions } from "@/db/schema";
 import { Markdown } from "@/components/Markdown";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { LessonInteractive } from "@/components/LessonInteractive";
@@ -76,6 +76,25 @@ export default async function LessonPage({ params }: Props) {
       if (!latestCode.has(s.exerciseId)) {
         latestCode.set(s.exerciseId, s.code);
       }
+    }
+  }
+
+  // Hint request counts per exercise for this user
+  const hintsUsed = new Map<number, number>();
+  if (exerciseIds.length > 0) {
+    const hintRows = await db
+      .select({
+        exerciseId: hintRequests.exerciseId,
+      })
+      .from(hintRequests)
+      .where(
+        and(
+          eq(hintRequests.userId, session.id),
+          inArray(hintRequests.exerciseId, exerciseIds),
+        ),
+      );
+    for (const h of hintRows) {
+      hintsUsed.set(h.exerciseId, (hintsUsed.get(h.exerciseId) ?? 0) + 1);
     }
   }
 
@@ -165,6 +184,8 @@ export default async function LessonPage({ params }: Props) {
           starterCode: ex.starterCode,
           tests: ex.tests as ExerciseTest[],
           initialCode: latestCode.get(ex.id),
+          hintLimit: ex.hintLimit,
+          initialHintsUsed: hintsUsed.get(ex.id) ?? 0,
         }))}
         questions={quizProps}
         savedAttempts={savedAttempts}

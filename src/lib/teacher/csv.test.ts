@@ -19,6 +19,7 @@ describe("buildGroupCsv", () => {
         exerciseTotal: 2,
         quizCorrect: 2,
         quizTotal: 5,
+        hintsUsed: 3,
         grade: 6,
         lastActivity: "2026-11-03T10:00:00.000Z",
       },
@@ -26,6 +27,8 @@ describe("buildGroupCsv", () => {
     expect(csv.charCodeAt(0)).toBe(0xfeff);
     expect(csv).toContain("Імʼя");
     expect(csv).toContain("Оля");
+    expect(csv).toContain("Підказки");
+    expect(csv).toContain(",3,");
     expect(csv).toContain("ola@school.ua");
     expect(csv).toContain(",6,");
   });

@@ -84,6 +84,7 @@ export default async function TeacherGroupPage({ params }: Props) {
                   <th className="px-4 py-3 font-medium">Уроки</th>
                   <th className="px-4 py-3 font-medium">Вправи</th>
                   <th className="px-4 py-3 font-medium">Квіз</th>
+                  <th className="px-4 py-3 font-medium">Підказки</th>
                   <th className="px-4 py-3 font-medium">Оцінка</th>
                   <th className="px-4 py-3 font-medium">Активність</th>
                 </tr>
@@ -114,6 +115,9 @@ export default async function TeacherGroupPage({ params }: Props) {
                     </td>
                     <td className="px-4 py-3">
                       {s.quizCorrect}/{s.quizTotal}
+                    </td>
+                    <td className="px-4 py-3" data-testid={`hints-count-${s.id}`}>
+                      {s.hintsUsed}
                     </td>
                     <td className="px-4 py-3 font-semibold">{s.grade}</td>
                     <td className="px-4 py-3 text-zinc-500 whitespace-nowrap">
@@ -160,6 +164,10 @@ export default async function TeacherGroupPage({ params }: Props) {
                     <dd>
                       {s.quizCorrect}/{s.quizTotal}
                     </dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs text-zinc-500">Підказки</dt>
+                    <dd data-testid={`hints-count-mobile-${s.id}`}>{s.hintsUsed}</dd>
                   </div>
                   <div>
                     <dt className="text-xs text-zinc-500">Оцінка</dt>
