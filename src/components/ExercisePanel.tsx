@@ -22,6 +22,8 @@ export type ExercisePanelProps = {
   tests: ExerciseTest[];
   /** Latest saved code from a previous submission, if any. */
   initialCode?: string;
+  hintLimit?: number;
+  initialHintsUsed?: number;
   /** Seam for step 4 — called after «Перевірити». */
   onCheckComplete?: (payload: SubmissionPayload) => void;
 };
@@ -32,18 +34,34 @@ type RunView =
   | { kind: "run"; outcome: RunOutcome }
   | { kind: "check"; report: CheckReport };
 
+function summarizeCheck(report: CheckReport): string {
+  const lines = [`Пройдено ${report.passed} з ${report.total} тестів.`];
+  for (const r of report.results) {
+    if (r.passed) continue;
+    lines.push(r.detail ? `${r.summary} — ${r.detail}` : r.summary);
+  }
+  return lines.join("\n");
+}
+
 export function ExercisePanel({
   exerciseId,
   prompt,
   starterCode,
   tests,
   initialCode,
+  hintLimit = 0,
+  initialHintsUsed = 0,
   onCheckComplete,
 }: ExercisePanelProps) {
   const [code, setCode] = useState(initialCode ?? starterCode);
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [view, setView] = useState<RunView>({ kind: "idle" });
+  const [hintsUsed, setHintsUsed] = useState(initialHintsUsed);
+  const [hintText, setHintText] = useState<string | null>(null);
+  const [hintError, setHintError] = useState<string | null>(null);
+  const [hintBusy, setHintBusy] = useState(false);
+  const [lastCheckSummary, setLastCheckSummary] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -73,7 +91,9 @@ export function ExercisePanel({
     [tests],
   );
 
-  const busy = view.kind === "running";
+  const hintsEnabled = hintLimit > 0;
+  const remaining = Math.max(0, hintLimit - hintsUsed);
+  const busy = view.kind === "running" || hintBusy;
 
   const handleRun = useCallback(async () => {
     setView({ kind: "running", mode: "run" });
@@ -94,6 +114,7 @@ export function ExercisePanel({
     }
     const report = buildCheckReport(tests, outcomes);
     setView({ kind: "check", report });
+    setLastCheckSummary(summarizeCheck(report));
     onCheckComplete?.({
       exerciseId,
       code,
@@ -101,6 +122,41 @@ export function ExercisePanel({
       total: report.total,
     });
   }, [code, exerciseId, onCheckComplete, tests]);
+
+  const handleHint = useCallback(async () => {
+    if (!hintsEnabled || remaining <= 0 || hintBusy) return;
+    setHintBusy(true);
+    setHintError(null);
+    try {
+      const res = await fetch("/api/hints", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          exerciseId,
+          code,
+          lastCheckSummary,
+        }),
+      });
+      const data = (await res.json()) as {
+        ok?: boolean;
+        hint?: string;
+        remaining?: number;
+        used?: number;
+        error?: string;
+      };
+      if (!res.ok || !data.hint) {
+        setHintError(data.error ?? "Не вдалося отримати підказку.");
+        if (typeof data.used === "number") setHintsUsed(data.used);
+        return;
+      }
+      setHintText(data.hint);
+      if (typeof data.used === "number") setHintsUsed(data.used);
+    } catch {
+      setHintError("Мережева помилка. Спробуй ще раз.");
+    } finally {
+      setHintBusy(false);
+    }
+  }, [code, exerciseId, hintBusy, hintsEnabled, lastCheckSummary, remaining]);
 
   return (
     <section
@@ -128,7 +184,7 @@ export function ExercisePanel({
 
       <CodeEditor value={code} onChange={setCode} disabled={busy} />
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={handleRun}
@@ -149,6 +205,17 @@ export function ExercisePanel({
             ? "Перевірка…"
             : "Перевірити"}
         </button>
+        {hintsEnabled && (
+          <button
+            type="button"
+            onClick={handleHint}
+            disabled={busy || remaining <= 0}
+            className="rounded-full border border-amber-500 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-900 disabled:opacity-50"
+            data-testid="hint-button"
+          >
+            {hintBusy ? "Підказка…" : "Підказка"}
+          </button>
+        )}
         {!ready && !loadError && (
           <span className="self-center text-xs text-zinc-500">
             Завантаження Python…
@@ -158,6 +225,34 @@ export function ExercisePanel({
           <span className="self-center text-xs text-red-600">{loadError}</span>
         )}
       </div>
+
+      {hintsEnabled && (
+        <p className="text-xs text-zinc-600" data-testid="hint-remaining">
+          {remaining > 0
+            ? `Залишилось підказок: ${remaining}`
+            : "Підказки вичерпано для цієї вправи."}
+        </p>
+      )}
+
+      {hintError && (
+        <p
+          className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700"
+          role="alert"
+          data-testid="hint-error"
+        >
+          {hintError}
+        </p>
+      )}
+
+      {hintText && (
+        <div
+          className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950"
+          data-testid="hint-text"
+        >
+          <p className="mb-1 font-medium text-amber-900">Підказка</p>
+          <p className="whitespace-pre-wrap">{hintText}</p>
+        </div>
+      )}
 
       {view.kind === "run" && <RunResultView outcome={view.outcome} />}
       {view.kind === "check" && <CheckResultView report={view.report} />}

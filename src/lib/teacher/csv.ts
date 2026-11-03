@@ -7,6 +7,7 @@ export type GroupCsvRow = {
   exerciseTotal: number;
   quizCorrect: number;
   quizTotal: number;
+  hintsUsed: number;
   grade: number;
   lastActivity: string; // ISO or empty
 };
@@ -20,6 +21,7 @@ const HEADERS = [
   "Вправи (усього)",
   "Квіз (правильно)",
   "Квіз (усього)",
+  "Підказки",
   "Оцінка",
   "Остання активність",
 ] as const;
@@ -51,6 +53,7 @@ export function buildGroupCsv(rows: GroupCsvRow[]): string {
         row.exerciseTotal,
         row.quizCorrect,
         row.quizTotal,
+        row.hintsUsed,
         row.grade,
         row.lastActivity,
       ]
@@ -58,5 +61,5 @@ export function buildGroupCsv(rows: GroupCsvRow[]): string {
         .join(","),
     );
   }
-  return `\uFEFF${lines.join("\r\n")}\r\n`;
+  return `﻿${lines.join("\r\n")}\r\n`;
 }
