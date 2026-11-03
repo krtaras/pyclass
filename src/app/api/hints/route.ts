@@ -3,9 +3,14 @@ import { and, count, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { exercises, hintRequests } from "@/db/schema";
 import { getSession } from "@/lib/auth/session";
+import { isHintsEnabled } from "@/lib/hints/enabled";
 import { generateExerciseHint } from "@/lib/hints/generate";
 
 export async function GET(req: Request) {
+  if (!isHintsEnabled()) {
+    return NextResponse.json({ error: "Підказки вимкнено." }, { status: 403 });
+  }
+
   const session = await getSession();
   if (!session || session.role !== "student") {
     return NextResponse.json({ error: "Потрібен вхід учня." }, { status: 401 });
@@ -44,6 +49,10 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  if (!isHintsEnabled()) {
+    return NextResponse.json({ error: "Підказки вимкнено." }, { status: 403 });
+  }
+
   const session = await getSession();
   if (!session || session.role !== "student") {
     return NextResponse.json({ error: "Потрібен вхід учня." }, { status: 401 });
