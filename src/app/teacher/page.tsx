@@ -37,6 +37,13 @@ export default async function TeacherHomePage() {
         <p className="text-sm text-zinc-600">
           Групи, коди запрошення та прогрес учнів.
         </p>
+        <Link
+          href="/teacher/content"
+          className="inline-flex rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-medium text-zinc-800 hover:bg-zinc-50"
+          data-testid="nav-content"
+        >
+          Редактор контенту
+        </Link>
       </div>
 
       <CreateGroupForm />
