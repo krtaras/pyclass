@@ -24,6 +24,17 @@ async function main() {
   await db.delete(modules);
   await db.delete(groups);
 
+  // Keep demo URLs stable (/lessons/1, /lessons/2)
+  for (const stmt of [
+    "ALTER SEQUENCE groups_id_seq RESTART WITH 1",
+    "ALTER SEQUENCE modules_id_seq RESTART WITH 1",
+    "ALTER SEQUENCE lessons_id_seq RESTART WITH 1",
+    "ALTER SEQUENCE exercises_id_seq RESTART WITH 1",
+    "ALTER SEQUENCE quiz_questions_id_seq RESTART WITH 1",
+  ]) {
+    await sql.query(stmt);
+  }
+
   const [demoGroup] = await db
     .insert(groups)
     .values({ name: "Демо-група 10-А", inviteCode: "DEMO10A" })
@@ -103,7 +114,12 @@ else:
       starterCode: 'greeting = ""\n# допиши код нижче\n',
       tests: [
         { type: "assert", code: "assert greeting == 'Привіт'" },
-        { type: "io", input: "", output: "Привіт" },
+        {
+          type: "io",
+          input: "",
+          output: "Привіт",
+          visible: true,
+        },
       ],
       hintLimit: 3,
     },
@@ -115,9 +131,14 @@ else:
       tests: [
         {
           type: "assert",
-          code: "score = 72\nassert score >= 50",
+          code: "assert 'score' in dir() and score == 72",
         },
-        { type: "io", input: "", output: "Здав" },
+        {
+          type: "io",
+          input: "",
+          output: "Здав",
+          visible: true,
+        },
       ],
       hintLimit: 3,
     },

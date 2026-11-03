@@ -63,12 +63,9 @@ export const exercises = pgTable("exercises", {
     .references(() => lessons.id, { onDelete: "cascade" }),
   prompt: text("prompt").notNull(),
   starterCode: text("starter_code").notNull().default(""),
-  tests: jsonb("tests").notNull().$type<
-    Array<
-      | { type: "io"; input: string; output: string }
-      | { type: "assert"; code: string }
-    >
-  >(),
+  tests: jsonb("tests")
+    .notNull()
+    .$type<import("@/lib/python/types").ExerciseTest[]>(),
   hintLimit: integer("hint_limit").notNull().default(3),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
