@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { lessons, quizQuestions } from "@/db/schema";
 import { requireTeacherApi } from "@/lib/auth/teacher-api";
 import { quizCreateSchema } from "@/lib/content/validate";
+import { teacherSlug } from "@/lib/content/slug";
 
 export async function POST(req: Request) {
   const auth = await requireTeacherApi();
@@ -34,6 +35,7 @@ export async function POST(req: Request) {
   const [row] = await db
     .insert(quizQuestions)
     .values({
+      slug: teacherSlug("quiz", parsed.data.prompt),
       lessonId: parsed.data.lessonId,
       kind: parsed.data.kind,
       prompt: parsed.data.prompt,
@@ -41,6 +43,7 @@ export async function POST(req: Request) {
       options: ["Варіант 1", "Варіант 2"],
       correct: "Варіант 1",
       explanation: "",
+      repoManaged: false,
     })
     .returning();
 

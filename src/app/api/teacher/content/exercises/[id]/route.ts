@@ -43,6 +43,7 @@ export async function PATCH(req: Request, { params }: Props) {
       starterCode: parsed.data.starterCode,
       hintLimit: parsed.data.hintLimit,
       tests,
+      repoManaged: false,
     })
     .where(eq(exercises.id, id))
     .returning();

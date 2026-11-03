@@ -1,0 +1,641 @@
+{
+  "slug": "m02-variables",
+  "order": 2,
+  "title": "Змінні та типи",
+  "lessons": [
+    {
+      "slug": "m02-l01-variables",
+      "order": 1,
+      "title": "Змінні: коробка з назвою",
+      "bodyMarkdown": "## Змінна — коробка з ім’ям\n\nТи кладеш значення в коробку і далі користуєшся ім’ям.\n\n```python\nім_я = \"Оля\"\nвік = 16\nprint(ім_я)\nprint(вік)\n```\n\n```python\nціна = 25\nкількість = 3\nprint(ціна * кількість)\n```\n\n```python\nповідомлення = \"Урок почався\"\nprint(повідомлення)\nповідомлення = \"Урок закінчився\"\nprint(повідомлення)\n```\n\n## Типові помилки\n\n- Використати змінну до присвоєння.\n- Написати `вік == 16` замість `вік = 16` (це порівняння, не запис).\n",
+      "videoUrl": "https://www.youtube.com/watch?v=kqtD5dpn9C8",
+      "exercises": [
+        {
+          "slug": "m02-l01-e1-name",
+          "prompt": "Створи змінну name зі значенням Тарас і виведи її.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nТарас\n```",
+          "starterCode": "name = \"Тарас\"\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Тарас",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Тарас",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Тарас"
+          }
+        },
+        {
+          "slug": "m02-l01-e2-two-vars",
+          "prompt": "Створи city=Новояворівськ і year=2026. Виведи місто, потім рік.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nНовояворівськ\n2026\n```",
+          "starterCode": "city = \"Новояворівськ\"\nyear = 2026\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Новояворівськ\n2026",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Новояворівськ\n2026",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Новояворівськ\n2026"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m02-l01-q1",
+          "kind": "single",
+          "prompt": "Що таке змінна?",
+          "options": [
+            "Імʼя, з яким повʼязане значення",
+            "Лише число",
+            "Команда print",
+            "Файл"
+          ],
+          "correct": "Імʼя, з яким повʼязане значення",
+          "explanation": "Змінна зберігає дані."
+        },
+        {
+          "slug": "m02-l01-q2",
+          "kind": "output",
+          "prompt": "Що виведе код?",
+          "options": [
+            "7",
+            "x",
+            "3 + 4",
+            "Помилка"
+          ],
+          "correct": "7",
+          "explanation": "Права частина першою.",
+          "code": "x = 3 + 4\nprint(x)"
+        },
+        {
+          "slug": "m02-l01-q3",
+          "kind": "multi",
+          "prompt": "Які імена коректні?",
+          "options": [
+            "suma",
+            "2vik",
+            "kilkist_tovariv",
+            "my-name"
+          ],
+          "correct": [
+            "suma",
+            "kilkist_tovariv"
+          ],
+          "explanation": "Не з цифри."
+        }
+      ]
+    },
+    {
+      "slug": "m02-l02-types",
+      "order": 2,
+      "title": "Типи: int, float, str, bool",
+      "bodyMarkdown": "## Типи значень\n\nНайчастіші на старті:\n\n| Тип | Приклад | Навіщо |\n|-----|---------|--------|\n| `int` | `7` | цілі числа |\n| `float` | `3.5` | дробові |\n| `str` | `\"привіт\"` | текст |\n| `bool` | `True` / `False` | так/ні |\n\n```python\nprint(type(7))\nprint(type(3.5))\nprint(type(\"hi\"))\nprint(type(True))\n```\n\n```python\na = 10\nb = \"10\"\nprint(a, type(a))\nprint(b, type(b))\n```\n\n## Типові помилки\n\n- Додавати `str` і `int` без перетворення: `\"3\" + 1` впаде.\n- Плутати `True`/`False` з рядками `\"True\"`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=khKv-8q7YmY",
+      "exercises": [
+        {
+          "slug": "m02-l02-e1-types-print",
+          "prompt": "Створи n=5, s=бал і виведи їх.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\n5\nбал\n```",
+          "starterCode": "n = 5\ns = \"бал\"\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "5\nбал",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "5\nбал",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "5\nбал"
+          }
+        },
+        {
+          "slug": "m02-l02-e2-bool",
+          "prompt": "Створи ok=True і виведи.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nTrue\n```",
+          "starterCode": "ok = True\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "True",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "True",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "True"
+          }
+        },
+        {
+          "slug": "m02-l02-e3-float",
+          "prompt": "Створи price=19.99 і виведи.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\n19.99\n```",
+          "starterCode": "price = 19.99\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "19.99",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "19.99",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "19.99"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m02-l02-q1",
+          "kind": "single",
+          "prompt": "Тип 3.14?",
+          "options": [
+            "float",
+            "int",
+            "str",
+            "bool"
+          ],
+          "correct": "float",
+          "explanation": "З крапкою — float."
+        },
+        {
+          "slug": "m02-l02-q2",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "34",
+            "7",
+            "3+4",
+            "Помилка"
+          ],
+          "correct": "34",
+          "explanation": "Рядки склеюються.",
+          "code": "print(\"3\" + \"4\")"
+        },
+        {
+          "slug": "m02-l02-q3",
+          "kind": "single",
+          "prompt": "Як істина?",
+          "options": [
+            "True",
+            "true",
+            "TRUE",
+            "yes"
+          ],
+          "correct": "True",
+          "explanation": "Саме True."
+        }
+      ]
+    },
+    {
+      "slug": "m02-l03-input",
+      "order": 3,
+      "title": "input: питаємо користувача",
+      "bodyMarkdown": "## input читає рядок з клавіатури\n\n```python\nім_я = input()\nprint(\"Привіт,\", ім_я)\n```\n\n```python\na = input()\nb = input()\nprint(a, b)\n```\n\n**Важливо:** `input()` завжди повертає **рядок** (`str`), навіть якщо ти ввів цифри.\n\n```python\nn = input()\nprint(type(n))  # <class 'str'>\n```\n\n## Типові помилки\n\n- Чекати число від `input()` без `int(...)`.\n- Забути, що кожен `input()` — новий рядок вводу.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=kqtD5dpn9C8",
+      "exercises": [
+        {
+          "slug": "m02-l03-e1-echo",
+          "prompt": "Зчитай рядок і виведи його.\n\n**Приклад.**\nВвід:\n```\nкава\n```\nВивід:\n```\nкава\n```",
+          "starterCode": "text = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "кава\n",
+              "output": "кава",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "хліб\n",
+              "output": "хліб",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "42\n",
+              "output": "42",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "кава\n",
+            "output": "кава"
+          }
+        },
+        {
+          "slug": "m02-l03-e2-greet",
+          "prompt": "Зчитай імʼя; виведи Привіт, імʼя!\n\n**Приклад.**\nВвід:\n```\nОля\n```\nВивід:\n```\nПривіт, Оля!\n```",
+          "starterCode": "name = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "Оля\n",
+              "output": "Привіт, Оля!",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "Тарас\n",
+              "output": "Привіт, Тарас!",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "Іра\n",
+              "output": "Привіт, Іра!",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "Оля\n",
+            "output": "Привіт, Оля!"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m02-l03-q1",
+          "kind": "single",
+          "prompt": "Тип input()?",
+          "options": [
+            "str",
+            "int",
+            "float",
+            "bool"
+          ],
+          "correct": "str",
+          "explanation": "Завжди рядок."
+        },
+        {
+          "slug": "m02-l03-q2",
+          "kind": "single",
+          "prompt": "Перед додаванням до 10?",
+          "options": [
+            "int або float",
+            "Нічого",
+            "Лише print",
+            "Ще input"
+          ],
+          "correct": "int або float",
+          "explanation": "Інакше TypeError."
+        },
+        {
+          "slug": "m02-l03-q3",
+          "kind": "single",
+          "prompt": "Навіщо input?",
+          "options": [
+            "Різні дані користувача",
+            "Малювати UI",
+            "Видалити файл",
+            "Вимкнути print"
+          ],
+          "correct": "Різні дані користувача",
+          "explanation": "Гнучкий ввід."
+        }
+      ]
+    },
+    {
+      "slug": "m02-l04-conversion",
+      "order": 4,
+      "title": "Перетворення типів",
+      "bodyMarkdown": "## Перетворення типів\n\n```python\nn = int(input())\nprint(n + 1)\n```\n\n```python\nx = float(input())\nprint(x * 2)\n```\n\n```python\nprint(int(\"12\"))\nprint(str(12))\nprint(float(\"3.5\"))\n```\n\n## Типові помилки\n\n- `int(\"3.5\")` — помилка; спочатку `float`, або беріть цілу частину інакше.\n- `int(\"12 грн\")` — не спрацює, лише чисті цифри.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=khKv-8q7YmY",
+      "exercises": [
+        {
+          "slug": "m02-l04-e1-plus-one",
+          "prompt": "Зчитай ціле; виведи +1.\n\n**Приклад.**\nВвід:\n```\n5\n```\nВивід:\n```\n6\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "5\n",
+              "output": "6",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "0\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "-2\n",
+              "output": "-1",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "5\n",
+            "output": "6"
+          }
+        },
+        {
+          "slug": "m02-l04-e2-sum-two",
+          "prompt": "Два цілі → сума.\n\n**Приклад.**\nВвід:\n```\n2\n3\n```\nВивід:\n```\n5\n```",
+          "starterCode": "a = int(input())\nb = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\n3\n",
+              "output": "5",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "10\n-4\n",
+              "output": "6",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n0\n",
+              "output": "0",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\n3\n",
+            "output": "5"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m02-l04-q1",
+          "kind": "single",
+          "prompt": "int(\"12\")?",
+          "options": [
+            "Ціле 12",
+            "Рядок",
+            "1.2",
+            "Помилка завжди"
+          ],
+          "correct": "Ціле 12",
+          "explanation": "Перетворення."
+        },
+        {
+          "slug": "m02-l04-q2",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "15",
+            "105",
+            "10 5",
+            "Помилка"
+          ],
+          "correct": "15",
+          "explanation": "Після int.",
+          "code": "print(int(\"10\") + int(\"5\"))"
+        },
+        {
+          "slug": "m02-l04-q3",
+          "kind": "multi",
+          "prompt": "Коректно?",
+          "options": [
+            "int(\"8\")",
+            "float(\"2.5\")",
+            "int(\"2.5\")",
+            "str(7)"
+          ],
+          "correct": [
+            "int(\"8\")",
+            "float(\"2.5\")",
+            "str(7)"
+          ],
+          "explanation": "int з крапкою падає."
+        }
+      ]
+    },
+    {
+      "slug": "m02-l05-arithmetic-fstrings",
+      "order": 5,
+      "title": "Арифметика та f-рядки",
+      "bodyMarkdown": "## Арифметика\n\n```python\nprint(7 + 3)\nprint(7 - 3)\nprint(7 * 3)\nprint(7 / 3)   # завжди float\nprint(7 // 3)  # ціла частина\nprint(7 % 3)   # остача\nprint(2 ** 3)  # степінь\n```\n\n## f-рядки\n\n```python\nім_я = \"Тарас\"\nбал = 10\nprint(f\"{ім_я} має {бал} балів\")\n```\n\n```python\na = int(input())\nb = int(input())\nprint(f\"Сума {a} і {b} = {a + b}\")\n```\n\n## Типові помилки\n\n- `/` замість `//`, коли потрібне ціле.\n- Забути `f` перед лапками: `\"{a}\"` не підставить змінну.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=khKv-8q7YmY",
+      "exercises": [
+        {
+          "slug": "m02-l05-e1-area",
+          "prompt": "Довжина і ширина → площа.\n\n**Приклад.**\nВвід:\n```\n3\n4\n```\nВивід:\n```\n12\n```",
+          "starterCode": "a = int(input())\nb = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\n4\n",
+              "output": "12",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "5\n5\n",
+              "output": "25",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2\n10\n",
+              "output": "20",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\n4\n",
+            "output": "12"
+          }
+        },
+        {
+          "slug": "m02-l05-e2-fstring",
+          "prompt": "Імʼя й вік → Мене звати X, мені Y.\n\n**Приклад.**\nВвід:\n```\nОля\n16\n```\nВивід:\n```\nМене звати Оля, мені 16.\n```",
+          "starterCode": "name = input()\nage = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "Оля\n16\n",
+              "output": "Мене звати Оля, мені 16.",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "Тарас\n17\n",
+              "output": "Мене звати Тарас, мені 17.",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "Іра\n15\n",
+              "output": "Мене звати Іра, мені 15.",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "Оля\n16\n",
+            "output": "Мене звати Оля, мені 16."
+          }
+        },
+        {
+          "slug": "m02-l05-e3-remainder",
+          "prompt": "n % 2.\n\n**Приклад.**\nВвід:\n```\n4\n```\nВивід:\n```\n0\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "4\n",
+              "output": "0",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "7\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n",
+              "output": "0",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "4\n",
+            "output": "0"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m02-l05-q1",
+          "kind": "output",
+          "prompt": "10 // 3?",
+          "options": [
+            "3",
+            "3.333",
+            "1",
+            "30"
+          ],
+          "correct": "3",
+          "explanation": "Ціле ділення.",
+          "code": "print(10 // 3)"
+        },
+        {
+          "slug": "m02-l05-q2",
+          "kind": "single",
+          "prompt": "f-string?",
+          "options": [
+            "f\"Привіт, {name}\"",
+            "\"Привіт, {name}\"",
+            "print name",
+            "name f"
+          ],
+          "correct": "f\"Привіт, {name}\"",
+          "explanation": "Літера f."
+        },
+        {
+          "slug": "m02-l05-q3",
+          "kind": "output",
+          "prompt": "2 ** 3?",
+          "options": [
+            "8",
+            "6",
+            "9",
+            "5"
+          ],
+          "correct": "8",
+          "explanation": "Степінь.",
+          "code": "print(2 ** 3)"
+        },
+        {
+          "slug": "m02-l05-q4",
+          "kind": "multi",
+          "prompt": "Операції int?",
+          "options": [
+            "+",
+            "%",
+            "//",
+            "input"
+          ],
+          "correct": [
+            "+",
+            "%",
+            "//"
+          ],
+          "explanation": "input не операція."
+        }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { modules } from "@/db/schema";
 import { requireTeacherApi } from "@/lib/auth/teacher-api";
 import { moduleCreateSchema } from "@/lib/content/validate";
+import { teacherSlug } from "@/lib/content/slug";
 
 export async function GET() {
   const auth = await requireTeacherApi();
@@ -34,7 +35,12 @@ export async function POST(req: Request) {
   const order = (agg?.m ?? 0) + 1;
   const [row] = await db
     .insert(modules)
-    .values({ title: parsed.data.title, order })
+    .values({
+      slug: teacherSlug("mod", parsed.data.title),
+      title: parsed.data.title,
+      order,
+      repoManaged: false,
+    })
     .returning();
   return NextResponse.json({ ok: true, module: row });
 }

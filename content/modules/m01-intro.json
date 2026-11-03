@@ -1,0 +1,592 @@
+{
+  "slug": "m01-intro",
+  "order": 1,
+  "title": "Знайомство з Python",
+  "lessons": [
+    {
+      "slug": "m01-l01-what-is-python",
+      "order": 1,
+      "title": "Що таке Python і навіщо він потрібен",
+      "bodyMarkdown": "## Привіт!\n\nPython — мова програмування. Нею пишуть сайти, ігри, ботів і автоматизацію в школі чи на роботі.\nДля нас важливо: **синтаксис простий**, майже як звичайні речення українською чи англійською.\n\n## Перша програма\n\n```python\nprint(\"Привіт, Новояворівськ!\")\n```\n\n```python\nprint(2 + 2)\nprint(\"2 + 2\")\n```\n\nПерший рядок рахує і друкує `4`. Другий друкує текст як є — бо в лапках.\n\n## Що вміє print\n\n```python\nprint(\"яблуко\", \"груша\")\nprint(10)\n```\n\n## Типові помилки початківців\n\n- Забути лапки: `print(Привіт)` — Python шукатиме змінну.\n- Написати `Print` з великої літери — імен чутливі до регістру.\n- Забути дужки: `print \"привіт\"` — у Python 3 так не можна.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=XBbIkZK388U",
+      "exercises": [
+        {
+          "slug": "m01-l01-e1-hello",
+          "prompt": "Виведи на екран рядок: Привіт, Python!\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nПривіт, Python!\n```",
+          "starterCode": "# допиши один рядок з print\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Привіт, Python!",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Привіт, Python!",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Привіт, Python!"
+          }
+        },
+        {
+          "slug": "m01-l01-e2-two-lines",
+          "prompt": "Виведи два рядки: спочатку «Добрий день», потім «ДНЗ Новояворівське ВПУ».\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nДобрий день\nДНЗ Новояворівське ВПУ\n```",
+          "starterCode": "print(\"Добрий день\")\n# допиши другий print\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Добрий день\nДНЗ Новояворівське ВПУ",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Добрий день\nДНЗ Новояворівське ВПУ",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Добрий день\nДНЗ Новояворівське ВПУ"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m01-l01-q1",
+          "kind": "single",
+          "prompt": "Що робить команда print?",
+          "options": [
+            "Виводить текст або значення на екран",
+            "Зберігає файл",
+            "Видаляє змінну",
+            "Запускає інтернет"
+          ],
+          "correct": "Виводить текст або значення на екран",
+          "explanation": "print показує результат у консолі."
+        },
+        {
+          "slug": "m01-l01-q2",
+          "kind": "output",
+          "prompt": "Що виведе цей код?",
+          "options": [
+            "4",
+            "2 + 2",
+            "22",
+            "Помилка"
+          ],
+          "correct": "4",
+          "explanation": "Без лапок Python обчислює вираз.",
+          "code": "print(2 + 2)"
+        },
+        {
+          "slug": "m01-l01-q3",
+          "kind": "multi",
+          "prompt": "Які з цих записів коректні в Python 3?",
+          "options": [
+            "print(\"Привіт\")",
+            "Print('Привіт')",
+            "print('ОК')",
+            "print Привіт"
+          ],
+          "correct": [
+            "print(\"Привіт\")",
+            "print('ОК')"
+          ],
+          "explanation": "Потрібні маленькі літери print, дужки й лапки."
+        }
+      ]
+    },
+    {
+      "slug": "m01-l02-print",
+      "order": 2,
+      "title": "print: вивід тексту й чисел",
+      "bodyMarkdown": "## print друкує на екран\n\nВсе, що ти передаси в `print(...)`, з’явиться у вікні виводу.\n\n```python\nprint(\"Доброго дня!\")\nprint(2026)\n```\n\n```python\na = 3\nb = 5\nprint(a + b)\n```\n\n```python\nprint(\"Сума:\", 3 + 5)\n```\n\n## Кілька значень\n\nЧерез кому `print` розділяє значення пробілом:\n\n```python\nprint(\"Клас\", 10, \"А\")\n```\n\n## Типові помилки\n\n- Плутати текст і числа: `\"3\" + \"5\"` дасть `\"35\"`, а `3 + 5` — `8`.\n- Забути кому між аргументами.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=kqtD5dpn9C8",
+      "exercises": [
+        {
+          "slug": "m01-l02-e1-sum-label",
+          "prompt": "Виведи рівно: Сума: 15\nПідказка: print з текстом і виразом 10+5.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nСума: 15\n```",
+          "starterCode": "# print(\"Сума:\", ...)\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Сума: 15",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Сума: 15",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Сума: 15"
+          }
+        },
+        {
+          "slug": "m01-l02-e2-three-numbers",
+          "prompt": "Виведи числа 1, 2 і 3 — кожне з нового рядка.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\n1\n2\n3\n```",
+          "starterCode": "print(1)\n# допиши ще два print\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "1\n2\n3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "1\n2\n3",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "1\n2\n3"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m01-l02-q1",
+          "kind": "output",
+          "prompt": "Що виведе код?",
+          "options": [
+            "Сума: 15",
+            "Сума:10+5",
+            "Сума: 10 + 5",
+            "Помилка"
+          ],
+          "correct": "Сума: 15",
+          "explanation": "Аргументи розділяються пробілом.",
+          "code": "print(\"Сума:\", 10 + 5)"
+        },
+        {
+          "slug": "m01-l02-q2",
+          "kind": "single",
+          "prompt": "Чому потрібні лапки в print(\"Привіт\")?",
+          "options": [
+            "Щоб Python зрозумів, що це текст, а не ім'я змінної",
+            "Щоб програма працювала швидше",
+            "Лапки не потрібні",
+            "Щоб створити файл"
+          ],
+          "correct": "Щоб Python зрозумів, що це текст, а не ім'я змінної",
+          "explanation": "Без лапок шукається змінна."
+        },
+        {
+          "slug": "m01-l02-q3",
+          "kind": "single",
+          "prompt": "Скільки рядків дадуть три окремі print?",
+          "options": [
+            "3",
+            "1",
+            "0",
+            "2"
+          ],
+          "correct": "3",
+          "explanation": "Кожен print — новий рядок."
+        }
+      ]
+    },
+    {
+      "slug": "m01-l03-comments",
+      "order": 3,
+      "title": "Коментарі: нотатки для себе",
+      "bodyMarkdown": "## Навіщо коментарі\n\nКоментар — нотатка для людини. Python **ігнорує** все після `#` у рядку.\n\n```python\n# Це коментар — програма його не виконує\nprint(\"Привіт\")  # теж коментар\n```\n\n```python\n# print(\"сховано\")\nprint(\"видно\")\n```\n\n```python\nціна = 40  # гривень за проїзд\nprint(ціна)\n```\n\n## Типові помилки\n\n- Думати, що коментар «виправляє» помилку в коді ліворуч — ні, ламаний код лишається ламаним.\n- Закрити `#` всередині рядка в лапках: `print(\"# це не коментар\")` — це звичайний текст.\n",
+      "videoUrl": null,
+      "exercises": [
+        {
+          "slug": "m01-l03-e1-with-comment",
+          "prompt": "Залиш коментар у першому рядку (# ...) і виведи слово Готово.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nГотово\n```",
+          "starterCode": "# напиши коментар\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Готово",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Готово",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Готово"
+          }
+        },
+        {
+          "slug": "m01-l03-e2-only-print",
+          "prompt": "Закоментуй рядок з «Секрет», щоб лишилось лише «Відкрито».\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nВідкрито\n```",
+          "starterCode": "print(\"Відкрито\")\nprint(\"Секрет\")\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Відкрито",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Відкрито",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Відкрито"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m01-l03-q1",
+          "kind": "single",
+          "prompt": "Що робить рядок, який починається з #?",
+          "options": [
+            "Його ігнорує Python — це коментар",
+            "Виводить текст",
+            "Створює змінну",
+            "Зупиняє програму"
+          ],
+          "correct": "Його ігнорує Python — це коментар",
+          "explanation": "Коментарі для людей."
+        },
+        {
+          "slug": "m01-l03-q2",
+          "kind": "output",
+          "prompt": "Що виведе програма?",
+          "options": [
+            "Привіт",
+            "вітання",
+            "Привіт\nвітання",
+            "Нічого"
+          ],
+          "correct": "Привіт",
+          "explanation": "Рядок із # не виконується.",
+          "code": "# вітання\nprint(\"Привіт\")"
+        },
+        {
+          "slug": "m01-l03-q3",
+          "kind": "multi",
+          "prompt": "Де доречно ставити коментарі?",
+          "options": [
+            "Пояснити складний рядок",
+            "Написати план перед кодом",
+            "Замість усього коду",
+            "Позначити одиниці виміру"
+          ],
+          "correct": [
+            "Пояснити складний рядок",
+            "Написати план перед кодом",
+            "Позначити одиниці виміру"
+          ],
+          "explanation": "Коментарі пояснюють, а не замінюють код."
+        }
+      ]
+    },
+    {
+      "slug": "m01-l04-errors",
+      "order": 4,
+      "title": "Помилки: як їх читати",
+      "bodyMarkdown": "## Помилки — нормально\n\nКоли Python не розуміє код, він показує повідомлення. Читай **останній рядок** і номер рядка.\n\n```python\nprint(\"ок\")\n```\n\nПриклад типової помилки імені:\n\n```python\n# NameError: Print не існує\n# Print(\"привіт\")\nprint(\"привіт\")\n```\n\n```python\n# SyntaxError — немає лапок\n# print(привіт)\nprint(\"привіт\")\n```\n\n## Типові помилки\n\n- Не читати текст помилки, а одразу переписувати все.\n- Виправити один рядок і не перевірити наступний.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=kqtD5dpn9C8",
+      "exercises": [
+        {
+          "slug": "m01-l04-e1-fix-quotes",
+          "prompt": "Виправ лапки так, щоб вивелося: OK\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nOK\n```",
+          "starterCode": "print(\"OK)\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "OK",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "OK",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "OK"
+          }
+        },
+        {
+          "slug": "m01-l04-e2-two-prints",
+          "prompt": "Виведи «Раз» і «Два» з нового рядка.\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nРаз\nДва\n```",
+          "starterCode": "print(\"Раз\")\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Раз\nДва",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Раз\nДва",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Раз\nДва"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m01-l04-q1",
+          "kind": "single",
+          "prompt": "Яка помилка при print(\"Привіт\" без ) ?",
+          "options": [
+            "SyntaxError",
+            "NameError",
+            "TypeError",
+            "Помилок не буде"
+          ],
+          "correct": "SyntaxError",
+          "explanation": "Дужки мають бути парними."
+        },
+        {
+          "slug": "m01-l04-q2",
+          "kind": "single",
+          "prompt": "Що означає NameError?",
+          "options": [
+            "Використали ім'я, якого Python не знає",
+            "Немає інтернету",
+            "Файл завеликий",
+            "Занадто багато print"
+          ],
+          "correct": "Використали ім'я, якого Python не знає",
+          "explanation": "Часто опечатка в назві."
+        },
+        {
+          "slug": "m01-l04-q3",
+          "kind": "output",
+          "prompt": "Що виведе код?",
+          "options": [
+            "7",
+            "3 + 4",
+            "34",
+            "Помилка"
+          ],
+          "correct": "7",
+          "explanation": "Арифметика без лапок.",
+          "code": "print(3 + 4)"
+        }
+      ]
+    },
+    {
+      "slug": "m01-l05-first-program",
+      "order": 5,
+      "title": "Міні-програма: вітання",
+      "bodyMarkdown": "## Збираємо мініпрограму\n\nПоєднаємо кілька `print` — як оголошення на дошці оголошень училища.\n\n```python\nprint(\"ДНЗ Новояворівське ВПУ\")\nprint(\"Гурток Python\")\nprint(\"Початок о 15:00\")\n```\n\n```python\nпредмет = \"Інформатика\"\nprint(\"Сьогодні:\", предмет)\n```\n\n```python\nprint(\"1) теорія\")\nprint(\"2) практика\")\nprint(\"3) перерва\")\n```\n\n## Типові помилки\n\n- Змішати українські та англійські лапки-«ялинки» з коду — у коді лише `\"...\"` або `'...'`.\n- Забути, що кожен `print` — новий рядок.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=XBbIkZK388U",
+      "exercises": [
+        {
+          "slug": "m01-l05-e1-welcome",
+          "prompt": "Виведи два рядки:\nЛаскаво просимо до курсу Python!\nДНЗ «Новояворівське ВПУ»\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nЛаскаво просимо до курсу Python!\nДНЗ «Новояворівське ВПУ»\n```",
+          "starterCode": "# вітання\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Ласкаво просимо до курсу Python!\nДНЗ «Новояворівське ВПУ»",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Ласкаво просимо до курсу Python!\nДНЗ «Новояворівське ВПУ»",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Ласкаво просимо до курсу Python!\nДНЗ «Новояворівське ВПУ»"
+          }
+        },
+        {
+          "slug": "m01-l05-e2-schedule",
+          "prompt": "Виведи:\n1. Теорія\n2. Практика\n3. Перерва\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\n1. Теорія\n2. Практика\n3. Перерва\n```",
+          "starterCode": "print(\"1. Теорія\")\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "1. Теорія\n2. Практика\n3. Перерва",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "1. Теорія\n2. Практика\n3. Перерва",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "1. Теорія\n2. Практика\n3. Перерва"
+          }
+        },
+        {
+          "slug": "m01-l05-e3-shop",
+          "prompt": "Виведи:\nТовар: зошит\nЦіна: 25\n\n**Приклад.**\nВвід:\n```\n(без вводу)```\nВивід:\n```\nТовар: зошит\nЦіна: 25\n```",
+          "starterCode": "# цінник\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "",
+              "output": "Товар: зошит\nЦіна: 25",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "",
+              "output": "Товар: зошит\nЦіна: 25",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert True",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "",
+            "output": "Товар: зошит\nЦіна: 25"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m01-l05-q1",
+          "kind": "single",
+          "prompt": "У якому порядку виконуються команди?",
+          "options": [
+            "Зверху вниз",
+            "Спочатку всі print",
+            "Випадково",
+            "Знизу вгору"
+          ],
+          "correct": "Зверху вниз",
+          "explanation": "Базовий порядок скрипта."
+        },
+        {
+          "slug": "m01-l05-q2",
+          "kind": "output",
+          "prompt": "Що виведе код?",
+          "options": [
+            "A\nB",
+            "AB",
+            "B\nA",
+            "Помилка"
+          ],
+          "correct": "A\nB",
+          "explanation": "Два print — два рядки.",
+          "code": "print(\"A\")\nprint(\"B\")"
+        },
+        {
+          "slug": "m01-l05-q3",
+          "kind": "multi",
+          "prompt": "Що варто зробити перед здачею?",
+          "options": [
+            "Запустити й перевірити вивід",
+            "Прочитати повідомлення помилки",
+            "Видалити всі print",
+            "Перевірити лапки й дужки"
+          ],
+          "correct": [
+            "Запустити й перевірити вивід",
+            "Прочитати повідомлення помилки",
+            "Перевірити лапки й дужки"
+          ],
+          "explanation": "Перевірка запуском ловить дрібні помилки."
+        }
+      ]
+    }
+  ]
+}

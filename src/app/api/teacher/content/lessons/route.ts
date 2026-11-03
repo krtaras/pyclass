@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { lessons, modules } from "@/db/schema";
 import { requireTeacherApi } from "@/lib/auth/teacher-api";
 import { lessonCreateSchema } from "@/lib/content/validate";
+import { teacherSlug } from "@/lib/content/slug";
 
 export async function POST(req: Request) {
   const auth = await requireTeacherApi();
@@ -41,12 +42,14 @@ export async function POST(req: Request) {
   const [row] = await db
     .insert(lessons)
     .values({
+      slug: teacherSlug("lesson", parsed.data.title),
       moduleId: parsed.data.moduleId,
       title: parsed.data.title,
       order,
       bodyMarkdown: "",
       videoUrl: null,
       videoKind: null,
+      repoManaged: false,
     })
     .returning();
 

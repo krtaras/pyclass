@@ -99,6 +99,7 @@ export async function PATCH(req: Request, { params }: Props) {
       bodyMarkdown: parsed.data.bodyMarkdown,
       videoUrl: video.videoUrl,
       videoKind: video.videoKind,
+      repoManaged: false,
     })
     .where(eq(lessons.id, id))
     .returning();

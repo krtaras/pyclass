@@ -53,6 +53,7 @@ export async function PATCH(req: Request, { params }: Props) {
       options: parsed.data.options,
       correct,
       explanation: parsed.data.explanation,
+      repoManaged: false,
     })
     .where(eq(quizQuestions.id, id))
     .returning();
