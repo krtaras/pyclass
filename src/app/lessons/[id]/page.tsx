@@ -2,11 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { asc, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { exercises, lessons, modules } from "@/db/schema";
+import { exercises, lessons, modules, quizQuestions } from "@/db/schema";
 import { Markdown } from "@/components/Markdown";
 import { VideoEmbed } from "@/components/VideoEmbed";
 import { ExercisePanel } from "@/components/ExercisePanel";
+import { QuizPanel } from "@/components/QuizPanel";
 import type { ExerciseTest } from "@/lib/python/types";
+import type { QuizQuestion } from "@/lib/quiz/types";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +40,23 @@ export default async function LessonPage({ params }: Props) {
     .where(eq(exercises.lessonId, lessonId))
     .orderBy(asc(exercises.id));
 
+  const lessonQuiz = await db
+    .select()
+    .from(quizQuestions)
+    .where(eq(quizQuestions.lessonId, lessonId))
+    .orderBy(asc(quizQuestions.id));
+
   const { lesson, moduleTitle, moduleOrder } = row;
+
+  const quizProps: QuizQuestion[] = lessonQuiz.map((q) => ({
+    id: q.id,
+    kind: q.kind,
+    prompt: q.prompt,
+    code: q.code,
+    options: (q.options ?? []) as string[],
+    correct: q.correct as string | string[],
+    explanation: q.explanation,
+  }));
 
   return (
     <article className="space-y-6">
@@ -82,6 +100,8 @@ export default async function LessonPage({ params }: Props) {
           />
         ))
       )}
+
+      <QuizPanel questions={quizProps} />
     </article>
   );
 }

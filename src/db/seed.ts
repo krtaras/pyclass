@@ -183,6 +183,15 @@ else:
       correct: ["10 > 5", "10 == 10", "10 != 7"],
       explanation: "10 не менше за 3, решта тверджень істинні.",
     },
+    {
+      lessonId: lesson2.id,
+      kind: "output",
+      prompt: "Що виведе цей код?",
+      code: "score = 40\nif score >= 50:\n    print(\"Здав\")\nelse:\n    print(\"Не здав\")",
+      options: ["Здав", "Не здав", "40", "Помилка"],
+      correct: "Не здав",
+      explanation: "40 < 50, тому виконується гілка else і друкується «Не здав».",
+    },
   ]);
 
   console.log("Seed OK", {
