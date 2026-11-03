@@ -16,6 +16,8 @@ describe("translatePythonError", () => {
     const t = translatePythonError("NameError: name 'foo' is not defined");
     expect(t.title).toBe("Невідоме імʼя");
     expect(t.body).toContain("foo");
+    expect(t.body).toContain("Якщо це твоя функція");
+    expect(t.body).toContain("def foo");
   });
 
   it("translates TypeError", () => {

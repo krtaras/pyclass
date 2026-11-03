@@ -1,0 +1,574 @@
+{
+  "slug": "m05-strings",
+  "order": 5,
+  "title": "Рядки",
+  "lessons": [
+    {
+      "slug": "m05-l01-indexing",
+      "order": 1,
+      "title": "Індекси та зрізи рядка",
+      "bodyMarkdown": "## Рядок — послідовність символів\n\n```python\ns = \"Київ\"\nprint(s[0])\nprint(s[-1])\n```\n\n```python\nword = \"Python\"\nprint(word[0:2])\nprint(word[2:])\nprint(word[:3])\n```\n\n```python\nprint(\"abc\"[1])\n```\n\n## Типові помилки\n\n- Індекс поза межами: `\"hi\"[5]` → `IndexError`.\n- Думати, що зріз включає кінець: `\"abcd\"[0:2]` → `\"ab\"`, не `\"abc\"`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=k9TUPpGqYTo",
+      "exercises": [
+        {
+          "slug": "m05-l01-e1-first-last",
+          "prompt": "Прочитай рядок. Виведи перший і останній символ у двох рядках.\n\n**Приклад.**\nВвід:\n```\nКиїв\n```\nВивід:\n```\nК\nв\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "Київ\n",
+              "output": "К\nв",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "Python\n",
+              "output": "P\nn",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "а\n",
+              "output": "а\nа",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "Київ\n",
+            "output": "К\nв"
+          }
+        },
+        {
+          "slug": "m05-l01-e2-slice",
+          "prompt": "Прочитай рядок. Виведи зріз від індексу 1 до кінця (без першого символу).\n\n**Приклад.**\nВвід:\n```\nabcd\n```\nВивід:\n```\nbcd\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "abcd\n",
+              "output": "bcd",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "XY\n",
+              "output": "Y",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "Привіт\n",
+              "output": "ривіт",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "abcd\n",
+            "output": "bcd"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m05-l01-q1",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "P",
+            "y",
+            "Py",
+            "Помилка"
+          ],
+          "correct": "P",
+          "explanation": "Індекс 0.",
+          "code": "print(\"Python\"[0])"
+        },
+        {
+          "slug": "m05-l01-q2",
+          "kind": "single",
+          "prompt": "\"abcd\"[1:3]?",
+          "options": [
+            "bc",
+            "ab",
+            "bcd",
+            "abc"
+          ],
+          "correct": "bc",
+          "explanation": "Кінець не входить."
+        },
+        {
+          "slug": "m05-l01-q3",
+          "kind": "multi",
+          "prompt": "Що правда?",
+          "options": [
+            "s[-1] — останній символ",
+            "Зріз не змінює рядок",
+            "s[0]=\"X\" змінює рядок",
+            "Рядки незмінні"
+          ],
+          "correct": [
+            "s[-1] — останній символ",
+            "Зріз не змінює рядок",
+            "Рядки незмінні"
+          ],
+          "explanation": "Рядки immutable."
+        }
+      ]
+    },
+    {
+      "slug": "m05-l02-methods",
+      "order": 2,
+      "title": "Методи рядків: upper, lower, strip",
+      "bodyMarkdown": "## Корисні методи\n\n```python\nprint(\"Привіт\".upper())\nprint(\"ПРИВІТ\".lower())\n```\n\n```python\nprint(\"  школа  \".strip())\n```\n\n```python\nprint(\"python\".startswith(\"py\"))\nprint(\"python\".endswith(\"on\"))\n```\n\n## Типові помилки\n\n- Чекати, що `s.upper()` змінить `s` на місці — ні, повертає новий рядок.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=k9TUPpGqYTo",
+      "exercises": [
+        {
+          "slug": "m05-l02-e1-upper",
+          "prompt": "Прочитай рядок і виведи його ВЕЛИКИМИ літерами.\n\n**Приклад.**\nВвід:\n```\nпривіт\n```\nВивід:\n```\nПРИВІТ\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "привіт\n",
+              "output": "ПРИВІТ",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "Ok\n",
+              "output": "OK",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "Python\n",
+              "output": "PYTHON",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "привіт\n",
+            "output": "ПРИВІТ"
+          }
+        },
+        {
+          "slug": "m05-l02-e2-strip-lower",
+          "prompt": "Прочитай рядок, прибери пробіли з країв і зроби малими літерами.\n\n**Приклад.**\nВвід:\n```\n  Hi  \n```\nВивід:\n```\nhi\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "  Hi  \n",
+              "output": "hi",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "PYTHON\n",
+              "output": "python",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "  Ok \n",
+              "output": "ok",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "  Hi  \n",
+            "output": "hi"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m05-l02-q1",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "HI",
+            "hi",
+            "Hi",
+            "Помилка"
+          ],
+          "correct": "HI",
+          "explanation": "upper.",
+          "code": "print(\"hi\".upper())"
+        },
+        {
+          "slug": "m05-l02-q2",
+          "kind": "single",
+          "prompt": "strip робить?",
+          "options": [
+            "Прибирає пробіли з країв",
+            "Видаляє всі пробіли",
+            "Робить upper",
+            "Ділить рядок"
+          ],
+          "correct": "Прибирає пробіли з країв",
+          "explanation": "Лише краї."
+        },
+        {
+          "slug": "m05-l02-q3",
+          "kind": "single",
+          "prompt": "s.upper() змінює s?",
+          "options": [
+            "Ні, повертає новий",
+            "Так",
+            "Інколи",
+            "Лише для цифр"
+          ],
+          "correct": "Ні, повертає новий",
+          "explanation": "Immutable."
+        }
+      ]
+    },
+    {
+      "slug": "m05-l03-find-replace",
+      "order": 3,
+      "title": "find, replace, in",
+      "bodyMarkdown": "## Пошук і заміна\n\n```python\nprint(\"банан\".find(\"на\"))\nprint(\"банан\".find(\"х\"))  # -1\n```\n\n```python\nprint(\"кот\".replace(\"о\", \"і\"))\n```\n\n```python\nprint(\"кот\" in \"котик\")\n```\n\n## Типові помилки\n\n- Плутати `find` (−1 якщо немає) з `index` (падає з помилкою).\n",
+      "videoUrl": "https://www.youtube.com/watch?v=k9TUPpGqYTo",
+      "exercises": [
+        {
+          "slug": "m05-l03-e1-contains",
+          "prompt": "Два рядки: якщо другий є підрядком першого — Так, інакше Ні.\n\n**Приклад.**\nВвід:\n```\nкотик\nкот\n```\nВивід:\n```\nТак\n```",
+          "starterCode": "a = input()\nb = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "котик\nкот\n",
+              "output": "Так",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "яблуко\nгруша\n",
+              "output": "Ні",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "aaa\naa\n",
+              "output": "Так",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "котик\nкот\n",
+            "output": "Так"
+          }
+        },
+        {
+          "slug": "m05-l03-e2-replace",
+          "prompt": "Заміни всі пробіли на підкреслення і виведи.\n\n**Приклад.**\nВвід:\n```\nя люблю python\n```\nВивід:\n```\nя_люблю_python\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "я люблю python\n",
+              "output": "я_люблю_python",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "a b c\n",
+              "output": "a_b_c",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "нічого\n",
+              "output": "нічого",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "я люблю python\n",
+            "output": "я_люблю_python"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m05-l03-q1",
+          "kind": "output",
+          "prompt": "find?",
+          "options": [
+            "1",
+            "0",
+            "-1",
+            "2"
+          ],
+          "correct": "1",
+          "explanation": "індекс 'y'.",
+          "code": "print(\"python\".find(\"y\"))"
+        },
+        {
+          "slug": "m05-l03-q2",
+          "kind": "single",
+          "prompt": "\"x\" in \"abc\"?",
+          "options": [
+            "False",
+            "True",
+            "Помилка",
+            "-1"
+          ],
+          "correct": "False",
+          "explanation": "Немає."
+        },
+        {
+          "slug": "m05-l03-q3",
+          "kind": "multi",
+          "prompt": "Що правда?",
+          "options": [
+            "replace повертає новий рядок",
+            "find дає -1 якщо немає",
+            "in шукає підрядок",
+            "replace змінює рядок на місці"
+          ],
+          "correct": [
+            "replace повертає новий рядок",
+            "find дає -1 якщо немає",
+            "in шукає підрядок"
+          ],
+          "explanation": "Immutable."
+        }
+      ]
+    },
+    {
+      "slug": "m05-l04-split-join",
+      "order": 4,
+      "title": "split і join",
+      "bodyMarkdown": "## Розбити і зібрати\n\n```python\nparts = \"яблуко,груша,слива\".split(\",\")\nprint(parts)\n```\n\n```python\nprint(\" \".join([\"ДНЗ\", \"ВПУ\"]))\n```\n\n```python\nwords = \"один два три\".split()\nprint(len(words))\n```\n\n## Типові помилки\n\n- `join` викликають **на роздільнику**: `\" \".join(list)`, не `list.join(\" \")`.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=k9TUPpGqYTo",
+      "exercises": [
+        {
+          "slug": "m05-l04-e1-word-count",
+          "prompt": "Прочитай рядок слів через пробіл. Виведи кількість слів.\n\n**Приклад.**\nВвід:\n```\nя люблю python\n```\nВивід:\n```\n3\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "я люблю python\n",
+              "output": "3",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "один\n",
+              "output": "1",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "a b c d\n",
+              "output": "4",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "я люблю python\n",
+            "output": "3"
+          }
+        },
+        {
+          "slug": "m05-l04-e2-join-dash",
+          "prompt": "Прочитай рядок слів через пробіл. Зʼєднай через дефіс.\n\n**Приклад.**\nВвід:\n```\nНово яворівськ\n```\nВивід:\n```\nНово-яворівськ\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "Ново яворівськ\n",
+              "output": "Ново-яворівськ",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "a b c\n",
+              "output": "a-b-c",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "один\n",
+              "output": "один",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "Ново яворівськ\n",
+            "output": "Ново-яворівськ"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m05-l04-q1",
+          "kind": "output",
+          "prompt": "Скільки слів?",
+          "options": [
+            "2",
+            "1",
+            "3",
+            "0"
+          ],
+          "correct": "2",
+          "explanation": "split.",
+          "code": "print(len(\"hi there\".split()))"
+        },
+        {
+          "slug": "m05-l04-q2",
+          "kind": "single",
+          "prompt": "Правильний join?",
+          "options": [
+            "\"-\".join(lst)",
+            "lst.join(\"-\")",
+            "join(lst, \"-\")",
+            "lst + \"-\""
+          ],
+          "correct": "\"-\".join(lst)",
+          "explanation": "Метод рядка."
+        },
+        {
+          "slug": "m05-l04-q3",
+          "kind": "single",
+          "prompt": "split без аргументів?",
+          "options": [
+            "По пробілах",
+            "По комі",
+            "По літерах",
+            "Помилка"
+          ],
+          "correct": "По пробілах",
+          "explanation": "Типовий випадок."
+        }
+      ]
+    },
+    {
+      "slug": "m05-l05-practice",
+      "order": 5,
+      "title": "Практика з рядками",
+      "bodyMarkdown": "## Збираємо вміння\n\n```python\nname = input().strip()\nprint(f\"Привіт, {name}!\")\n```\n\n```python\ns = \"10 20 30\"\nnums = [int(x) for x in s.split()]\nprint(sum(nums))\n```\n\nСпочатку роби крок за кроком: прочитай → оброби → виведи.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=k9TUPpGqYTo",
+      "exercises": [
+        {
+          "slug": "m05-l05-e1-initials",
+          "prompt": "Два слова (імʼя прізвище). Виведи ініціали великими з крапками, напр. Т.К.\n\n**Приклад.**\nВвід:\n```\nТарас Кривуляк\n```\nВивід:\n```\nТ.К.\n```",
+          "starterCode": "line = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "Тарас Кривуляк\n",
+              "output": "Т.К.",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "оля петренко\n",
+              "output": "О.П.",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "Іван Іванов\n",
+              "output": "І.І.",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "Тарас Кривуляк\n",
+            "output": "Т.К."
+          }
+        },
+        {
+          "slug": "m05-l05-e2-digits-only",
+          "prompt": "Прочитай рядок. Виведи лише цифри з нього (в тому ж порядку), без інших символів.\n\n**Приклад.**\nВвід:\n```\nтел: 067-11\n```\nВивід:\n```\n06711\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "тел: 067-11\n",
+              "output": "06711",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "abc\n",
+              "output": "",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1a2b3\n",
+              "output": "123",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "тел: 067-11\n",
+            "output": "06711"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m05-l05-q1",
+          "kind": "single",
+          "prompt": "isdigit для '5'?",
+          "options": [
+            "True",
+            "False",
+            "Помилка",
+            "None"
+          ],
+          "correct": "True",
+          "explanation": "Цифра."
+        },
+        {
+          "slug": "m05-l05-q2",
+          "kind": "output",
+          "prompt": "Що виведе?",
+          "options": [
+            "A.B.",
+            "ab",
+            "A.B",
+            "Помилка"
+          ],
+          "correct": "A.B.",
+          "explanation": "f-рядок.",
+          "code": "a='Ann'; b='Bob'\nprint(f\"{a[0]}.{b[0]}.\")"
+        },
+        {
+          "slug": "m05-l05-q3",
+          "kind": "multi",
+          "prompt": "Корисно для рядків?",
+          "options": [
+            "split",
+            "strip",
+            "replace",
+            "append"
+          ],
+          "correct": [
+            "split",
+            "strip",
+            "replace"
+          ],
+          "explanation": "append — для списків."
+        }
+      ]
+    }
+  ]
+}

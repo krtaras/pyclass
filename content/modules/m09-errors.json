@@ -1,0 +1,589 @@
+{
+  "slug": "m09-errors",
+  "order": 9,
+  "title": "Помилки та try/except",
+  "lessons": [
+    {
+      "slug": "m09-l01-types-errors",
+      "order": 1,
+      "title": "Які бувають помилки",
+      "bodyMarkdown": "## Читаємо повідомлення\n\n```python\n# SyntaxError — зламаний запис\n# print(\"hi\"\n```\n\n```python\n# NameError\n# print(немає_такої)\n```\n\n```python\n# TypeError\n# print(\"3\" + 1)\n```\n\n## Типові помилки\n\n- Ігнорувати останній рядок traceback.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+      "exercises": [
+        {
+          "slug": "m09-l01-e1-safe-add",
+          "prompt": "Два вводи. Якщо обидва можна зробити int — виведи суму, інакше рядок Помилка.\n\n**Приклад.**\nВвід:\n```\n2\n3\n```\nВивід:\n```\n5\n```",
+          "starterCode": "a = input()\nb = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "2\n3\n",
+              "output": "5",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "x\n3\n",
+              "output": "Помилка",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "2\ny\n",
+              "output": "Помилка",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n0\n",
+              "output": "0",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "2\n3\n",
+            "output": "5"
+          }
+        },
+        {
+          "slug": "m09-l01-e2-index-safe",
+          "prompt": "Рядок і індекс (int). Виведи символ або Помилка, якщо індекс невірний.\n\n**Приклад.**\nВвід:\n```\nabc\n1\n```\nВивід:\n```\nb\n```",
+          "starterCode": "s = input()\ni = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "abc\n1\n",
+              "output": "b",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "abc\n5\n",
+              "output": "Помилка",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "hi\n-1\n",
+              "output": "i",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "x\n0\n",
+              "output": "x",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "abc\n1\n",
+            "output": "b"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m09-l01-q1",
+          "kind": "single",
+          "prompt": "NameError означає?",
+          "options": [
+            "Невідоме імʼя",
+            "Поділ на 0",
+            "Зламаний синтаксис",
+            "Немає ключа"
+          ],
+          "correct": "Невідоме імʼя",
+          "explanation": "NameError."
+        },
+        {
+          "slug": "m09-l01-q2",
+          "kind": "single",
+          "prompt": "\"3\"+1?",
+          "options": [
+            "TypeError",
+            "ValueError",
+            "SyntaxError",
+            "Ок 4"
+          ],
+          "correct": "TypeError",
+          "explanation": "Типи."
+        },
+        {
+          "slug": "m09-l01-q3",
+          "kind": "multi",
+          "prompt": "Що дивитись у помилці?",
+          "options": [
+            "Тип помилки",
+            "Номер рядка",
+            "Останній рядок повідомлення",
+            "Лише перший рядок файлу"
+          ],
+          "correct": [
+            "Тип помилки",
+            "Номер рядка",
+            "Останній рядок повідомлення"
+          ],
+          "explanation": "Traceback."
+        }
+      ]
+    },
+    {
+      "slug": "m09-l02-try-except",
+      "order": 2,
+      "title": "try / except",
+      "bodyMarkdown": "## Ловимо помилку\n\n```python\ntry:\n    n = int(input())\n    print(n * 2)\nexcept ValueError:\n    print(\"Це не число\")\n```\n\n```python\ntry:\n    print(10 / 0)\nexcept ZeroDivisionError:\n    print(\"Не діли на нуль\")\n```\n\n## Типові помилки\n\n- Голий `except:` ловить усе — краще конкретний тип.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+      "exercises": [
+        {
+          "slug": "m09-l02-e1-int-or-msg",
+          "prompt": "Прочитай рядок. Якщо це ціле — виведи його, інакше Не число.\n\n**Приклад.**\nВвід:\n```\n42\n```\nВивід:\n```\n42\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "42\n",
+              "output": "42",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "hi\n",
+              "output": "Не число",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "-3\n",
+              "output": "-3",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "3.5\n",
+              "output": "Не число",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "42\n",
+            "output": "42"
+          }
+        },
+        {
+          "slug": "m09-l02-e2-div",
+          "prompt": "Два цілі a b. Виведи a//b або Ділення на нуль.\n\n**Приклад.**\nВвід:\n```\n10\n2\n```\nВивід:\n```\n5\n```",
+          "starterCode": "a = int(input())\nb = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "10\n2\n",
+              "output": "5",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "10\n0\n",
+              "output": "Ділення на нуль",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "9\n4\n",
+              "output": "2",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "10\n2\n",
+            "output": "5"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m09-l02-q1",
+          "kind": "single",
+          "prompt": "try містить?",
+          "options": [
+            "Код, що може впасти",
+            "Лише print",
+            "Імпорти",
+            "Коментарі"
+          ],
+          "correct": "Код, що може впасти",
+          "explanation": "try."
+        },
+        {
+          "slug": "m09-l02-q2",
+          "kind": "single",
+          "prompt": "except ValueError ловить?",
+          "options": [
+            "Помилки значення",
+            "Усі помилки",
+            "Лише синтаксис",
+            "Нічого"
+          ],
+          "correct": "Помилки значення",
+          "explanation": "Конкретно."
+        },
+        {
+          "slug": "m09-l02-q3",
+          "kind": "output",
+          "prompt": "Що?",
+          "options": [
+            "Не число",
+            "hi",
+            "Помилка Python",
+            "0"
+          ],
+          "correct": "Не число",
+          "explanation": "except.",
+          "code": "s = \"hi\"\ntry:\n    print(int(s))\nexcept ValueError:\n    print(\"Не число\")"
+        }
+      ]
+    },
+    {
+      "slug": "m09-l03-else-finally",
+      "order": 3,
+      "title": "else і finally (огляд)",
+      "bodyMarkdown": "## else після try\n\n```python\ntry:\n    n = int(\"5\")\nexcept ValueError:\n    print(\"помилка\")\nelse:\n    print(\"успіх\", n)\n```\n\n```python\ntry:\n    f = 1\nfinally:\n    print(\"завжди\")\n```\n\n`finally` виконується завжди — навіть якщо була помилка.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+      "exercises": [
+        {
+          "slug": "m09-l03-e1-parse-list",
+          "prompt": "Рядок чисел через пробіл. Якщо всі int — виведи суму, інакше Помилка.\n\n**Приклад.**\nВвід:\n```\n1 2 3\n```\nВивід:\n```\n6\n```",
+          "starterCode": "s = input()\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "1 2 3\n",
+              "output": "6",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "1 x 3\n",
+              "output": "Помилка",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "10\n",
+              "output": "10",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "1 2 3\n",
+            "output": "6"
+          }
+        },
+        {
+          "slug": "m09-l03-e2-safe-fn",
+          "prompt": "Напиши `safe_int(s)`: повертає int або None якщо не вийшло.",
+          "starterCode": "# def safe_int(s):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'safe_int' in globals() and callable(globals()['safe_int']), 'Немає функції «safe_int». Напиши: def safe_int(...):'\nassert safe_int('12') == 12",
+              "visible": true,
+              "label": "safe_int('12')==12"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'safe_int' in globals() and callable(globals()['safe_int']), 'Немає функції «safe_int». Напиши: def safe_int(...):'\nassert safe_int('x') is None",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'safe_int' in globals() and callable(globals()['safe_int']), 'Немає функції «safe_int». Напиши: def safe_int(...):'\nassert safe_int('-5') == -5",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'safe_int' in globals() and callable(globals()['safe_int']), 'Немає функції «safe_int». Напиши: def safe_int(...):'\nassert safe_int('3.1') is None",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m09-l03-q1",
+          "kind": "single",
+          "prompt": "else у try?",
+          "options": [
+            "Якщо не було винятку",
+            "Завжди",
+            "Лише при помилці",
+            "Замість except"
+          ],
+          "correct": "Якщо не було винятку",
+          "explanation": "else."
+        },
+        {
+          "slug": "m09-l03-q2",
+          "kind": "single",
+          "prompt": "finally?",
+          "options": [
+            "Завжди виконується",
+            "Лише при помилці",
+            "Ніколи",
+            "Лише в циклі"
+          ],
+          "correct": "Завжди виконується",
+          "explanation": "finally."
+        },
+        {
+          "slug": "m09-l03-q3",
+          "kind": "output",
+          "prompt": "safe?",
+          "options": [
+            "None",
+            "x",
+            "Помилка",
+            "0"
+          ],
+          "correct": "None",
+          "explanation": "except.",
+          "code": "def safe_int(s):\n    try:\n        return int(s)\n    except ValueError:\n        return None\nprint(safe_int(\"x\"))"
+        }
+      ]
+    },
+    {
+      "slug": "m09-l04-raise",
+      "order": 4,
+      "title": "raise: кидаємо самі (огляд)",
+      "bodyMarkdown": "## Коли дані невірні\n\n```python\ndef vik(n):\n    if n < 0:\n        raise ValueError(\"вік не може бути відʼємним\")\n    return n\n```\n\nНа старті досить розуміти: `raise` створює помилку навмисно.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+      "exercises": [
+        {
+          "slug": "m09-l04-e1-validate",
+          "prompt": "Напиши `perevir_bal(n)`: якщо 0..12 — повертає n, інакше кидає ValueError.",
+          "starterCode": "# def perevir_bal(n):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'perevir_bal' in globals() and callable(globals()['perevir_bal']), 'Немає функції «perevir_bal». Напиши: def perevir_bal(...):'\nassert perevir_bal(10) == 10",
+              "visible": true,
+              "label": "perevir_bal(10)"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'perevir_bal' in globals() and callable(globals()['perevir_bal']), 'Немає функції «perevir_bal». Напиши: def perevir_bal(...):'\nassert perevir_bal(0) == 0",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'perevir_bal' in globals() and callable(globals()['perevir_bal']), 'Немає функції «perevir_bal». Напиши: def perevir_bal(...):'\nassert perevir_bal(12) == 12",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'perevir_bal' in globals() and callable(globals()['perevir_bal']), 'Немає функції «perevir_bal». Напиши: def perevir_bal(...):'\n\nok = False\ntry:\n    perevir_bal(13)\nexcept ValueError:\n    ok = True\nassert ok, 'Має бути ValueError для 13'",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'perevir_bal' in globals() and callable(globals()['perevir_bal']), 'Немає функції «perevir_bal». Напиши: def perevir_bal(...):'\n\nok = False\ntry:\n    perevir_bal(-1)\nexcept ValueError:\n    ok = True\nassert ok",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "slug": "m09-l04-e2-use",
+          "prompt": "Прочитай int. Якщо не в 0..12 — виведи Невірний бал, інакше сам бал. Використай try/except навколо логіки.\n\n**Приклад.**\nВвід:\n```\n10\n```\nВивід:\n```\n10\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "10\n",
+              "output": "10",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "13\n",
+              "output": "Невірний бал",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "-1\n",
+              "output": "Невірний бал",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "0\n",
+              "output": "0",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "10\n",
+            "output": "10"
+          }
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m09-l04-q1",
+          "kind": "single",
+          "prompt": "raise робить?",
+          "options": [
+            "Створює виняток",
+            "Ігнорує помилку",
+            "Друкує текст",
+            "Зупиняє лише цикл"
+          ],
+          "correct": "Створює виняток",
+          "explanation": "raise."
+        },
+        {
+          "slug": "m09-l04-q2",
+          "kind": "single",
+          "prompt": "Навіщо validate?",
+          "options": [
+            "Відсікати невірні дані",
+            "Прискорити PC",
+            "Замінити if",
+            "Очистити памʼять"
+          ],
+          "correct": "Відсікати невірні дані",
+          "explanation": "Перевірка."
+        },
+        {
+          "slug": "m09-l04-q3",
+          "kind": "multi",
+          "prompt": "Що правда?",
+          "options": [
+            "ValueError — тип помилки",
+            "except може спіймати raise",
+            "raise завжди друкує",
+            "Краще конкретний except"
+          ],
+          "correct": [
+            "ValueError — тип помилки",
+            "except може спіймати raise",
+            "Краще конкретний except"
+          ],
+          "explanation": "raise сам по собі не print."
+        }
+      ]
+    },
+    {
+      "slug": "m09-l05-errors-practice",
+      "order": 5,
+      "title": "Практика обробки помилок",
+      "bodyMarkdown": "## Надійний ввід числа\n\n```python\nwhile True:\n    try:\n        n = int(input())\n        break\n    except ValueError:\n        print(\"Спробуй ще\")\n```\n\nУ наших тестах ввід одразу правильний або одразу ні — без циклу повтору.\n",
+      "videoUrl": "https://www.youtube.com/watch?v=NIWwJbo-9_8",
+      "exercises": [
+        {
+          "slug": "m09-l05-e1-avg-safe",
+          "prompt": "n, потім n рядків. Скільки з них є цілими числами? (інші ігноруй)\n\n**Приклад.**\nВвід:\n```\n3\n10\nx\n2\n```\nВивід:\n```\n2\n```",
+          "starterCode": "n = int(input())\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "io",
+              "input": "3\n10\nx\n2\n",
+              "output": "2",
+              "visible": true
+            },
+            {
+              "type": "io",
+              "input": "2\na\nb\n",
+              "output": "0",
+              "visible": false
+            },
+            {
+              "type": "io",
+              "input": "1\n5\n",
+              "output": "1",
+              "visible": false
+            }
+          ],
+          "exampleIo": {
+            "input": "3\n10\nx\n2\n",
+            "output": "2"
+          }
+        },
+        {
+          "slug": "m09-l05-e2-div-fn",
+          "prompt": "Напиши `dilennia(a, b)`: повертає a/b як float, або None якщо b==0.",
+          "starterCode": "# def dilennia(a, b):\n",
+          "hintLimit": 3,
+          "tests": [
+            {
+              "type": "assert",
+              "code": "assert 'dilennia' in globals() and callable(globals()['dilennia']), 'Немає функції «dilennia». Напиши: def dilennia(...):'\nassert dilennia(10, 4) == 2.5",
+              "visible": true,
+              "label": "dilennia(10,4)"
+            },
+            {
+              "type": "assert",
+              "code": "assert 'dilennia' in globals() and callable(globals()['dilennia']), 'Немає функції «dilennia». Напиши: def dilennia(...):'\nassert dilennia(10, 0) is None",
+              "visible": false
+            },
+            {
+              "type": "assert",
+              "code": "assert 'dilennia' in globals() and callable(globals()['dilennia']), 'Немає функції «dilennia». Напиши: def dilennia(...):'\nassert dilennia(9, 3) == 3.0",
+              "visible": false
+            }
+          ]
+        }
+      ],
+      "quizzes": [
+        {
+          "slug": "m09-l05-q1",
+          "kind": "single",
+          "prompt": "pass у except?",
+          "options": [
+            "Нічого не робить",
+            "Кидає помилку",
+            "Повторює try",
+            "Виходить з програми"
+          ],
+          "correct": "Нічого не робить",
+          "explanation": "pass."
+        },
+        {
+          "slug": "m09-l05-q2",
+          "kind": "output",
+          "prompt": "None?",
+          "options": [
+            "None",
+            "0",
+            "Помилка",
+            "inf"
+          ],
+          "correct": "None",
+          "explanation": "b==0.",
+          "code": "def dilennia(a, b):\n    if b == 0:\n        return None\n    return a / b\nprint(dilennia(1, 0))"
+        },
+        {
+          "slug": "m09-l05-q3",
+          "kind": "single",
+          "prompt": "Мета try/except у вводі?",
+          "options": [
+            "Не падати на поганих даних",
+            "Прискорити int",
+            "Замінити split",
+            "Вимкнути друк"
+          ],
+          "correct": "Не падати на поганих даних",
+          "explanation": "Стійкість."
+        }
+      ]
+    }
+  ]
+}

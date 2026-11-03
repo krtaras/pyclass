@@ -15,7 +15,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "content:sync": "tsx scripts/sync-content.ts",
-    "content:cleanup-demo": "tsx scripts/cleanup-demo-content.ts"
+    "content:cleanup-demo": "tsx scripts/cleanup-demo-content.ts",
+    "proof:course": "node scripts/proof-course.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

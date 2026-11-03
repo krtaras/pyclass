@@ -178,5 +178,277 @@
   "m04-l05-e2-table": {
     "correct": "n = int(input())\nfor i in range(1, 11):\n    print(n * i)\n",
     "wrong": "n = int(input())\nfor i in range(10):\n    print(n * i)\n"
+  },
+  "m05-l01-e1-first-last": {
+    "correct": "s = input()\nprint(s[0])\nprint(s[-1])\n",
+    "wrong": "s = input()\nprint(s[0])\nprint(s[1])\n"
+  },
+  "m05-l01-e2-slice": {
+    "correct": "s = input()\nprint(s[1:])\n",
+    "wrong": "s = input()\nprint(s[0:])\n"
+  },
+  "m05-l02-e1-upper": {
+    "correct": "s = input()\nprint(s.upper())\n",
+    "wrong": "s = input()\nprint(s.lower())\n"
+  },
+  "m05-l02-e2-strip-lower": {
+    "correct": "s = input()\nprint(s.strip().lower())\n",
+    "wrong": "s = input()\nprint(s.lower())\n"
+  },
+  "m05-l03-e1-contains": {
+    "correct": "a = input()\nb = input()\nif b in a:\n    print(\"Так\")\nelse:\n    print(\"Ні\")\n",
+    "wrong": "a = input()\nb = input()\nif a in b:\n    print(\"Так\")\nelse:\n    print(\"Ні\")\n"
+  },
+  "m05-l03-e2-replace": {
+    "correct": "s = input()\nprint(s.replace(\" \", \"_\"))\n",
+    "wrong": "s = input()\nprint(s.replace(\"_\", \" \"))\n"
+  },
+  "m05-l04-e1-word-count": {
+    "correct": "s = input()\nprint(len(s.split()))\n",
+    "wrong": "s = input()\nprint(len(s))\n"
+  },
+  "m05-l04-e2-join-dash": {
+    "correct": "s = input()\nprint(\"-\".join(s.split()))\n",
+    "wrong": "s = input()\nprint(\" \".join(s.split(\"-\")))\n"
+  },
+  "m05-l05-e1-initials": {
+    "correct": "line = input()\na, b = line.split()\nprint(f\"{a[0].upper()}.{b[0].upper()}.\")\n",
+    "wrong": "line = input()\na, b = line.split()\nprint(a[0] + b[0])\n"
+  },
+  "m05-l05-e2-digits-only": {
+    "correct": "s = input()\nout = \"\"\nfor ch in s:\n    if ch.isdigit():\n        out += ch\nprint(out)\n",
+    "wrong": "s = input()\nprint(s)\n"
+  },
+  "m06-l01-e1-nth": {
+    "correct": "n = int(input())\nnums = list(map(int, input().split()))\nprint(nums[-1])\n",
+    "wrong": "n = int(input())\nnums = list(map(int, input().split()))\nprint(nums[0])\n"
+  },
+  "m06-l01-e2-len": {
+    "correct": "s = input()\nprint(len(s.split()))\n",
+    "wrong": "s = input()\nprint(s.count(\" \"))\n"
+  },
+  "m06-l02-e1-build": {
+    "correct": "n = int(input())\nitems = []\nfor _ in range(n):\n    items.append(input())\nprint(\" \".join(items))\n",
+    "wrong": "n = int(input())\nitems = []\nfor _ in range(n):\n    items.append(input())\nprint(items)\n"
+  },
+  "m06-l02-e2-pop-last": {
+    "correct": "nums = input().split()\nnums.pop()\nprint(\" \".join(nums))\n",
+    "wrong": "nums = input().split()\nprint(\" \".join(nums))\n"
+  },
+  "m06-l03-e1-sum": {
+    "correct": "nums = list(map(int, input().split()))\nprint(sum(nums))\n",
+    "wrong": "nums = list(map(int, input().split()))\nprint(len(nums))\n"
+  },
+  "m06-l03-e2-max": {
+    "correct": "nums = list(map(int, input().split()))\nprint(max(nums))\n",
+    "wrong": "nums = list(map(int, input().split()))\nprint(min(nums))\n"
+  },
+  "m06-l03-e3-evens": {
+    "correct": "nums = list(map(int, input().split()))\nout = [str(x) for x in nums if x % 2 == 0]\nprint(\" \".join(out))\n",
+    "wrong": "nums = list(map(int, input().split()))\nout = [str(x) for x in nums if x % 2 == 1]\nprint(\" \".join(out))\n"
+  },
+  "m06-l04-e1-swap": {
+    "correct": "a = int(input())\nb = int(input())\na, b = b, a\nprint(a, b)\n",
+    "wrong": "a = int(input())\nb = int(input())\nprint(a, b)\n"
+  },
+  "m06-l04-e2-pair": {
+    "correct": "a = input()\nb = input()\nprint((a, b))\n",
+    "wrong": "a = input()\nb = input()\nprint([a, b])\n"
+  },
+  "m06-l05-e1-reverse": {
+    "correct": "nums = input().split()\nprint(\" \".join(reversed(nums)))\n",
+    "wrong": "nums = input().split()\nprint(\" \".join(nums))\n"
+  },
+  "m06-l05-e2-unique-keep": {
+    "correct": "words = input().split()\nout = []\nfor w in words:\n    if w not in out:\n        out.append(w)\nprint(\" \".join(out))\n",
+    "wrong": "words = input().split()\nprint(\" \".join(words))\n"
+  },
+  "m07-l01-e1-hello-fn": {
+    "correct": "def privit():\n    return \"Привіт!\"\n",
+    "wrong": "def privit():\n    print(\"Привіт!\")\n"
+  },
+  "m07-l01-e2-double": {
+    "correct": "def podvij(x):\n    return x * 2\n",
+    "wrong": "def podvij(x):\n    return x + 2\n"
+  },
+  "m07-l02-e1-suma": {
+    "correct": "def suma(a, b):\n    return a + b\n",
+    "wrong": "def suma(a, b):\n    return a * b\n"
+  },
+  "m07-l02-e2-max2": {
+    "correct": "def bilshe(a, b):\n    if a >= b:\n        return a\n    return b\n",
+    "wrong": "def bilshe(a, b):\n    return a\n"
+  },
+  "m07-l03-e1-serednye": {
+    "correct": "def serednye(a, b):\n    return (a + b) / 2\n",
+    "wrong": "def serednye(a, b):\n    return (a + b) // 2\n"
+  },
+  "m07-l03-e2-abs-own": {
+    "correct": "def modul(n):\n    if n < 0:\n        return -n\n    return n\n",
+    "wrong": "def modul(n):\n    return n\n"
+  },
+  "m07-l04-e1-suma-list": {
+    "correct": "def suma_list(nums):\n    s = 0\n    for x in nums:\n        s += x\n    return s\n",
+    "wrong": "def suma_list(nums):\n    return len(nums)\n"
+  },
+  "m07-l04-e2-count-pos": {
+    "correct": "def kilkist_dod(nums):\n    c = 0\n    for x in nums:\n        if x > 0:\n            c += 1\n    return c\n",
+    "wrong": "def kilkist_dod(nums):\n    c = 0\n    for x in nums:\n        if x >= 0:\n            c += 1\n    return c\n"
+  },
+  "m07-l05-e1-grade-fn": {
+    "correct": "def ocinka(bal):\n    if bal >= 10:\n        return \"відмінно\"\n    if bal >= 7:\n        return \"добре\"\n    return \"треба ще\"\n",
+    "wrong": "def ocinka(bal):\n    if bal > 10:\n        return \"відмінно\"\n    return \"треба ще\"\n"
+  },
+  "m07-l05-e2-io-wrap": {
+    "correct": "def suma(a, b):\n    return a + b\na = int(input())\nb = int(input())\nprint(suma(a, b))\n",
+    "wrong": "a = int(input())\nb = int(input())\nprint(a * b)\n"
+  },
+  "m08-l01-e1-get": {
+    "correct": "d = {\"імʼя\": \"Оля\", \"бал\": 11}\nprint(d[\"бал\"])\n",
+    "wrong": "d = {\"імʼя\": \"Оля\", \"бал\": 11}\nprint(d[\"імʼя\"])\n"
+  },
+  "m08-l01-e2-build": {
+    "correct": "k = input()\nv = input()\nd = {k: v}\nprint(d[k])\n",
+    "wrong": "k = input()\nv = input()\nprint(k)\n"
+  },
+  "m08-l02-e1-sum-vals": {
+    "correct": "n = int(input())\nd = {}\nfor _ in range(n):\n    k = input()\n    v = int(input())\n    d[k] = v\nprint(sum(d.values()))\n",
+    "wrong": "n = int(input())\nd = {}\nfor _ in range(n):\n    k = input()\n    v = int(input())\n    d[k] = v\nprint(len(d))\n"
+  },
+  "m08-l02-e2-has-key": {
+    "correct": "n = int(input())\nd = {}\nfor _ in range(n):\n    k = input()\n    v = int(input())\n    d[k] = v\nq = input()\nif q in d:\n    print(\"Так\")\nelse:\n    print(\"Ні\")\n",
+    "wrong": "n = int(input())\nd = {}\nfor _ in range(n):\n    k = input()\n    v = int(input())\n    d[k] = v\nq = input()\nprint(\"Так\")\n"
+  },
+  "m08-l03-e1-unique-count": {
+    "correct": "nums = list(map(int, input().split()))\nprint(len(set(nums)))\n",
+    "wrong": "nums = list(map(int, input().split()))\nprint(len(nums))\n"
+  },
+  "m08-l03-e2-intersect": {
+    "correct": "a = set(map(int, input().split()))\nb = set(map(int, input().split()))\nprint(len(a & b))\n",
+    "wrong": "a = set(map(int, input().split()))\nb = set(map(int, input().split()))\nprint(len(a | b))\n"
+  },
+  "m08-l04-e1-char-freq": {
+    "correct": "s = input()\nprint(s.count(\"а\"))\n",
+    "wrong": "s = input()\nprint(len(s))\n"
+  },
+  "m08-l04-e2-word-freq": {
+    "correct": "words = input().split()\nfreq = {}\nfor w in words:\n    freq[w] = freq.get(w, 0) + 1\nbest = max(freq, key=freq.get)\nprint(best, freq[best])\n",
+    "wrong": "words = input().split()\nprint(words[0], 1)\n"
+  },
+  "m08-l05-e1-avg": {
+    "correct": "n = int(input())\nd = {}\nfor _ in range(n):\n    name = input()\n    bal = int(input())\n    d[name] = bal\navg = sum(d.values()) / len(d)\nprint(f\"{avg:.1f}\")\n",
+    "wrong": "n = int(input())\nd = {}\nfor _ in range(n):\n    name = input()\n    bal = int(input())\n    d[name] = bal\nprint(sum(d.values()))\n"
+  },
+  "m08-l05-e2-best": {
+    "correct": "n = int(input())\nd = {}\nfor _ in range(n):\n    name = input()\n    bal = int(input())\n    d[name] = bal\nprint(max(d, key=d.get))\n",
+    "wrong": "n = int(input())\nd = {}\nfor _ in range(n):\n    name = input()\n    bal = int(input())\n    d[name] = bal\nprint(min(d, key=d.get))\n"
+  },
+  "m09-l01-e1-safe-add": {
+    "correct": "a = input()\nb = input()\ntry:\n    print(int(a) + int(b))\nexcept ValueError:\n    print(\"Помилка\")\n",
+    "wrong": "a = input()\nb = input()\nprint(int(a) + int(b))\n"
+  },
+  "m09-l01-e2-index-safe": {
+    "correct": "s = input()\ni = int(input())\ntry:\n    print(s[i])\nexcept IndexError:\n    print(\"Помилка\")\n",
+    "wrong": "s = input()\ni = int(input())\nprint(s[i])\n"
+  },
+  "m09-l02-e1-int-or-msg": {
+    "correct": "s = input()\ntry:\n    print(int(s))\nexcept ValueError:\n    print(\"Не число\")\n",
+    "wrong": "s = input()\nprint(int(s))\n"
+  },
+  "m09-l02-e2-div": {
+    "correct": "a = int(input())\nb = int(input())\ntry:\n    print(a // b)\nexcept ZeroDivisionError:\n    print(\"Ділення на нуль\")\n",
+    "wrong": "a = int(input())\nb = int(input())\nprint(a // b)\n"
+  },
+  "m09-l03-e1-parse-list": {
+    "correct": "s = input()\ntry:\n    nums = [int(x) for x in s.split()]\nexcept ValueError:\n    print(\"Помилка\")\nelse:\n    print(sum(nums))\n",
+    "wrong": "s = input()\nprint(sum(map(int, s.split())))\n"
+  },
+  "m09-l03-e2-safe-fn": {
+    "correct": "def safe_int(s):\n    try:\n        return int(s)\n    except ValueError:\n        return None\n",
+    "wrong": "def safe_int(s):\n    return int(s)\n"
+  },
+  "m09-l04-e1-validate": {
+    "correct": "def perevir_bal(n):\n    if n < 0 or n > 12:\n        raise ValueError(\"невірний бал\")\n    return n\n",
+    "wrong": "def perevir_bal(n):\n    return n\n"
+  },
+  "m09-l04-e2-use": {
+    "correct": "n = int(input())\nif 0 <= n <= 12:\n    print(n)\nelse:\n    print(\"Невірний бал\")\n",
+    "wrong": "n = int(input())\nprint(n)\n"
+  },
+  "m09-l05-e1-avg-safe": {
+    "correct": "n = int(input())\nc = 0\nfor _ in range(n):\n    s = input()\n    try:\n        int(s)\n        c += 1\n    except ValueError:\n        pass\nprint(c)\n",
+    "wrong": "n = int(input())\nc = 0\nfor _ in range(n):\n    s = input()\n    c += 1\nprint(c)\n"
+  },
+  "m09-l05-e2-div-fn": {
+    "correct": "def dilennia(a, b):\n    if b == 0:\n        return None\n    return a / b\n",
+    "wrong": "def dilennia(a, b):\n    return a / b\n"
+  },
+  "m10-l01-e1-read": {
+    "correct": "n = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\nprint(len(journal))\n",
+    "wrong": "n = int(input())\nfor _ in range(n):\n    input()\nprint(0)\n"
+  },
+  "m10-l01-e2-list-names": {
+    "correct": "n = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\nprint(\" \".join(sorted(journal)))\n",
+    "wrong": "n = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\nprint(\" \".join(journal))\n"
+  },
+  "m10-l02-e1-avg": {
+    "correct": "n = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\navg = sum(journal.values()) / len(journal)\nprint(f\"{avg:.1f}\")\n",
+    "wrong": "n = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\nprint(sum(journal.values()))\n"
+  },
+  "m10-l02-e2-best": {
+    "correct": "n = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\nprint(max(journal, key=journal.get))\n",
+    "wrong": "n = int(input())\njournal = {}\nfor _ in range(n):\n    name, bal = input().split()\n    journal[name] = int(bal)\nprint(min(journal, key=journal.get))\n"
+  },
+  "m10-l02-e3-pass-count": {
+    "correct": "n = int(input())\nporig = int(input())\nc = 0\nfor _ in range(n):\n    name, bal = input().split()\n    if int(bal) >= porig:\n        c += 1\nprint(c)\n",
+    "wrong": "n = int(input())\nporig = int(input())\nc = 0\nfor _ in range(n):\n    name, bal = input().split()\n    if int(bal) > porig:\n        c += 1\nprint(c)\n"
+  },
+  "m10-l03-e1-price-map": {
+    "correct": "n = int(input())\nprice = {}\nfor _ in range(n):\n    name, p = input().split()\n    price[name] = int(p)\nq = input()\nif q in price:\n    print(price[q])\nelse:\n    print(\"Немає\")\n",
+    "wrong": "n = int(input())\nprice = {}\nfor _ in range(n):\n    name, p = input().split()\n    price[name] = int(p)\nprint(price[input()])\n"
+  },
+  "m10-l03-e2-receipt": {
+    "correct": "n = int(input())\nprice = {}\nfor _ in range(n):\n    name, p = input().split()\n    price[name] = int(p)\nk = int(input())\ntotal = 0\nfor _ in range(k):\n    name, qty = input().split()\n    total += price.get(name, 0) * int(qty)\nprint(total)\n",
+    "wrong": "n = int(input())\nprice = {}\nfor _ in range(n):\n    name, p = input().split()\n    price[name] = int(p)\nk = int(input())\ntotal = 0\nfor _ in range(k):\n    name, qty = input().split()\n    total += int(qty)\nprint(total)\n"
+  },
+  "m10-l03-e3-receipt-fn": {
+    "correct": "def suma_cheku(price, cart):\n    total = 0\n    for name, qty in cart.items():\n        total += price.get(name, 0) * qty\n    return total\n",
+    "wrong": "def suma_cheku(price, cart):\n    return sum(cart.values())\n"
+  },
+  "m10-l04-e1-one-hint": {
+    "correct": "secret = int(input())\ng = int(input())\nif g < secret:\n    print(\"Мало\")\nelif g > secret:\n    print(\"Багато\")\nelse:\n    print(\"Вгадав\")\n",
+    "wrong": "secret = int(input())\ng = int(input())\nprint(\"Вгадав\")\n"
+  },
+  "m10-l04-e2-loop": {
+    "correct": "secret = int(input())\ntries = 0\nwhile True:\n    g = int(input())\n    tries += 1\n    if g < secret:\n        print(\"Мало\")\n    elif g > secret:\n        print(\"Багато\")\n    else:\n        print(f\"Вгадав за {tries} спроб\")\n        break\n",
+    "wrong": "secret = int(input())\ng = int(input())\nprint(\"Вгадав за 1 спроб\")\n"
+  },
+  "m10-l04-e3-fn": {
+    "correct": "def pidkazka(secret, guess):\n    if guess < secret:\n        return \"Мало\"\n    if guess > secret:\n        return \"Багато\"\n    return \"Вгадав\"\n",
+    "wrong": "def pidkazka(secret, guess):\n    return \"Вгадав\"\n"
+  },
+  "m10-l05-e1-count": {
+    "correct": "text = input()\nprint(len(text.split()))\n",
+    "wrong": "text = input()\nprint(len(text))\n"
+  },
+  "m10-l05-e2-unique": {
+    "correct": "words = input().split()\nprint(len(set(words)))\n",
+    "wrong": "words = input().split()\nprint(len(words))\n"
+  },
+  "m10-l05-e3-top": {
+    "correct": "words = input().split()\nfreq = {}\nfor w in words:\n    freq[w] = freq.get(w, 0) + 1\nbest = max(freq, key=freq.get)\nprint(best, freq[best])\n",
+    "wrong": "words = input().split()\nprint(words[0], len(words))\n"
+  },
+  "m10-l05-e4-fn": {
+    "correct": "def najchastishe(words):\n    freq = {}\n    for w in words:\n        freq[w] = freq.get(w, 0) + 1\n    best = max(freq, key=freq.get)\n    return best, freq[best]\n",
+    "wrong": "def najchastishe(words):\n    return words[0], 1\n"
+  },
+  "m10-l06-e1-summary-fn": {
+    "correct": "def privit(name):\n    return f\"Привіт, {name}!\"\n",
+    "wrong": "def privit(name):\n    return name\n"
+  },
+  "m10-l06-e2-pipeline": {
+    "correct": "words = input().split()\nprint(len(words))\nfreq = {}\nfor w in words:\n    freq[w] = freq.get(w, 0) + 1\nprint(max(freq, key=freq.get))\n",
+    "wrong": "words = input().split()\nprint(len(words))\nprint(\"?\")\n"
   }
 }
